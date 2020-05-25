@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "GraphicsAPI.hpp"
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
@@ -12,6 +14,12 @@ const unsigned int SCR_HEIGHT = 600;
 
 int main()
 {
+	GraphicsAPI *api = new GraphicsAPI_OpenGL();
+
+	std::cout << ((api->type == GraphicsAPI_Type::OPENGL) ? "OPENGL" : "OTHER") << std::endl;
+
+	delete api;
+
 	// glfw: initialize and configure
 	// ------------------------------
 	glfwInit();
