@@ -1,30 +1,39 @@
 #pragma once
 
-enum class GraphicsAPI_Type
+namespace TinySandbox
 {
-    OPENGL,
-    OPENGL_ES,
-    DIRECT_X,
-    LEN
-};
+    enum class GraphicsAPI_Type
+    {
+        OPENGL,
+        OPENGL_ES,
+        DIRECT_X,
+        LEN
+    };
 
-class GraphicsAPI
-{
-    public:
-        GraphicsAPI() {
-            GraphicsAPI::type = GraphicsAPI_Type::LEN;
-        };
+    class GraphicsAPI
+    {
+        public:
+            GraphicsAPI() {
+                GraphicsAPI::type = GraphicsAPI_Type::LEN;
+            };
 
-        // define virtual functions
-        // i.e., virtual void BindTextures(Texture, uint_32t);
+            // virtual void Init();
 
-        static GraphicsAPI_Type type;
-};
+            // define virtual functions
+            // i.e., virtual void BindTextures(Texture, uint_32t);
 
-class GraphicsAPI_OpenGL : public GraphicsAPI
-{
-    public:
-        GraphicsAPI_OpenGL() {
-            GraphicsAPI::type = GraphicsAPI_Type::OPENGL;
-        };
-};
+            static GraphicsAPI_Type type;
+    };
+
+    class GraphicsAPI_OpenGL : public GraphicsAPI
+    {
+        public:
+            GraphicsAPI_OpenGL() {
+                GraphicsAPI::type = GraphicsAPI_Type::OPENGL;
+            };
+
+            /*void Init () override {
+                
+            }*/
+    };
+}

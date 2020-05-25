@@ -355,3 +355,4 @@ MigrationBackup/
 # For Linux
 *.o
 a.out
+*.swp

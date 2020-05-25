@@ -4,7 +4,7 @@ CC=g++
 OUT=a.out
 INCLUDE_DIR=includes
 FLAGS=-I${INCLUDE_DIR} -lglfw -ldl --std=c++11
-OBJS= glad.o TinySandbox.o GraphicsAPI.o
+OBJS= glad.o TinySandbox.o GraphicsAPI.o Windows.o
 
 main: $(OBJS)
 	$(CC) -o $(OUT) $^ $(FLAGS)
