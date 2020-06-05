@@ -1,6 +1,10 @@
 // always include GraphicsAPI first, since it may contains header need to include first
 #include "GraphicsAPI.hpp"
-#include "Windows.hpp"
+#include "GLFW_Windows.hpp"
+
+#include "Entity.hpp"
+
+#include "TestComponent.hpp"
 
 #include <iostream>
 
@@ -37,13 +41,17 @@ void framebuffer_size_callback(GLFWwindow* glfw_window, int width, int height)
 
 int main()
 {
-	/*GraphicsAPI *api = new GraphicsAPI_OpenGL();
+	// TODO: Should Create a Scene class, contains of Lists of Entity
+	// replace mainLoopEntity to Scene
 
-	std::cout << ((api->type == GraphicsAPI_Type::OPENGL) ? "OPENGL" : "OTHER") << std::endl;
+	TinySandbox::Entity mainLoopEntity;
+	TinySandbox::Component* testComponent = new TinySandbox::TestComponent();
 
-	delete api;*/
+	// buggy when writing my own Add()
+	mainLoopEntity.components.push_back(testComponent);
+	//mainLoopComponent.Add(testComponent);
 
-	window = new TinySandbox::GLFW_Windows(SCR_WIDTH, SCR_HEIGHT, "NSD!", NULL, NULL);
+	window = new TinySandbox::GLFW_Windows(SCR_WIDTH, SCR_HEIGHT, "NSD!", NULL, NULL, mainLoopEntity);
 
 	// for reshape callback, the last parameter is a function point
 	// there is no way to cast it from a lambda or std::function

@@ -1,12 +1,10 @@
-#include "Windows.hpp"
-
-#include <iostream>
+#include "GLFW_Windows.hpp"
 
 namespace TinySandbox
 {
-    GLFW_Windows::GLFW_Windows(int width, int height, const char* title, ::GLFWmonitor *monitor=nullptr, ::GLFWwindow *share=nullptr) {
-        
-        glfwInit();
+    GLFW_Windows::GLFW_Windows(int width, int height, const char* title, ::GLFWmonitor *monitor, ::GLFWwindow *share, Entity& component) : Windows(std::move(component)) {
+
+		glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         
@@ -39,17 +37,28 @@ namespace TinySandbox
     }
 
     void GLFW_Windows::MainLoop() {
+
+		mainLoop->Start();
+
         while (this->ShouldClose() == false)
         {
+			// 1. Process Input
             this->inputCallback(this->m_glfwInstance);
 
+			// 2. Update Game Logics
+			mainLoop->Update();
+
+			// 3. Render the scene without UI
             this->renderCallback();
 
+			// 4. Render UI after the scene
+			mainLoop->OnGUI();
+
+			// 5. Flush FrameBuffer
             glfwSwapBuffers(this->m_glfwInstance);
             glfwPollEvents();
         }
     }
-
 
     void GLFW_Windows::SetInputCallback(std::function<void(GLFWwindow*)> _inputCallback) {
 		this->inputCallback = _inputCallback;

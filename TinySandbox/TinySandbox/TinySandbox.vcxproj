@@ -156,7 +156,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />
+    <ClCompile Include="GLFW_Windows.cpp" />
+    <ClCompile Include="GraphicsAPI.cpp" />
     <ClCompile Include="TinySandbox.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Component.hpp" />
+    <ClInclude Include="GLFW_Windows.hpp" />
+    <ClInclude Include="GraphicsAPI.hpp" />
+    <ClInclude Include="Entity.hpp" />
+    <ClInclude Include="Windows.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
