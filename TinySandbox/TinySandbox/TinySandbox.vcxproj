@@ -162,6 +162,7 @@
     <ClCompile Include="TinySandbox.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="GLFW_Windows.hpp" />
     <ClInclude Include="GraphicsAPI.hpp" />

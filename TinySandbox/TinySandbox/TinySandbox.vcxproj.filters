@@ -59,5 +59,8 @@
     <ClInclude Include="Scene.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

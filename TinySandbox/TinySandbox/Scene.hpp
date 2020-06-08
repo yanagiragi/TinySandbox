@@ -14,11 +14,11 @@ namespace TinySandbox
 			
 			Scene();
 
-			Scene(const Scene& _scene) 
+			/*Scene(const Scene& _scene) 
 			{
 				//std::copy(std::begin(other.entitiesList), std::end(other.entitiesList), std::back_inserter(entitiesList));
 				entitiesList = _scene.entitiesList;
-			};
+			};*/
 		
 			~Scene()
 			{
