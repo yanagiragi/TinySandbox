@@ -1,5 +1,7 @@
 #pragma once
 
+#include "includes/glad/glad.h"
+
 #include "Component.hpp"
 #include "Entity.hpp"
 #include <vector>
@@ -68,6 +70,7 @@ namespace TinySandbox
 
 			void InitSceneSettings();
 			static void Draw();
+			// static void ProcessInput(GLFWwindow* w) {} ;
 
 		private:
 			std::vector<Entity*> entitiesList;

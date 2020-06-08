@@ -20,6 +20,8 @@ namespace TinySandbox {
 			void Loop();
 
 			void SetInputCallback(std::function<void(GLFWwindow*)> _inputCallback);
+			// void SetInputCallback(void(*_inputCallback)(GLFWwindow*));
+			//void SetInputCallback(void (TinySandbox::Scene::*ProcessInput)(GLFWwindow*));
 
 			void SetRenderCallback(std::function<void(void)> _renderCallback);
 
@@ -31,6 +33,7 @@ namespace TinySandbox {
 			GLFWwindow *m_glfwInstance;
 
 			std::function<void(GLFWwindow*)> inputCallback;
+			// void(*inputCallback)(GLFWwindow*);
 			std::function<void(void)> renderCallback;
 	};
 }
