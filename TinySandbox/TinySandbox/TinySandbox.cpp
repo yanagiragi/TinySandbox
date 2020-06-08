@@ -41,7 +41,7 @@ int main()
 {	
 	window = new TinySandbox::GLFW_Windows(SCR_WIDTH, SCR_HEIGHT, "NSD!", NULL, NULL);
 
-	TinySandbox::Scene* mainScene = new TinySandbox::Scene();
+	TinySandbox::Scene* mainScene = TinySandbox::Scene::Instance();
 
 	// for reshape callback, the last parameter is a function point
 	// there is no way to cast it from a lambda or std::function
@@ -49,7 +49,8 @@ int main()
 	glfwSetFramebufferSizeCallback(window->instance(), framebuffer_size_callback);
 
 	window->SetInputCallback(ProcessInput);
-	window->SetRenderCallback(Draw);
+	window->SetRenderCallback(TinySandbox::Scene::Draw);
+	TinySandbox::Scene::Instance()->InitSceneSettings();
 	window->SetScene(mainScene);
 
 	window->Loop();

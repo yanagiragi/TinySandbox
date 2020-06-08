@@ -15,7 +15,7 @@ namespace TinySandbox {
 
 			Windows(Scene&& _mainLoop)
 			{
-				mainScene = new Scene(_mainLoop);
+				// mainScene = new Scene(_mainLoop);
 			}
 
 			~Windows()

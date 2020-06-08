@@ -18,44 +18,59 @@ namespace TinySandbox
 				entitiesList = _scene.entitiesList;
 			};
 		
-			~Scene() 
+			~Scene()
 			{
-				for (auto entity : entitiesList)
-				{
-					delete entity;
+				if (Scene::Instance() != nullptr) {
+					for (auto entity : Scene::Instance()->entitiesList)
+					{
+						delete entity;
+					}
 				}
 			}
 
 			Scene& operator= (const Scene& _scene) = delete;
 			Scene& operator= (const Scene&& _scene) = delete;
-			
+
 			void Start() override
 			{
-				for (auto entity : entitiesList) {
+				for (auto entity : Scene::Instance()->entitiesList) {
 					entity->Start();
 				}
 			}
 
 			void Update() override
 			{
-				for (auto entity : entitiesList) {
+				for (auto entity : Scene::Instance()->entitiesList) {
 					entity->Update();
 				}
 			}
 
 			void OnGUI() override
 			{
-				for (auto entity : entitiesList) {
+				for (auto entity : Scene::Instance()->entitiesList) {
 					entity->OnGUI();
 				}
 			}
 
 			void Add(Entity* _entity)
 			{
-				entitiesList.push_back(_entity);
+				Scene::Instance()->entitiesList.push_back(_entity);
 			}
+
+			static Scene* Instance()
+			{
+				if (Scene::m_instance == nullptr)
+				{
+					Scene::m_instance = new Scene();
+				}
+				return m_instance;
+			}
+
+			void InitSceneSettings();
+			static void Draw();
 
 		private:
 			std::vector<Entity*> entitiesList;
+			static Scene* m_instance; // singleton instance
 	};
 }
