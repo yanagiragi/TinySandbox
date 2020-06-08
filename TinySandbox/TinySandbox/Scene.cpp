@@ -4,6 +4,8 @@
 
 #include "GLFW_Windows.hpp"
 
+#include "MeshRenderer.hpp"
+
 // initialize static member
 TinySandbox::Scene* TinySandbox::Scene::m_instance = nullptr;
 
@@ -18,9 +20,11 @@ namespace TinySandbox
 	void Scene::InitSceneSettings()
 	{
 		TinySandbox::Component* testComponent = new TinySandbox::TestComponent();
+		TinySandbox::Component* meshRenderer = new TinySandbox::MeshRenderer();
 
-		TinySandbox::Entity* testEntity = new TinySandbox::Entity();
+		TinySandbox::Entity* testEntity = new TinySandbox::Entity("Test");
 		testEntity->Add(testComponent);
+		testEntity->Add(meshRenderer);
 
 		Scene::Instance()->Add(testEntity);
 	}

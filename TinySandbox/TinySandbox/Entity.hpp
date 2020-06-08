@@ -11,7 +11,7 @@ namespace TinySandbox
 		public:
 			
 			// ctor
-			Entity() 
+			Entity(const char* _name) : name(_name)
 			{
 			
 			}
@@ -69,6 +69,7 @@ namespace TinySandbox
 			}
 
 		 private:
+			 const char* name;
 			std::vector<Component*> components;
 	};
 }
