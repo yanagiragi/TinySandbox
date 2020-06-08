@@ -6,7 +6,7 @@
 
 namespace TinySandbox
 {
-	class Entity : Component 
+	class Entity : public Component 
 	{
 		public:
 			
@@ -19,6 +19,9 @@ namespace TinySandbox
 			// dtor
 			~Entity()
 			{
+				for (auto component : components) {
+					delete component;
+				}
 				components.clear();
 			}
 

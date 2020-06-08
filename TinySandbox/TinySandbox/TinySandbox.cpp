@@ -2,6 +2,7 @@
 #include "GraphicsAPI.hpp"
 #include "GLFW_Windows.hpp"
 
+#include "Scene.hpp"
 #include "Entity.hpp"
 
 #include "TestComponent.hpp"
@@ -40,18 +41,18 @@ void framebuffer_size_callback(GLFWwindow* glfw_window, int width, int height)
 }
 
 int main()
-{
-	// TODO: Should Create a Scene class, contains of Lists of Entity
-	// replace mainLoopEntity to Scene
-
-	TinySandbox::Entity mainLoopEntity;
+{	
 	TinySandbox::Component* testComponent = new TinySandbox::TestComponent();
 
-	// buggy when writing my own Add()
-	//mainLoopEntity.components.push_back(testComponent);
-	mainLoopEntity.Add(testComponent);
+	TinySandbox::Entity* testEntity = new TinySandbox::Entity();
+	testEntity->Add(testComponent);
+	
+	TinySandbox::Scene* mainScene = new TinySandbox::Scene();
+	mainScene->Add(testEntity);
 
-	window = new TinySandbox::GLFW_Windows(SCR_WIDTH, SCR_HEIGHT, "NSD!", NULL, NULL, mainLoopEntity);
+	window = new TinySandbox::GLFW_Windows(SCR_WIDTH, SCR_HEIGHT, "NSD!", NULL, NULL);
+	
+	window->SetScene(mainScene);
 
 	// for reshape callback, the last parameter is a function point
 	// there is no way to cast it from a lambda or std::function

@@ -2,8 +2,9 @@
 
 namespace TinySandbox
 {
-    GLFW_Windows::GLFW_Windows(int width, int height, const char* title, ::GLFWmonitor *monitor, ::GLFWwindow *share, Entity& component) : Windows(std::move(component)) {
-
+    GLFW_Windows::GLFW_Windows
+	(int width, int height, const char* title, ::GLFWmonitor *monitor, ::GLFWwindow *share) 
+	{
 		glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -31,14 +32,20 @@ namespace TinySandbox
             throw "Failed to initialize GLAD";
         }
     }
-            
+
+	GLFW_Windows::~GLFW_Windows()
+	{
+		glfwTerminate();
+	}
+
+        
     bool GLFW_Windows::ShouldClose() {
         return glfwWindowShouldClose(this->m_glfwInstance);
     }
 
     void GLFW_Windows::MainLoop() {
 
-		mainLoop->Start();
+		mainScene->Start();
 
         while (this->ShouldClose() == false)
         {
@@ -46,13 +53,13 @@ namespace TinySandbox
             this->inputCallback(this->m_glfwInstance);
 
 			// 2. Update Game Logics
-			mainLoop->Update();
+			mainScene->Update();
 
 			// 3. Render the scene without UI
             this->renderCallback();
 
 			// 4. Render UI after the scene
-			mainLoop->OnGUI();
+			mainScene->OnGUI();
 
 			// 5. Flush FrameBuffer
             glfwSwapBuffers(this->m_glfwInstance);

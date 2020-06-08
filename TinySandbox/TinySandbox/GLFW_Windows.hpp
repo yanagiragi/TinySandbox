@@ -8,32 +8,26 @@
 
 namespace TinySandbox {
 
-	class GLFW_Windows : Windows
+	class GLFW_Windows : public Windows
 	{
 		public:
 
-			GLFW_Windows(int width, int height, const char* title, ::GLFWmonitor *monitor, ::GLFWwindow *share, Entity& component);
+			GLFW_Windows(int width, int height, const char* title, ::GLFWmonitor *monitor, ::GLFWwindow *share);
+			~GLFW_Windows();
 
 			bool ShouldClose();
-
+			
 			void MainLoop();
 
 			void SetInputCallback(std::function<void(GLFWwindow*)> _inputCallback);
 
 			void SetRenderCallback(std::function<void(void)> _renderCallback);
 
-			// helper function for now
-			GLFWwindow* instance();
-
-			~GLFW_Windows()
-			{
-				glfwTerminate();
-			}
-
+			GLFWwindow* instance(); // helper function for now
+			
 			const char *name = "GLFW";
 
 		private:
-
 			GLFWwindow *m_glfwInstance;
 
 			std::function<void(GLFWwindow*)> inputCallback;

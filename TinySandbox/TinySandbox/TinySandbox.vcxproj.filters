@@ -53,5 +53,8 @@
     <ClInclude Include="GraphicsAPI.hpp">
       <Filter>Source Files\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

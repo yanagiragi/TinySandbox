@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Entity.hpp"
+#include "Scene.hpp"
 
 namespace TinySandbox {
 
@@ -13,21 +13,26 @@ namespace TinySandbox {
 
 			}
 
-			Windows(Entity&& _mainLoop)
+			Windows(Scene&& _mainLoop)
 			{
-				mainLoop = new Entity(_mainLoop);
+				mainScene = new Scene(_mainLoop);
 			}
 
 			~Windows()
 			{
-				delete mainLoop;
+				delete mainScene;
+			}
+
+			void SetScene(Scene* _scene)
+			{
+				mainScene = _scene;
 			}
 			
 			virtual bool ShouldClose() = 0;
 			virtual void MainLoop() = 0;
 
-		//protected:
-			Entity* mainLoop;
+		protected:
+			Scene* mainScene;
     };
  
 }
