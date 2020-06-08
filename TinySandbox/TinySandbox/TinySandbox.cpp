@@ -48,8 +48,8 @@ int main()
 	TinySandbox::Component* testComponent = new TinySandbox::TestComponent();
 
 	// buggy when writing my own Add()
-	mainLoopEntity.components.push_back(testComponent);
-	//mainLoopComponent.Add(testComponent);
+	//mainLoopEntity.components.push_back(testComponent);
+	mainLoopEntity.Add(testComponent);
 
 	window = new TinySandbox::GLFW_Windows(SCR_WIDTH, SCR_HEIGHT, "NSD!", NULL, NULL, mainLoopEntity);
 

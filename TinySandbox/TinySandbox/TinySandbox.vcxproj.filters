@@ -13,36 +13,45 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Windows">
+      <UniqueIdentifier>{bd0fad22-80bc-41ea-92db-f913cf8be0a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{3e11237f-6d11-4814-a878-6b227be927c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{9834e3a3-954e-4bd0-a1e9-53cb880902ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TinySandbox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GLFW_Windows.cpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="glad.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="GraphicsAPI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GLFW_Windows.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GraphicsAPI.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Windows.hpp">
+    <ClInclude Include="Entity.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="GLFW_Windows.hpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows.hpp">
+      <Filter>Source Files\Windows</Filter>
     </ClInclude>
     <ClInclude Include="Component.hpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="GraphicsAPI.hpp">
+      <Filter>Source Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

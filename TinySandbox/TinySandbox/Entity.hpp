@@ -60,17 +60,12 @@ namespace TinySandbox
 			}
 
 			// Only add is allowed, no other operation (e.g. delete) is provided.
-			void Add(const Component& _components)
+			void Add(Component* _components)
 			{
-				// components.insert(components.end(), { &_components });
+				components.push_back(_components);
 			}
 
-			/*void Add(Component&& _components)
-			{
-				components.emplace_back(std::move(_components));
-			}*/
-
-		// private:
+		 private:
 			std::vector<Component*> components;
 	};
 }
