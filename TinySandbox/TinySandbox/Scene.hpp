@@ -9,10 +9,8 @@ namespace TinySandbox
 	class Scene : public Component
 	{
 		public:
-			Scene()
-			{
-		
-			}
+			
+			Scene();
 
 			Scene(const Scene& _scene) 
 			{

@@ -158,6 +158,7 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="GLFW_Windows.cpp" />
     <ClCompile Include="GraphicsAPI.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="TinySandbox.cpp" />
   </ItemGroup>
   <ItemGroup>

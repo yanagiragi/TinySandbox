@@ -3,9 +3,6 @@
 #include "GLFW_Windows.hpp"
 
 #include "Scene.hpp"
-#include "Entity.hpp"
-
-#include "TestComponent.hpp"
 
 #include <iostream>
 
@@ -19,13 +16,13 @@ TinySandbox::GLFW_Windows* window;
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
-void draw()
+void Draw()
 {
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);	
 }
 
-void processInput(GLFWwindow *window)
+void ProcessInput(GLFWwindow *window)
 {
 	//if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	//	glfwSetWindowShouldClose(window, true);
@@ -42,29 +39,20 @@ void framebuffer_size_callback(GLFWwindow* glfw_window, int width, int height)
 
 int main()
 {	
-	TinySandbox::Component* testComponent = new TinySandbox::TestComponent();
-
-	TinySandbox::Entity* testEntity = new TinySandbox::Entity();
-	testEntity->Add(testComponent);
-	
-	TinySandbox::Scene* mainScene = new TinySandbox::Scene();
-	mainScene->Add(testEntity);
-
 	window = new TinySandbox::GLFW_Windows(SCR_WIDTH, SCR_HEIGHT, "NSD!", NULL, NULL);
-	
-	window->SetScene(mainScene);
+
+	TinySandbox::Scene* mainScene = new TinySandbox::Scene();
 
 	// for reshape callback, the last parameter is a function point
 	// there is no way to cast it from a lambda or std::function
 	// and it has to be static function
 	glfwSetFramebufferSizeCallback(window->instance(), framebuffer_size_callback);
 
-	window->SetInputCallback(processInput);
-	window->SetRenderCallback(draw);
+	window->SetInputCallback(ProcessInput);
+	window->SetRenderCallback(Draw);
+	window->SetScene(mainScene);
 
-	std::cout << window->name << std::endl;
-
-	window->MainLoop();
+	window->Loop();
 
 	// cleanup resources
 	delete window;

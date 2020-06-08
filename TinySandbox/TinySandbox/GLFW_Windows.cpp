@@ -43,7 +43,7 @@ namespace TinySandbox
         return glfwWindowShouldClose(this->m_glfwInstance);
     }
 
-    void GLFW_Windows::MainLoop() {
+    void GLFW_Windows::Loop() {
 
 		mainScene->Start();
 

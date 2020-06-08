@@ -29,7 +29,7 @@ namespace TinySandbox {
 			}
 			
 			virtual bool ShouldClose() = 0;
-			virtual void MainLoop() = 0;
+			virtual void Loop() = 0;
 
 		protected:
 			Scene* mainScene;

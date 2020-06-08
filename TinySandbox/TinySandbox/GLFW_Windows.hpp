@@ -17,7 +17,7 @@ namespace TinySandbox {
 
 			bool ShouldClose();
 			
-			void MainLoop();
+			void Loop();
 
 			void SetInputCallback(std::function<void(GLFWwindow*)> _inputCallback);
 
