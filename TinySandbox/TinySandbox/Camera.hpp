@@ -18,7 +18,7 @@ namespace TinySandbox
 			void Phi(const float &val) { m_phi = val; }
 			const float Phi() const { return m_phi;  }
 			
-			glm::vec3 Position(const glm::vec3 &val) { m_position = val; }
+			void Position(const glm::vec3 &val) { m_position = val; }
 			const glm::vec3 Position() const { return m_position;  }
 
 			const glm::vec3 Forward() const { 
@@ -49,11 +49,24 @@ namespace TinySandbox
 			void Aspect(const float &val) { m_aspect = val; }
 			const float Aspect() const { return m_aspect; }
 
-			const glm::mat4x4 ViewMatrix() const  {
-				return glm::lookAt(Position(), Forward(), Up());
+			const glm::mat4 ViewMatrix() const  {
+
+				const float M_PI = 3.14f;
+
+				const glm::vec3 forward = glm::vec3(0, 0, 11);
+				glm::mat4 ViewMatrixLH = glm::lookAtLH(
+					m_position,
+					forward,
+					glm::vec3(0.0, 1.0, 0.0));
+				glm::mat4 ViewMatrixRH = glm::lookAtRH(
+					m_position,
+					forward,
+					glm::vec3(0.0, 1.0, 0.0));
+
+				return glm::lookAt(Position(), forward, Up());
 			}
 
-			const glm::mat4x4 ProjectionMatrix() const {
+			const glm::mat4 ProjectionMatrix() const {
 				return glm::perspective(
 					glm::radians(m_fieldOfView),
 					m_aspect,

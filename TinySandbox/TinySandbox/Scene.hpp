@@ -1,9 +1,11 @@
 #pragma once
 
-#include "includes/glad/glad.h"
+#include <glad/glad.h>
 
 #include "Component.hpp"
 #include "Entity.hpp"
+#include "Camera.hpp"
+
 #include <vector>
 
 namespace TinySandbox
@@ -20,50 +22,42 @@ namespace TinySandbox
 				entitiesList = _scene.entitiesList;
 			};*/
 		
-			~Scene()
-			{
-				if (Scene::Instance() != nullptr) {
-					for (auto entity : Scene::Instance()->entitiesList)
-					{
-						delete entity;
-					}
-				}
-			}
+			~Scene();
 
 			Scene& operator= (const Scene& _scene) = delete;
 			Scene& operator= (const Scene&& _scene) = delete;
 
 			void Start() override
 			{
-				for (auto entity : Scene::Instance()->entitiesList) {
+				for (auto entity : Scene::Instance()->m_entitiesList) {
 					entity->Start();
 				}
 			}
 
 			void Update() override
 			{
-				for (auto entity : Scene::Instance()->entitiesList) {
+				for (auto entity : Scene::Instance()->m_entitiesList) {
 					entity->Update();
 				}
 			}
 
 			void OnGUI() override
 			{
-				for (auto entity : Scene::Instance()->entitiesList) {
+				for (auto entity : Scene::Instance()->m_entitiesList) {
 					entity->OnGUI();
 				}
 			}
 
 			void OnRender() override
 			{
-				for (auto entity : Scene::Instance()->entitiesList) {
+				for (auto entity : Scene::Instance()->m_entitiesList) {
 					entity->OnRender();
 				}
 			}
 
 			void Add(Entity* _entity)
 			{
-				Scene::Instance()->entitiesList.push_back(_entity);
+				Scene::Instance()->m_entitiesList.push_back(_entity);
 			}
 
 			static Scene* Instance()
@@ -75,12 +69,18 @@ namespace TinySandbox
 				return m_instance;
 			}
 
+			static Camera* GetMainCamera()
+			{
+				return Scene::Instance()->m_mainCamera;
+			}
+
 			void InitSceneSettings();
 			static void Draw();
 			// static void ProcessInput(GLFWwindow* w) {} ;
 
 		private:
-			std::vector<Entity*> entitiesList;
+			std::vector<Entity*> m_entitiesList;
 			static Scene* m_instance; // singleton instance
+			Camera* m_mainCamera;
 	};
 }

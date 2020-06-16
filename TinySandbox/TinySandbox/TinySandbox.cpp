@@ -27,6 +27,46 @@ void ProcessInput(GLFWwindow *window)
 {
 	//if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	//	glfwSetWindowShouldClose(window, true);
+
+	TinySandbox::Camera* mainCamera = TinySandbox::Scene::GetMainCamera();
+
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		mainCamera->Phi(mainCamera->Phi() + 1);
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	{
+		mainCamera->Phi(mainCamera->Phi() - 1);
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		mainCamera->Theta(mainCamera->Theta() + 1);
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		mainCamera->Theta(mainCamera->Theta() - 1);
+	}
+
+	/*if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	{	
+		glm::vec3 position = mainCamera->Position();
+
+		mainCamera->Position(position + glm::vec3(0, 0, 1));
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	{
+		TinySandbox::Camera* mainCamera = TinySandbox::Scene::GetMainCamera();
+
+		glm::vec3 position = mainCamera->Position();
+
+		mainCamera->Position(position + glm::vec3(0, 0, -1));
+	}*/
+
+		
 }
 
 void framebuffer_size_callback(GLFWwindow* glfw_window, int width, int height)

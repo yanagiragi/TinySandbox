@@ -14,7 +14,18 @@ namespace TinySandbox
 	// ctor, Setup Scene
 	Scene::Scene()
 	{
+		m_mainCamera = new Camera();
+	}
 
+	Scene::~Scene()
+	{
+		delete m_mainCamera;
+		if (Scene::Instance() != nullptr) {
+			for (auto entity : Scene::Instance()->m_entitiesList)
+			{
+				delete entity;
+			}
+		}
 	}
 
 	void Scene::InitSceneSettings()
@@ -27,8 +38,16 @@ namespace TinySandbox
 		meshRenderer->SetMesh(mesh);
 
 		TinySandbox::Entity* testEntity = new TinySandbox::Entity("Test");
-		testEntity->Add(testComponent);
+		// testEntity->Add(testComponent);
 		testEntity->Add(meshRenderer); // implicitly cast to TinySandbox::Component
+
+		m_mainCamera->Aspect(1.33f);
+		m_mainCamera->NearPlaneDistance(0.01f);
+		m_mainCamera->FarPlaneDistance(100.0f);
+		m_mainCamera->FieldOfView(45.0f);
+		m_mainCamera->Position(glm::vec3(0, 0, 10));
+		m_mainCamera->Phi(0.0f);
+		m_mainCamera->Theta(0.0f);
 
 		Scene::Instance()->Add(testEntity);
 	}
@@ -38,10 +57,10 @@ namespace TinySandbox
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		std::cout << Scene::Instance() << std::endl;
+		// std::cout << Scene::Instance() << std::endl;
 
 		// debug code
-		Scene::Instance()->Start();
+		// Scene::Instance()->Start();
 	}
 
 	/*void Scene::ProcessInput(GLFWwindow *window)

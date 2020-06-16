@@ -173,6 +173,7 @@
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="GraphicsAPI_OpenGL.hpp" />
     <ClInclude Include="Mesh.hpp" />
+    <ClInclude Include="MeshRenderer.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="Windows.hpp" />
   </ItemGroup>
