@@ -62,6 +62,13 @@ namespace TinySandbox
 				}
 			}
 
+			void OnRender() override
+			{
+				for (auto component : components) {
+					component->OnRender();
+				}
+			}
+
 			// Only add is allowed, no other operation (e.g. delete) is provided.
 			void Add(Component* _components)
 			{

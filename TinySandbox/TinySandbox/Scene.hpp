@@ -54,6 +54,13 @@ namespace TinySandbox
 				}
 			}
 
+			void OnRender() override
+			{
+				for (auto entity : Scene::Instance()->entitiesList) {
+					entity->OnRender();
+				}
+			}
+
 			void Add(Entity* _entity)
 			{
 				Scene::Instance()->entitiesList.push_back(_entity);

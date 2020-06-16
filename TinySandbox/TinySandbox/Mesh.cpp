@@ -9,7 +9,7 @@ namespace TinySandbox
 
 	}
 
-	Mesh::Mesh(char* _filename) : filename(_filename)
+	Mesh::Mesh(const char* _filename) : filename(_filename)
 	{
 		std::string inputfile = "Resources/bunnyLow.obj";
 		tinyobj::attrib_t attrib;
@@ -73,19 +73,22 @@ namespace TinySandbox
 		}
 	}
 	
-	Mesh::Mesh(const Mesh &val)
+	/*Mesh::Mesh(const Mesh &val)
 	{
 		filename = val.filename;
-	}
+	}*/
 
-	Mesh& Mesh::operator=(const Mesh &val)
+	Mesh& Mesh::operator=(const Mesh &other)
 	{
+		filename = other.filename;
+		vertex = other.vertex;
+		normal = other.normal;
+		uv0 = other.uv0;
 		return *this;
 	}
 	
 	Mesh::~Mesh()
 	{
-		free(filename);
 		vertex.clear();
 		normal.clear();
 		uv0.clear();

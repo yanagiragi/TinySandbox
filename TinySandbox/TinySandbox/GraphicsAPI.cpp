@@ -2,4 +2,5 @@
 
 using namespace TinySandbox;
 
-GraphicsAPI_Type GraphicsAPI::type;
+GraphicsAPI* GraphicsAPI::m_api;
+GraphicsAPI_Type GraphicsAPI::m_type;

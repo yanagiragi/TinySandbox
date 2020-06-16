@@ -1,5 +1,6 @@
 // always include GraphicsAPI first, since it may contains header need to include first
-#include "GraphicsAPI.hpp"
+#include "GraphicsAPI_OpenGL.hpp"
+
 #include "GLFW_Windows.hpp"
 
 #include "Scene.hpp"
@@ -38,7 +39,12 @@ void framebuffer_size_callback(GLFWwindow* glfw_window, int width, int height)
 }
 
 int main()
-{	
+{
+	// Note: the constructor binds GrpahicsAPI::m_api to the instance
+	// The reason is there should only be one api in entire engine
+	// However we provide SetAPI() if multiple api instance exists
+	const TinySandbox::GraphicsAPI_OpenGL* apiInstance = new TinySandbox::GraphicsAPI_OpenGL();
+
 	window = new TinySandbox::GLFW_Windows(SCR_WIDTH, SCR_HEIGHT, "NSD!", NULL, NULL);
 
 	TinySandbox::Scene* mainScene = TinySandbox::Scene::Instance();
@@ -57,6 +63,7 @@ int main()
 
 	// cleanup resources
 	delete window;
+	delete apiInstance;
 
 	return 0;
 }

@@ -20,11 +20,15 @@ namespace TinySandbox
 	void Scene::InitSceneSettings()
 	{
 		TinySandbox::Component* testComponent = new TinySandbox::TestComponent();
-		TinySandbox::Component* meshRenderer = new TinySandbox::MeshRenderer();
+		TinySandbox::MeshRenderer* meshRenderer = new TinySandbox::MeshRenderer();
+
+		// setup meshes
+		TinySandbox::Mesh mesh("../Resources/bunnyLow.obj");
+		meshRenderer->SetMesh(mesh);
 
 		TinySandbox::Entity* testEntity = new TinySandbox::Entity("Test");
 		testEntity->Add(testComponent);
-		testEntity->Add(meshRenderer);
+		testEntity->Add(meshRenderer); // implicitly cast to TinySandbox::Component
 
 		Scene::Instance()->Add(testEntity);
 	}
@@ -36,6 +40,7 @@ namespace TinySandbox
 
 		std::cout << Scene::Instance() << std::endl;
 
+		// debug code
 		Scene::Instance()->Start();
 	}
 
