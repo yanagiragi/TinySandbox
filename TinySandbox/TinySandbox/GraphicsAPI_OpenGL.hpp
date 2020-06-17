@@ -27,6 +27,22 @@ namespace TinySandbox
 		void EnableVertexArrayAttribute(unsigned int _VAOid) override;
 		void DisableVertexArrayAttribute(unsigned int _VAOid) override;
 		void SetVertexArray(unsigned int _VAOid, unsigned int _size, GraphicsAPI_DataType _type, GraphicsAPI_DataType _normalized, unsigned int _stride, const void* ptr) override;
+		unsigned int CompileShader(std::string _vertexShaderSource, std::string _geometryShaderSource, std::string _fragmentShaderSouce) override;
+		void BindProgram(unsigned int _program) override;
+		void UnbindProgram() override;
+
+		void SetBool(unsigned int _program, const std::string &name, bool value) const override;
+		void SetInt(unsigned int _program, const std::string &name, int value) const override;
+		void SetFloat(unsigned int _program, const std::string &name, float value) const override;
+		void SetVec2(unsigned int _program, const std::string &name, const glm::vec2 &value) const override;
+		void SetVec2(unsigned int _program, const std::string &name, float x, float y) const override;
+		void SetVec3(unsigned int _program, const std::string &name, const glm::vec3 &value) const override;
+		void SetVec3(unsigned int _program, const std::string &name, float x, float y, float z) const override;
+		void SetVec4(unsigned int _program, const std::string &name, const glm::vec4 &value) const override;
+		void SetVec4(unsigned int _program, const std::string &name, float x, float y, float z, float w) const override;
+		void SetMat2(unsigned int _program, const std::string &name, const glm::mat2 &mat) const override;
+		void SetMat3(unsigned int _program, const std::string &name, const glm::mat3 &mat) const override;
+		void SetMat4(unsigned int _program, const std::string &name, const glm::mat4 &mat) const override;
 
 	};
 }

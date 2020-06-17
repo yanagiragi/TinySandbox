@@ -10,6 +10,7 @@
 #include "GLFW_Windows.hpp"
 
 #include "includes/glmathematics/gtc/type_ptr.hpp" //value_ptr
+#include "NormalDebugMaterial.hpp"
 
 using namespace TinySandbox;
 
@@ -65,8 +66,6 @@ void renderQuad()
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 }
-
-
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
@@ -207,114 +206,33 @@ void MeshRenderer::OnRender()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-
-	const char *vertexShaderSource = "#version 330 core\n"
-		"layout (location = 0) in vec3 aPos;\n"
-		"layout (location = 1) in vec3 aNor;\n"
-		"layout (location = 2) in vec2 aTex;\n"
-		"uniform mat4 M;\n"
-		"uniform mat4 V;\n"
-		"uniform mat4 P;\n"
-		"void main()\n"
-		"{\n"
-		"   //gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-		"gl_Position = P * V * M * vec4(aPos, 1.0);\n"
-		"}\0";
-
-	unsigned int vertexShader;
-	vertexShader = glCreateShader(GL_VERTEX_SHADER);
-
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-
-	const char* fragmentShaderSource = "#version 330 core\n"
-		"out vec4 FragColor;\n"
-		"void main()\n"
-		"{\n"
-		"FragColor = vec4(0.5f, 0.5f, 0.2f, 1.0f);\n"
-		"}\0";
-
-	unsigned int fragmentShader;
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-
-	unsigned int shaderProgram;
-	shaderProgram = glCreateProgram();
-
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-
-	
-	
-	// const glm::mat4 viewMatrix = glm::mat4(glm::vec4(1, 0, 0, 0), glm::vec4(0, 1, 0, 0), glm::vec4(0, 0, 1, 0), glm::vec4(0.0, 0.0, Scene::GetMainCamera()->Theta(), 1.0));
+	const glm::mat4 viewMatrix = Scene::GetMainCamera()->ViewMatrix();
 	const glm::mat4 projectionMatrix = Scene::GetMainCamera()->ProjectionMatrix();
 
-	glUseProgram(shaderProgram);
+	Material* mat = new NormalDebugMaterial("Shaders/normalDebug.vert", "Shaders/normalDebug.frag");
 
-	
-	// settings
-	const unsigned int SCR_WIDTH = 800;
-	const unsigned int SCR_HEIGHT = 600;
-
-	// camera
-	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f) + Scene::GetMainCamera()->Theta() * 0.01f;
-	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-
-	bool firstMouse = true;
-	float yaw = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
-	float pitch = 0.0f;
-	float lastX = 800.0f / 2.0;
-	float lastY = 600.0 / 2.0;
-	float fov = 45.0f;
-
-	// pass projection matrix to shader (note that in this case it could change every frame)
-	glm::mat4 projection = glm::perspective(glm::radians(fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-	//ourShader.setMat4("projection", projection);
-
-	glm::vec3 direction;
-	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	direction.y = sin(glm::radians(pitch));
-	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	cameraFront = glm::normalize(direction);
-
-	// camera/view transformation
-	glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-	//ourShader.setMat4("view", view);
-
-	const glm::mat4 viewMatrix = Scene::GetMainCamera()->ViewMatrix();
-
-	view = viewMatrix;
-
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "V"), 1, GL_FALSE, &view[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "P"), 1, GL_FALSE, &projection[0][0]);
+	mat->Use();
+	mat->SetMat4("V", viewMatrix);
+	mat->SetMat4("P", projectionMatrix);
+	mat->SetFloat("time", time);
 
 	// render boxes
 	glBindVertexArray(VAO);
-	for (unsigned int i = 0; i < 10; i++)
+	for (unsigned int i = 1; i < 10; i++)
 	{
 		// calculate the model matrix for each object and pass it to shader before drawing
 		glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-		
-		/*model = glm::translate(model, cubePositions[i]);
+		model = glm::translate(model, cubePositions[i]);
 		float angle = 20.0f * i;
-		model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));*/
+		model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 
-		GLuint a = glGetUniformLocation(shaderProgram, "M");
-		glUniformMatrix4fv(a, 1, GL_FALSE, &model[0][0]);
-		//ourShader.setMat4("model", model);
+		mat->SetMat4("M", model);
 
-		// glDrawArrays(GL_TRIANGLES, 0, 36);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 
-	glDisable(GL_CULL_FACE);
-
-	glm::mat4 model = glm::mat4(1.0f);
-	GLuint a = glGetUniformLocation(shaderProgram, "M");
-	glUniformMatrix4fv(a, 1, GL_FALSE, &model[0][0]);
-
+	mat->SetMat4("M", glm::mat4(1.0f));
+	
 	API->BindVertexArray(m_VAO);
 	glDrawArrays(GL_TRIANGLES, 0, m_mesh.vertex.size());
 	API->UnbindVertexArray();
@@ -323,6 +241,4 @@ void MeshRenderer::OnRender()
 
 	
 	// printf("Time = %f\n", time);
-
-	
 }

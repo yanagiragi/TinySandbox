@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "Mesh.hpp"
 
 namespace TinySandbox
@@ -114,6 +115,26 @@ namespace TinySandbox
 			virtual void DisableVertexArrayAttribute(unsigned int _VAOid) = 0;
 
 			virtual void SetVertexArray(unsigned int _VAOid, unsigned int _size, GraphicsAPI_DataType _type, GraphicsAPI_DataType _normalized, unsigned int _stride, const void* ptr) = 0;
+
+			virtual unsigned int CompileShader(std::string _vertexShaderSource, std::string _geometryShaderSource, std::string _fragmentShaderSouce) = 0;
+
+			virtual void BindProgram(unsigned int _program) = 0;
+			virtual void UnbindProgram() = 0;
+
+			// Set Uniforms
+			virtual void SetBool(unsigned int _program, const std::string &name, bool value) const = 0;
+			virtual void SetInt(unsigned int _program, const std::string &name, int value) const = 0;
+			virtual void SetFloat(unsigned int _program, const std::string &name, float value) const = 0;
+			virtual void SetVec2(unsigned int _program, const std::string &name, const glm::vec2 &value) const = 0;
+			virtual void SetVec2(unsigned int _program, const std::string &name, float x, float y) const = 0;
+			virtual void SetVec3(unsigned int _program, const std::string &name, const glm::vec3 &value) const = 0;
+			virtual void SetVec3(unsigned int _program, const std::string &name, float x, float y, float z) const = 0;
+			virtual void SetVec4(unsigned int _program, const std::string &name, const glm::vec4 &value) const = 0;
+			virtual void SetVec4(unsigned int _program, const std::string &name, float x, float y, float z, float w) const = 0;
+			virtual void SetMat2(unsigned int _program, const std::string &name, const glm::mat2 &mat) const = 0;
+			virtual void SetMat3(unsigned int _program, const std::string &name, const glm::mat3 &mat) const = 0;
+			virtual void SetMat4(unsigned int _program, const std::string &name, const glm::mat4 &mat) const = 0;
+
 			
 		private:
             static GraphicsAPI_Type m_type;

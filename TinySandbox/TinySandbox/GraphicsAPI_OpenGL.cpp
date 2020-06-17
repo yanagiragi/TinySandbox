@@ -1,5 +1,8 @@
 #include "GraphicsAPI_OpenGL.hpp"
+
 #include <assert.h>
+#include <functional>
+
 #include <glad/glad.h>
 
 using namespace TinySandbox;
@@ -256,4 +259,207 @@ void GraphicsAPI_OpenGL::SetupVAO(unsigned int* _VAO, Mesh* _mesh, GraphicsAPI_D
 	UnbindBuffer(GraphicsAPI_DataType::ARRAY_BUFFER);
 
 	delete[] VBO;
+}
+
+unsigned int GraphicsAPI_OpenGL::CompileShader(std::string _vertexShaderSource, std::string _geometryShaderSource, std::string _fragmentShaderSouce)
+{
+	auto ReadFile = [](const char* filename) -> char* {
+		FILE *fp = fopen(filename, "rb");
+		fseek(fp, 0, SEEK_END);
+		long fsize = ftell(fp);
+		fseek(fp, 0, SEEK_SET);  //same as rewind(fp);
+
+		char* buffer = (char *)malloc(sizeof(char) * (fsize + 1));
+		fread(buffer, fsize, 1, fp);
+		fclose(fp);
+
+		buffer[fsize] = 0;
+
+		return buffer;
+	};
+
+	auto CreateShader_Impl = [](const char *source, const char *type) -> GLuint {
+		
+		GLuint shader;
+		
+		/* GLuint glCreateShader( GLenum shaderType ); */
+		if (0 == strcmp(type, "vertex")) {			
+			shader = glCreateShader(GL_VERTEX_SHADER);
+		}
+		else if (0 == strcmp(type, "fragment")) {
+			shader = glCreateShader(GL_FRAGMENT_SHADER);
+		}
+		else if (0 == strcmp(type, "geometry")) {
+			shader = glCreateShader(GL_GEOMETRY_SHADER);
+		}
+		else {
+			puts("Error: Unknown type of shader.");
+			return -1;
+		}
+
+		glShaderSource(shader, 1, (const GLchar **)&source, 0);
+
+		glCompileShader(shader);
+		GLint isCompiled = 0;
+
+		glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
+		if (isCompiled == GL_FALSE)
+		{
+			GLint maxLength = 0;
+			glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+
+			//The maxLength includes the NULL character
+			char *infoLog = (char *)malloc(sizeof(char) * (maxLength));
+			glGetShaderInfoLog(shader, maxLength, &maxLength, infoLog);
+
+			//We don't need the shader anymore.
+			glDeleteShader(shader);
+
+			//Use the infoLog as you see fit.
+			puts(infoLog);
+			free(infoLog);
+
+			//In this simple program, we'll just leave
+			return -1;
+		}
+
+		return shader;
+	};
+
+	auto CreateShader = [&ReadFile, &CreateShader_Impl](const char *filename, const char *type) -> GLuint {
+		char *source = ReadFile(filename);
+
+		GLuint returnShader = CreateShader_Impl(source, type);
+
+		// free allocated memory
+		free(source);
+
+		return returnShader;
+	};
+
+	auto CreateProgram = [](GLuint vert, GLuint frag, GLuint geom = -1) -> GLuint {
+		
+		GLuint program = glCreateProgram();
+
+		//Attach our shaders to our program
+		glAttachShader(program, vert);
+		glAttachShader(program, frag);
+		if (geom != -1) {
+			glAttachShader(program, geom);
+		}
+
+		//Link our program
+		glLinkProgram(program);
+
+		//Note the different functions here: glGetProgram* instead of glGetShader*.
+		GLint isLinked = 0;
+		glGetProgramiv(program, GL_LINK_STATUS, &isLinked);
+
+		if (isLinked == GL_FALSE)
+		{
+			GLint maxLength = 0;
+			glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
+
+			//The maxLength includes the NULL character
+			char *infoLog = (char *)malloc(sizeof(char) * (maxLength));
+			glGetProgramInfoLog(program, maxLength, &maxLength, infoLog);
+
+			//We don't need the program anymore.
+			glDeleteProgram(program);
+			//Don't leak shaders either.
+			glDeleteShader(vert);
+			glDeleteShader(frag);
+
+			//Use the infoLog as you see fit.
+			puts(infoLog);
+			free(infoLog);
+
+			//In this simple program, we'll just leave
+			return -1;
+		}
+
+		//Always detach shaders after a successful link.
+		glDetachShader(program, vert);
+		glDetachShader(program, frag);
+		if (geom != -1) {
+			glDetachShader(program, geom);
+		}
+
+		return program;
+	};
+
+	GLuint Vert = CreateShader(_vertexShaderSource.c_str(), "vertex");
+	GLuint Geom = (_geometryShaderSource != "") ? CreateShader(_geometryShaderSource.c_str(), "geometry") : -1;
+	GLuint Frag = CreateShader(_fragmentShaderSouce.c_str(), "fragment");	
+	GLuint program = CreateProgram(Vert, Frag, Geom);
+
+	return static_cast<unsigned int>(program);
+}
+
+void GraphicsAPI_OpenGL::BindProgram(unsigned int _program)
+{
+	glUseProgram(_program);
+}
+
+void GraphicsAPI_OpenGL::UnbindProgram()
+{
+	glUseProgram(NULL);
+}
+
+void GraphicsAPI_OpenGL::SetBool(unsigned int _program, const std::string &name, bool value) const
+{
+	glUniform1i(glGetUniformLocation(_program, name.c_str()), (int)value);
+}
+
+void GraphicsAPI_OpenGL::SetInt(unsigned int _program, const std::string &name, int value) const
+{
+	glUniform1i(glGetUniformLocation(_program, name.c_str()), value);
+}
+
+void GraphicsAPI_OpenGL::SetFloat(unsigned int _program, const std::string &name, float value) const
+{
+	glUniform1f(glGetUniformLocation(_program, name.c_str()), value);
+}
+
+void GraphicsAPI_OpenGL::SetVec2(unsigned int _program, const std::string &name, const glm::vec2 &value) const
+{
+	glUniform2fv(glGetUniformLocation(_program, name.c_str()), 1, &value[0]);
+}
+void GraphicsAPI_OpenGL::SetVec2(unsigned int _program, const std::string &name, float x, float y) const
+{
+	glUniform2f(glGetUniformLocation(_program, name.c_str()), x, y);
+}
+
+void GraphicsAPI_OpenGL::SetVec3(unsigned int _program, const std::string &name, const glm::vec3 &value) const
+{
+	glUniform3fv(glGetUniformLocation(_program, name.c_str()), 1, &value[0]);
+}
+void GraphicsAPI_OpenGL::SetVec3(unsigned int _program, const std::string &name, float x, float y, float z) const
+{
+	glUniform3f(glGetUniformLocation(_program, name.c_str()), x, y, z);
+}
+
+void GraphicsAPI_OpenGL::SetVec4(unsigned int _program, const std::string &name, const glm::vec4 &value) const
+{
+	glUniform4fv(glGetUniformLocation(_program, name.c_str()), 1, &value[0]);
+}
+
+void GraphicsAPI_OpenGL::SetVec4(unsigned int _program, const std::string &name, float x, float y, float z, float w) const
+{
+	glUniform4f(glGetUniformLocation(_program, name.c_str()), x, y, z, w);
+}
+
+void GraphicsAPI_OpenGL::SetMat2(unsigned int _program, const std::string &name, const glm::mat2 &mat) const
+{
+	glUniformMatrix2fv(glGetUniformLocation(_program, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}
+
+void GraphicsAPI_OpenGL::SetMat3(unsigned int _program, const std::string &name, const glm::mat3 &mat) const
+{
+	glUniformMatrix3fv(glGetUniformLocation(_program, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}
+
+void GraphicsAPI_OpenGL::SetMat4(unsigned int _program, const std::string &name, const glm::mat4 &mat) const
+{
+	glUniformMatrix4fv(glGetUniformLocation(_program, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 }

@@ -83,5 +83,11 @@
     <ClInclude Include="MeshRenderer.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Material.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalDebugMaterial.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
