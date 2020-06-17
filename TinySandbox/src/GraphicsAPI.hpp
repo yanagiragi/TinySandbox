@@ -29,6 +29,35 @@ namespace TinySandbox
 		TRUE,
 		FALSE,
 
+		// Depth Func
+		NEVER,
+		LESS,
+		EQUAL,
+		LEQUAL,
+		GREATER,
+		NOTEQUAL,
+		GEQUAL,
+		ALWAYS,
+
+		// Culling Face
+		FRONT,
+		BACK,
+		FRONT_AND_BACK,
+
+		// Primitive Types
+		POINTS,
+		LINE_STRIP,
+		LINE_LOOP,
+		LINES,
+		LINE_STRIP_ADJACENCY,
+		LINES_ADJACENCY,
+		TRIANGLE_STRIP,
+		TRIANGLE_FAN,
+		TRIANGLES,
+		TRIANGLE_STRIP_ADJACENCY,
+		TRIANGLES_ADJACENCY,
+		PATCHES,
+
 		// others
 		ARRAY_BUFFER,
 		ATOMIC_COUNTER_BUFFER,
@@ -146,7 +175,7 @@ namespace TinySandbox
 			
 			virtual void EnableStencilTest() const = 0;
 			virtual void DisableStencilTest() const = 0;
-			virtual void SetStencilMask(GraphicsAPI_DataType _type) const = 0;
+			virtual void SetStencilMask(unsigned int _mask) const = 0;
 
 			virtual void EnableBlending() const = 0;
 			virtual void DisableBlending() const = 0;
@@ -155,6 +184,8 @@ namespace TinySandbox
 			virtual void EnableCulling() const = 0;
 			virtual void DisableCulling() const = 0;
 			virtual void SetCullingMode(GraphicsAPI_DataType _type) const = 0;
+
+			virtual void DrawArrays(GraphicsAPI_DataType _type, unsigned int count, int _first = 0) const = 0;
 			
 		private:
             static GraphicsAPI_Type m_type;

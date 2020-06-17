@@ -1,8 +1,15 @@
 #pragma once
 
-#include "Component.hpp"
+//#include "Component.hpp"
+#include "Transform.hpp"
 
 #include <vector>
+
+// use Forward Declaration to avoid Circular Dependency
+// Reference: https://stackoverflow.com/questions/7665912/double-include-solution
+namespace TinySandbox {
+	class Component;
+}
 
 namespace TinySandbox
 {
@@ -11,30 +18,37 @@ namespace TinySandbox
 		public:
 			
 			// ctor
-			Entity(const char* _name) : name(_name)
+			Entity(const char* _name) : m_name(_name)
 			{
-			
+				m_transform = new Transform();
 			}
 		
 			// dtor
 			~Entity()
 			{
-				for (auto component : components) {
+				if (m_transform) {
+					delete m_transform;
+				}
+
+				for (auto component : m_components) {
 					delete component;
 				}
-				components.clear();
+				m_components.clear();
 			}
 
 			// Copy constructor
 			Entity(const Entity& other)
 			{
-				std::copy(std::begin(other.components), std::end(other.components), std::back_inserter(components));
+				std::copy(std::begin(other.m_components), std::end(other.m_components), std::back_inserter(m_components));
+				m_transform = new Transform(other.m_transform);
 			};
 
 			// Move constructor
 			Entity(Entity&& other)
 			{
-				std::move(std::begin(other.components), std::end(other.components), std::back_inserter(components));
+				std::move(std::begin(other.m_components), std::end(other.m_components), std::back_inserter(m_components));
+				m_transform = other.m_transform;
+				other.m_transform = nullptr;
 			};
 
 			// Assignment Operators
@@ -43,28 +57,28 @@ namespace TinySandbox
 
 			void Start() override
 			{
-				for (auto component : components) {
+				for (auto component : m_components) {
 					component->Start();
 				}
 			}
 
 			void Update() override
 			{
-				for (auto component : components) {
+				for (auto component : m_components) {
 					component->Update();
 				}
 			}
 
 			void OnGUI() override
 			{
-				for (auto component : components) {
+				for (auto component : m_components) {
 					component->OnGUI();
 				}
 			}
 
 			void OnRender() override
 			{
-				for (auto component : components) {
+				for (auto component : m_components) {
 					component->OnRender();
 				}
 			}
@@ -72,11 +86,18 @@ namespace TinySandbox
 			// Only add is allowed, no other operation (e.g. delete) is provided.
 			void Add(Component* _components)
 			{
-				components.push_back(_components);
+				m_components.push_back(_components);
+				_components->SetEntity(this); // bind this to component
+			}
+
+			Transform* GetTransform() const
+			{
+				return m_transform;
 			}
 
 		 private:
-			 const char* name;
-			std::vector<Component*> components;
+			const char* m_name;
+			std::vector<Component*> m_components;
+			Transform* m_transform;
 	};
 }

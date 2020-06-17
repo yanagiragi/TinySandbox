@@ -54,6 +54,12 @@
     <ClInclude Include="MeshRenderer.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Transform.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GLFW_Windows.cpp">

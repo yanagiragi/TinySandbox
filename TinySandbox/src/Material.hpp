@@ -3,20 +3,26 @@
 #include "GraphicsAPI.hpp"
 #include "Component.hpp"
 #include "Scene.hpp"
+//#include "Renderer.hpp"
 
 #include <string>
 
 namespace TinySandbox
 {
+	class Renderer;
+
 	class Material : public Component
 	{
 		public:
 
 			Material(const char* _vertexShaderSource, const char* _geometryShaderSource, const char* _fragmentShaderSouce) 
-				: m_vertexShaderSource(_vertexShaderSource), m_geometryShaderSource(_geometryShaderSource), m_fragmentShaderSource(_fragmentShaderSouce)
+				: m_vertexShaderSource(_vertexShaderSource), 
+				m_geometryShaderSource(_geometryShaderSource), 
+				m_fragmentShaderSource(_fragmentShaderSouce), 
+				m_renderer(nullptr)
 			{
+				m_API = GraphicsAPI::GetAPI();				
 				this->Compile();
-				m_API = GraphicsAPI::GetAPI();
 			}
 
 			void Start() override {}
@@ -104,9 +110,10 @@ namespace TinySandbox
 			std::string m_vertexShaderSource = "";
 			std::string m_geometryShaderSource = "";
 			std::string m_fragmentShaderSource = "";
-		
+
 		protected:
 
+			Renderer* m_renderer;
 			unsigned int m_program;
 			GraphicsAPI* m_API;
 	};

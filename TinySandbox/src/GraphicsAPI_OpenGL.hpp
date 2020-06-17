@@ -55,7 +55,7 @@ namespace TinySandbox
 
 		void EnableStencilTest() const override;
 		void DisableStencilTest() const override;
-		void SetStencilMask(GraphicsAPI_DataType _type) const override;
+		void SetStencilMask(unsigned int _mask) const override;
 		
 		// TODO: https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glStencilFunc.xml
 		// TODO: https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glStencilOp.xml
@@ -67,6 +67,8 @@ namespace TinySandbox
 		void EnableCulling() const override;
 		void DisableCulling() const override;
 		void SetCullingMode(GraphicsAPI_DataType _type) const override;
+
+		void DrawArrays(GraphicsAPI_DataType _type, unsigned int _count, int _first = 0) const override;
 
 	};
 }

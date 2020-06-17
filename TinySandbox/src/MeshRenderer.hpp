@@ -2,14 +2,15 @@
 
 #include "GraphicsAPI.hpp"
 
-#include "Component.hpp"
+#include "Renderer.hpp"
 #include "Mesh.hpp"
+#include "Material.hpp"
 
 #include "GLFW_Windows.hpp"
 
 namespace TinySandbox
 {
-	class MeshRenderer : public Component
+	class MeshRenderer : public Renderer
 	{
 		public:
 
@@ -49,6 +50,8 @@ namespace TinySandbox
 			void OnGUI() override;
 
 			void OnRender() override;
+
+			void SetEntity(Entity* _entity) override;
 
 		private:
 			Mesh m_mesh;

@@ -39,7 +39,6 @@ int GraphicsAPI_OpenGL::GetType(GraphicsAPI_DataType _dataType) const
 
 		case GraphicsAPI_DataType::DOUBLE:
 			type = GL_DOUBLE; break;
-
 		
 		case GraphicsAPI_DataType::TRUE:
 			type = GL_TRUE; break;
@@ -88,6 +87,75 @@ int GraphicsAPI_OpenGL::GetType(GraphicsAPI_DataType _dataType) const
 
 		case GraphicsAPI_DataType::DYNAMIC_COPY:
 			type = GL_DYNAMIC_COPY; break;
+
+		case GraphicsAPI_DataType::NEVER:
+			type = GL_NEVER; break;
+
+		case GraphicsAPI_DataType::LESS:
+			type = GL_LESS; break;
+
+		case GraphicsAPI_DataType::EQUAL:
+			type = GL_EQUAL; break;
+
+		case GraphicsAPI_DataType::LEQUAL:
+			type = GL_LEQUAL; break;
+
+		case GraphicsAPI_DataType::GREATER:
+			type = GL_GREATER; break;
+
+		case GraphicsAPI_DataType::NOTEQUAL:
+			type = GL_NOTEQUAL; break;
+
+		case GraphicsAPI_DataType::GEQUAL:
+			type = GL_GEQUAL; break;
+
+		case GraphicsAPI_DataType::ALWAYS:
+			type = GL_ALWAYS; break;
+
+		case GraphicsAPI_DataType::FRONT:
+			type = GL_FRONT; break;
+
+		case GraphicsAPI_DataType::BACK:
+			type = GL_BACK; break;
+
+		case GraphicsAPI_DataType::FRONT_AND_BACK:
+			type = GL_FRONT_AND_BACK; break;
+
+		case GraphicsAPI_DataType::POINTS:
+			type = GL_POINTS; break;
+
+		case GraphicsAPI_DataType::LINE_STRIP:
+			type = GL_LINE_STRIP; break;
+
+		case GraphicsAPI_DataType::LINE_LOOP:
+			type = GL_LINE_LOOP; break;
+
+		case GraphicsAPI_DataType::LINES:
+			type = GL_LINES; break;
+
+		case GraphicsAPI_DataType::LINE_STRIP_ADJACENCY:
+			type = GL_LINE_STRIP_ADJACENCY; break;
+
+		case GraphicsAPI_DataType::LINES_ADJACENCY:
+			type = GL_LINES_ADJACENCY; break;
+
+		case GraphicsAPI_DataType::TRIANGLE_STRIP:
+			type = GL_TRIANGLE_STRIP; break;
+
+		case GraphicsAPI_DataType::TRIANGLE_FAN:
+			type = GL_TRIANGLE_FAN; break;
+
+		case GraphicsAPI_DataType::TRIANGLES:
+			type = GL_TRIANGLES; break;
+
+		case GraphicsAPI_DataType::TRIANGLE_STRIP_ADJACENCY:
+			type = GL_TRIANGLE_STRIP_ADJACENCY; break;
+
+		case GraphicsAPI_DataType::TRIANGLES_ADJACENCY:
+			type = GL_TRIANGLES_ADJACENCY; break;
+
+		case GraphicsAPI_DataType::PATCHES:
+			type = GL_PATCHES; break;
 
 		/* OpenGL 4.4 Contexts */
 
@@ -515,9 +583,9 @@ void GraphicsAPI_OpenGL::DisableStencilTest() const
 	glDisable(GL_STENCIL_TEST);
 }
 
-void GraphicsAPI_OpenGL::SetStencilMask(GraphicsAPI_DataType _type) const 
+void GraphicsAPI_OpenGL::SetStencilMask(unsigned int _mask) const 
 {
-	const GLuint mask = static_cast<GLuint>(this->GetType(_type));
+	const GLuint mask = static_cast<GLuint>(_mask);
 
 	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glDepthMask.xml
 	glStencilMask(mask);
@@ -558,4 +626,15 @@ void GraphicsAPI_OpenGL::SetCullingMode(GraphicsAPI_DataType _type) const
 
 	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glCullFace.xhtml
 	glCullFace(mode);
+}
+
+// Syntactic sugar: set first default to 0 
+void GraphicsAPI_OpenGL::DrawArrays(GraphicsAPI_DataType _type, unsigned int _count, int _first) const
+{
+	const GLenum mode = static_cast<GLenum>(this->GetType(_type));
+	const GLint first = static_cast<GLint>(_first);
+	const GLsizei count = static_cast<GLsizei>(_count);
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawArrays.xhtml
+	glDrawArrays(mode, first, count);
 }

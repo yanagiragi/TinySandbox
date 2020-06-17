@@ -29,8 +29,10 @@
     <ClInclude Include="Mesh.hpp" />
     <ClInclude Include="MeshRenderer.hpp" />
     <ClInclude Include="NormalDebugMaterial.hpp" />
+    <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="TestComponent.hpp" />
+    <ClInclude Include="Transform.hpp" />
     <ClInclude Include="Windows.hpp" />
   </ItemGroup>
   <ItemGroup>

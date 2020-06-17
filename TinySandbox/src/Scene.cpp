@@ -1,10 +1,9 @@
 #include "Scene.hpp"
 
-#include "TestComponent.hpp"
-
 #include "GLFW_Windows.hpp"
-
 #include "MeshRenderer.hpp"
+
+#include "NormalDebugMaterial.hpp"
 
 // initialize static member
 TinySandbox::Scene* TinySandbox::Scene::m_instance = nullptr;
@@ -35,8 +34,9 @@ namespace TinySandbox
 		API->EnableDepthTest();
 		
 		/***** Setup Scene Entity & Setting *****/
-		TinySandbox::Component* testComponent = new TinySandbox::TestComponent();
+		//TinySandbox::Component* testComponent = new TinySandbox::TestComponent();
 		TinySandbox::MeshRenderer* meshRenderer = new TinySandbox::MeshRenderer();
+		meshRenderer->SetMaterial(new NormalDebugMaterial(meshRenderer));
 
 		// setup meshes
 		TinySandbox::Mesh mesh("../Resources/monkey.obj");
@@ -44,7 +44,10 @@ namespace TinySandbox
 
 		TinySandbox::Entity* testEntity = new TinySandbox::Entity("Test");
 		testEntity->Add(meshRenderer); // implicitly cast to TinySandbox::Component
-
+		
+		Transform* testTransform = testEntity->GetTransform();
+		testTransform->Rotation(glm::vec3(-90.0f, 0.0f, 90.0f));
+		
 		m_mainCamera->Aspect(1.33f);
 		m_mainCamera->NearPlaneDistance(0.01f);
 		m_mainCamera->FarPlaneDistance(100.0f);
