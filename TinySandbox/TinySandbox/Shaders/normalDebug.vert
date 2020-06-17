@@ -1,15 +1,19 @@
 #version 330 core
 
-layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec3 aNor;
-layout (location = 2) in vec2 aTex;
+layout (location = 0) in vec3 a_Position;
+layout (location = 1) in vec3 a_Normal;
+layout (location = 2) in vec2 a_TexCoord;
 
-uniform mat4 M;
-uniform mat4 V;
-uniform mat4 P;
+uniform mat4 u_Model;
+uniform mat4 u_View;
+uniform mat4 u_Projection;
+
+out vec3 _worldNormal;
 
 void main()
 {
-    //gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
-    gl_Position = P * V * M * vec4(aPos, 1.0);
+    mat4 normalMatrix = transpose(inverse(u_Model));
+	_worldNormal = normalize((normalMatrix * vec4(a_Normal, 1)).xyz); // this is correct , don't use raw normal or MV * normal
+
+    gl_Position = u_Projection * u_View * u_Model * vec4(a_Position, 1.0);
 }

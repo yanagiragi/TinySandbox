@@ -230,10 +230,10 @@ void GraphicsAPI_OpenGL::SetupVAO(unsigned int* _VAO, Mesh* _mesh, GraphicsAPI_D
 	SetBuffers(GraphicsAPI_DataType::ARRAY_BUFFER, vec3Size * _mesh->vertex.size(), _mesh->vertex.data(), _type);
 
 	BindBuffer(GraphicsAPI_DataType::ARRAY_BUFFER, VBO[1]);
-	SetBuffers(GraphicsAPI_DataType::ARRAY_BUFFER, vec3Size * _mesh->vertex.size(), _mesh->normal.data(), _type);
+	SetBuffers(GraphicsAPI_DataType::ARRAY_BUFFER, vec3Size * _mesh->normal.size(), _mesh->normal.data(), _type);
 
 	BindBuffer(GraphicsAPI_DataType::ARRAY_BUFFER, VBO[2]);
-	SetBuffers(GraphicsAPI_DataType::ARRAY_BUFFER, vec2Size * _mesh->vertex.size(), _mesh->uv0.data(), _type);
+	SetBuffers(GraphicsAPI_DataType::ARRAY_BUFFER, vec2Size * _mesh->uv0.size(), _mesh->uv0.data(), _type);
 
 	// Bind VBO to VAO
 	GenerateVertexArrays(_VAO, 1);
