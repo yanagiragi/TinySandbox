@@ -74,7 +74,7 @@ namespace TinySandbox
 				return Scene::Instance()->m_mainCamera;
 			}
 
-			void InitSceneSettings();
+			virtual void InitSceneSettings();
 			static void Draw();
 			// static void ProcessInput(GLFWwindow* w) {} ;
 

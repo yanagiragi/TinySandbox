@@ -94,7 +94,7 @@ namespace TinySandbox
 			// i.e., virtual void BindTextures(Texture, uint_32t);
 
 			// Maps GraphicsAPI_DataType to actual MACRO type
-			virtual int GetType(GraphicsAPI_DataType _type) = 0;
+			virtual int GetType(GraphicsAPI_DataType _type) const = 0;
 
 			virtual void GenerateBuffers(unsigned int* _ids, int _length) = 0;
 			virtual void BindBuffer(GraphicsAPI_DataType _type, unsigned int _id) = 0;
@@ -135,6 +135,26 @@ namespace TinySandbox
 			virtual void SetMat3(unsigned int _program, const std::string &name, const glm::mat3 &mat) const = 0;
 			virtual void SetMat4(unsigned int _program, const std::string &name, const glm::mat4 &mat) const = 0;
 
+			virtual void ClearScreenColor() const = 0;
+			virtual void ClearScreenDepth() const = 0;
+			virtual void ClearScreenScreen() const = 0;
+
+			virtual void EnableDepthTest() const = 0;
+			virtual void DisableDepthTest() const = 0;
+			virtual void SetDepthMask(GraphicsAPI_DataType _type) const = 0;
+			virtual void SetDepthTestMode(GraphicsAPI_DataType _type) const = 0;
+			
+			virtual void EnableStencilTest() const = 0;
+			virtual void DisableStencilTest() const = 0;
+			virtual void SetStencilMask(GraphicsAPI_DataType _type) const = 0;
+
+			virtual void EnableBlending() const = 0;
+			virtual void DisableBlending() const = 0;
+			virtual void SetBlendingMode(GraphicsAPI_DataType _type, GraphicsAPI_DataType _additionalType) const = 0;
+
+			virtual void EnableCulling() const = 0;
+			virtual void DisableCulling() const = 0;
+			virtual void SetCullingMode(GraphicsAPI_DataType _type) const = 0;
 			
 		private:
             static GraphicsAPI_Type m_type;

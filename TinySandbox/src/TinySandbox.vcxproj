@@ -18,6 +18,32 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="Component.hpp" />
+    <ClInclude Include="Entity.hpp" />
+    <ClInclude Include="GLFW_Windows.hpp" />
+    <ClInclude Include="GraphicsAPI.hpp" />
+    <ClInclude Include="GraphicsAPI_OpenGL.hpp" />
+    <ClInclude Include="Material.hpp" />
+    <ClInclude Include="Mesh.hpp" />
+    <ClInclude Include="MeshRenderer.hpp" />
+    <ClInclude Include="NormalDebugMaterial.hpp" />
+    <ClInclude Include="Scene.hpp" />
+    <ClInclude Include="TestComponent.hpp" />
+    <ClInclude Include="Windows.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\includes\glad.c" />
+    <ClCompile Include="..\includes\TinyObjLoader\tiny_obj_loader.cc" />
+    <ClCompile Include="GLFW_Windows.cpp" />
+    <ClCompile Include="GraphicsAPI.cpp" />
+    <ClCompile Include="GraphicsAPI_OpenGL.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshRenderer.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="TinySandbox.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{9C2321EB-D823-4342-9B55-AEFFFD3B322C}</ProjectGuid>
@@ -75,8 +101,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>includes;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>libs;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <IncludePath>../includes;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>../libs;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -154,31 +180,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="glad.c" />
-    <ClCompile Include="GLFW_Windows.cpp" />
-    <ClCompile Include="GraphicsAPI.cpp" />
-    <ClCompile Include="GraphicsAPI_OpenGL.cpp" />
-    <ClCompile Include="includes\TinyObjLoader\tiny_obj_loader.cc" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="MeshRenderer.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="TinySandbox.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Camera.hpp" />
-    <ClInclude Include="Component.hpp" />
-    <ClInclude Include="GLFW_Windows.hpp" />
-    <ClInclude Include="GraphicsAPI.hpp" />
-    <ClInclude Include="Entity.hpp" />
-    <ClInclude Include="GraphicsAPI_OpenGL.hpp" />
-    <ClInclude Include="Material.hpp" />
-    <ClInclude Include="Mesh.hpp" />
-    <ClInclude Include="MeshRenderer.hpp" />
-    <ClInclude Include="NormalDebugMaterial.hpp" />
-    <ClInclude Include="Scene.hpp" />
-    <ClInclude Include="Windows.hpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

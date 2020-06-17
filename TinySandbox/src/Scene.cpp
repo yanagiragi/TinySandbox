@@ -30,15 +30,19 @@ namespace TinySandbox
 
 	void Scene::InitSceneSettings()
 	{
+		/***** Setup Graphics Setting *****/
+		GraphicsAPI* API = GraphicsAPI::GetAPI();
+		API->EnableDepthTest();
+		
+		/***** Setup Scene Entity & Setting *****/
 		TinySandbox::Component* testComponent = new TinySandbox::TestComponent();
 		TinySandbox::MeshRenderer* meshRenderer = new TinySandbox::MeshRenderer();
 
 		// setup meshes
-		TinySandbox::Mesh mesh("Resources/monkey.obj");
+		TinySandbox::Mesh mesh("../Resources/monkey.obj");
 		meshRenderer->SetMesh(mesh);
 
 		TinySandbox::Entity* testEntity = new TinySandbox::Entity("Test");
-		// testEntity->Add(testComponent);
 		testEntity->Add(meshRenderer); // implicitly cast to TinySandbox::Component
 
 		m_mainCamera->Aspect(1.33f);
@@ -50,6 +54,8 @@ namespace TinySandbox
 		m_mainCamera->Theta(0.0f);
 
 		Scene::Instance()->Add(testEntity);
+
+		
 	}
 
 	void Scene::Draw()

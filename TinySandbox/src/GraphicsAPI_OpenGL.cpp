@@ -7,7 +7,7 @@
 
 using namespace TinySandbox;
 
-int GraphicsAPI_OpenGL::GetType(GraphicsAPI_DataType _dataType)
+int GraphicsAPI_OpenGL::GetType(GraphicsAPI_DataType _dataType) const
 {
 	int type = -2147483648; // magic number
 
@@ -462,4 +462,100 @@ void GraphicsAPI_OpenGL::SetMat3(unsigned int _program, const std::string &name,
 void GraphicsAPI_OpenGL::SetMat4(unsigned int _program, const std::string &name, const glm::mat4 &mat) const
 {
 	glUniformMatrix4fv(glGetUniformLocation(_program, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}
+
+void GraphicsAPI_OpenGL::ClearScreenColor() const
+{
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void GraphicsAPI_OpenGL::ClearScreenDepth() const
+{
+	glClear(GL_DEPTH_BUFFER_BIT);
+}
+
+void GraphicsAPI_OpenGL::ClearScreenScreen() const 
+{
+	glClear(GL_STENCIL_BUFFER_BIT);
+}
+
+void GraphicsAPI_OpenGL::EnableDepthTest() const 
+{
+	glEnable(GL_DEPTH_TEST);
+}
+
+void GraphicsAPI_OpenGL::DisableDepthTest() const 
+{
+	glDisable(GL_DEPTH_TEST);
+}
+
+void GraphicsAPI_OpenGL::SetDepthMask(GraphicsAPI_DataType _type) const 
+{
+	const GLboolean flag = static_cast<GLboolean>(this->GetType(_type));
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glDepthMask.xml
+	glDepthMask(flag);
+}
+
+void GraphicsAPI_OpenGL::SetDepthTestMode(GraphicsAPI_DataType _type) const 
+{
+	const GLenum func = static_cast<GLenum>(this->GetType(_type));
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glDepthFunc.xml
+	glDepthFunc(func);
+}
+
+void GraphicsAPI_OpenGL::EnableStencilTest() const 
+{
+	glEnable(GL_STENCIL_TEST);
+}
+
+void GraphicsAPI_OpenGL::DisableStencilTest() const 
+{
+	glDisable(GL_STENCIL_TEST);
+}
+
+void GraphicsAPI_OpenGL::SetStencilMask(GraphicsAPI_DataType _type) const 
+{
+	const GLuint mask = static_cast<GLuint>(this->GetType(_type));
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glDepthMask.xml
+	glStencilMask(mask);
+}
+
+void GraphicsAPI_OpenGL::EnableBlending() const 
+{
+	glEnable(GL_BLEND);
+}
+
+void GraphicsAPI_OpenGL::DisableBlending() const 
+{
+	glDisable(GL_BLEND);
+}
+
+void GraphicsAPI_OpenGL::SetBlendingMode(GraphicsAPI_DataType _type, GraphicsAPI_DataType _additionalType) const 
+{
+	const GLenum sfactor = static_cast<GLenum>(this->GetType(_type));
+	const GLenum dfactor = static_cast<GLenum>(this->GetType(_additionalType));
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBlendFunc.xhtml
+	glBlendFunc(sfactor, dfactor);
+}
+
+void GraphicsAPI_OpenGL::EnableCulling() const 
+{
+	glEnable(GL_CULL_FACE);
+}
+
+void GraphicsAPI_OpenGL::DisableCulling() const 
+{
+	glDisable(GL_CULL_FACE);
+}
+
+void GraphicsAPI_OpenGL::SetCullingMode(GraphicsAPI_DataType _type) const 
+{
+	const GLenum mode = static_cast<GLenum>(this->GetType(_type));
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glCullFace.xhtml
+	glCullFace(mode);
 }

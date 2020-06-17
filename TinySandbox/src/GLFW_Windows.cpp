@@ -1,5 +1,7 @@
 #include "GLFW_Windows.hpp"
 
+#include "GraphicsAPI.hpp"
+
 namespace TinySandbox
 {
     GLFW_Windows::GLFW_Windows
@@ -45,10 +47,16 @@ namespace TinySandbox
 
     void GLFW_Windows::Loop() {
 
+		GraphicsAPI* API = GraphicsAPI::GetAPI();
+
 		mainScene->Start();
 
         while (this->ShouldClose() == false)
         {
+			// 0. Init Screen
+			API->ClearScreenColor();
+			API->ClearScreenDepth();
+
 			// 1. Process Input
             this->inputCallback(this->m_glfwInstance);
 

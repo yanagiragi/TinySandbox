@@ -1,7 +1,7 @@
 #pragma once
 
-#include "includes/glmathematics/glm.hpp"
-#include "includes/glmathematics/gtc/matrix_transform.hpp"
+#include <glmathematics/glm.hpp>
+#include <glmathematics/gtc/matrix_transform.hpp>
 
 namespace TinySandbox
 {

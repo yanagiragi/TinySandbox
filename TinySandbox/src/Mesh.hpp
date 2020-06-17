@@ -1,9 +1,9 @@
 #pragma once
 
-#include "includes/glmathematics/glm.hpp"
-#include "includes/TinyObjLoader/tiny_obj_loader.h"
+#include <glmathematics/glm.hpp>
 
-#define TINYOBJLOADER_IMPLEMENTATION 
+// #define TINYOBJLOADER_IMPLEMENTATION 
+#include <TinyObjLoader/tiny_obj_loader.h>
 
 namespace TinySandbox
 {

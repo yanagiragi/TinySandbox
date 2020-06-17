@@ -55,5 +55,3 @@ namespace TinySandbox
 			unsigned int m_VAO;
 	};
 }
-
-void mouse_callback(GLFWwindow* window, double xpos, double ypos);
