@@ -542,7 +542,7 @@ void GraphicsAPI_OpenGL::ClearScreenDepth() const
 	glClear(GL_DEPTH_BUFFER_BIT);
 }
 
-void GraphicsAPI_OpenGL::ClearScreenScreen() const 
+void GraphicsAPI_OpenGL::ClearScreenStencil() const
 {
 	glClear(GL_STENCIL_BUFFER_BIT);
 }

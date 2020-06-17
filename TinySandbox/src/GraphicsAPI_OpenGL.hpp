@@ -46,7 +46,7 @@ namespace TinySandbox
 
 		void ClearScreenColor() const override;
 		void ClearScreenDepth() const override;
-		void ClearScreenScreen() const override;
+		void ClearScreenStencil() const override;
 
 		void EnableDepthTest() const override;
 		void DisableDepthTest() const override;
