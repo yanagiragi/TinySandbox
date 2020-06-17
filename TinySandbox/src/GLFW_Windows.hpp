@@ -6,6 +6,9 @@
 #include <GLFW/glfw3.h>
 #include <functional>
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void ProcessInput(GLFWwindow *window);
+
 namespace TinySandbox {
 
 	class GLFW_Windows : public Windows
@@ -36,5 +39,3 @@ namespace TinySandbox {
 			std::function<void(void)> renderCallback;
 	};
 }
-
-#pragma once

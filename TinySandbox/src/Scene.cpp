@@ -33,8 +33,7 @@ namespace TinySandbox
 		GraphicsAPI* API = GraphicsAPI::GetAPI();
 		API->EnableDepthTest();
 		
-		/***** Setup Scene Entity & Setting *****/
-		
+		/***** Setup Scene Entity & Setting *****/		
 		TinySandbox::Entity* testEntity = new TinySandbox::Entity("Test");
 		TinySandbox::MeshRenderer* meshRenderer = new TinySandbox::MeshRenderer();
 		TinySandbox::Mesh mesh("../Resources/monkey.obj");
@@ -52,7 +51,7 @@ namespace TinySandbox
 		m_mainCamera->NearPlaneDistance(0.01f);
 		m_mainCamera->FarPlaneDistance(100.0f);
 		m_mainCamera->FieldOfView(45.0f);
-		m_mainCamera->Position(glm::vec3(0, 0, 3));
+		m_mainCamera->Position(glm::vec3(0, 0, 5));
 		m_mainCamera->Phi(90.0f);
 		m_mainCamera->Theta(0.0f);
 	}

@@ -1,80 +1,8 @@
 // always include GraphicsAPI first, since it may contains header need to include first
-
 #include "GraphicsAPI_OpenGL.hpp"
+
 #include "GLFW_Windows.hpp"
 #include "Scene.hpp"
-
-#include <iostream>
-
-// settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
-
-// declare as a global variable for reshape 
-TinySandbox::GLFW_Windows* window;
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void processInput(GLFWwindow *window);
-
-void ProcessInput(GLFWwindow *window)
-{
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
-
-	TinySandbox::Camera* mainCamera = TinySandbox::Scene::GetMainCamera();
-
-	const float sentivity = 0.1;
-
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		mainCamera->Position(mainCamera->Position() + glm::vec3(0, 0, -1) * sentivity);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		mainCamera->Position(mainCamera->Position() + glm::vec3(0, 0, 1) * sentivity);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-		mainCamera->Position(mainCamera->Position() + glm::vec3(-1, 0, 0) * sentivity);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-		mainCamera->Position(mainCamera->Position() + glm::vec3(1, 0, 0) * sentivity);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-		mainCamera->Position(mainCamera->Position() + glm::vec3(0, 1, 0) * sentivity);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
-		mainCamera->Position(mainCamera->Position() + glm::vec3(0, -1, 0) * sentivity);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) {
-		mainCamera->Theta(mainCamera->Theta() + 1);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS) {
-		mainCamera->Theta(mainCamera->Theta() - 1);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) {
-		mainCamera->Phi(mainCamera->Phi() + 1);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
-		mainCamera->Phi(mainCamera->Phi() - 1);
-	}
-
-}
-
-void framebuffer_size_callback(GLFWwindow* glfw_window, int width, int height)
-{
-	// make sure the viewport matches the new window dimensions; note that width and 
-	// height will be significantly larger than specified on retina displays.
-	glViewport(0, 0, width, height);
-
-	std::cout << window->name << std::endl;
-}
 
 int main()
 {
@@ -83,7 +11,11 @@ int main()
 	// However we provide SetAPI() if multiple api instance exists
 	const TinySandbox::GraphicsAPI_OpenGL* apiInstance = new TinySandbox::GraphicsAPI_OpenGL();
 
-	window = new TinySandbox::GLFW_Windows(SCR_WIDTH, SCR_HEIGHT, "NSD!", NULL, NULL);	
+	const unsigned int SCR_WIDTH = 800;
+	const unsigned int SCR_HEIGHT = 600;
+
+	// declared in GLFW_Windows
+	TinySandbox::GLFW_Windows* window = new TinySandbox::GLFW_Windows(SCR_WIDTH, SCR_HEIGHT, "NSD!", NULL, NULL);	
 
 	// for reshape callback, the last parameter is a function point
 	// there is no way to cast it from a lambda or std::function
