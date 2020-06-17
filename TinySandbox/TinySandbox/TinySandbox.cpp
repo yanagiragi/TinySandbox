@@ -5,6 +5,8 @@
 
 #include "Scene.hpp"
 
+#include "MeshRenderer.hpp"
+
 #include <iostream>
 
 // settings
@@ -16,6 +18,7 @@ TinySandbox::GLFW_Windows* window;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
+
 
 void Draw()
 {
@@ -32,22 +35,23 @@ void ProcessInput(GLFWwindow *window)
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		mainCamera->Phi(mainCamera->Phi() + 1);
+		mainCamera->Theta(mainCamera->Theta() + 1);
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		mainCamera->Phi(mainCamera->Phi() - 1);
+		mainCamera->Theta(mainCamera->Theta() - 1);
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		mainCamera->Theta(mainCamera->Theta() + 1);
+		mainCamera->Phi(mainCamera->Phi() + 1);
+		
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		mainCamera->Theta(mainCamera->Theta() - 1);
+		mainCamera->Phi(mainCamera->Phi() - 1);
 	}
 
 	/*if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
@@ -93,6 +97,9 @@ int main()
 	// there is no way to cast it from a lambda or std::function
 	// and it has to be static function
 	glfwSetFramebufferSizeCallback(window->instance(), framebuffer_size_callback);
+
+	// glfwSetCursorPosCallback(window->instance(), mouse_callback);
+	
 
 	window->SetInputCallback(ProcessInput);
 	window->SetRenderCallback(TinySandbox::Scene::Draw);

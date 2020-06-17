@@ -7,6 +7,7 @@
 
 #include "Scene.hpp"
 #include <iostream>
+#include "GLFW_Windows.hpp"
 
 #include "includes/glmathematics/gtc/type_ptr.hpp" //value_ptr
 
@@ -14,7 +15,7 @@ using namespace TinySandbox;
 
 void MeshRenderer::Start()
 {
-
+	
 }
 
 void MeshRenderer::Update()
@@ -27,9 +28,16 @@ void MeshRenderer::OnGUI()
 
 }
 
+
+// debug for now
 float time = 0;
 unsigned int quadVAO = 0;
 unsigned int quadVBO = 0;
+glm::vec3 direction;
+bool firstMouse = true;
+double lastX = 400, lastY = 300;
+double yaw = -90.0, pitch = 0.0;
+glm::vec3 cameraFront;
 
 void renderQuad()
 {
@@ -56,6 +64,41 @@ void renderQuad()
 	glBindVertexArray(quadVAO);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
+}
+
+
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+	if (firstMouse)
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
+
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos;
+	lastX = xpos;
+	lastY = ypos;
+
+	float sensitivity = 0.1f;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	yaw += xoffset;
+	pitch += yoffset;
+
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
+
+	glm::vec3 direction;
+	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	direction.y = sin(glm::radians(pitch));
+	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	cameraFront = glm::normalize(direction);
 }
 
 void MeshRenderer::OnRender()
@@ -203,9 +246,9 @@ void MeshRenderer::OnRender()
 	glAttachShader(shaderProgram, fragmentShader);
 	glLinkProgram(shaderProgram);
 
-	//const glm::mat4 viewMatrix = Scene::GetMainCamera()->ViewMatrix();
 	
-	const glm::mat4 viewMatrix = glm::mat4(glm::vec4(1, 0, 0, 0), glm::vec4(0, 1, 0, 0), glm::vec4(0, 0, 1, 0), glm::vec4(0.0, 0.0, Scene::GetMainCamera()->Theta(), 1.0));
+	
+	// const glm::mat4 viewMatrix = glm::mat4(glm::vec4(1, 0, 0, 0), glm::vec4(0, 1, 0, 0), glm::vec4(0, 0, 1, 0), glm::vec4(0.0, 0.0, Scene::GetMainCamera()->Theta(), 1.0));
 	const glm::mat4 projectionMatrix = Scene::GetMainCamera()->ProjectionMatrix();
 
 	glUseProgram(shaderProgram);
@@ -231,9 +274,19 @@ void MeshRenderer::OnRender()
 	glm::mat4 projection = glm::perspective(glm::radians(fov), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 	//ourShader.setMat4("projection", projection);
 
+	glm::vec3 direction;
+	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	direction.y = sin(glm::radians(pitch));
+	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	cameraFront = glm::normalize(direction);
+
 	// camera/view transformation
 	glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 	//ourShader.setMat4("view", view);
+
+	const glm::mat4 viewMatrix = Scene::GetMainCamera()->ViewMatrix();
+
+	view = viewMatrix;
 
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "V"), 1, GL_FALSE, &view[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "P"), 1, GL_FALSE, &projection[0][0]);
@@ -244,20 +297,27 @@ void MeshRenderer::OnRender()
 	{
 		// calculate the model matrix for each object and pass it to shader before drawing
 		glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-		model = glm::translate(model, cubePositions[i]);
+		
+		/*model = glm::translate(model, cubePositions[i]);
 		float angle = 20.0f * i;
-		model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+		model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));*/
 
 		GLuint a = glGetUniformLocation(shaderProgram, "M");
 		glUniformMatrix4fv(a, 1, GL_FALSE, &model[0][0]);
 		//ourShader.setMat4("model", model);
 
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		// glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
 
-	/*API->BindVertexArray(m_VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 135);
-	API->UnbindVertexArray();*/
+	glDisable(GL_CULL_FACE);
+
+	glm::mat4 model = glm::mat4(1.0f);
+	GLuint a = glGetUniformLocation(shaderProgram, "M");
+	glUniformMatrix4fv(a, 1, GL_FALSE, &model[0][0]);
+
+	API->BindVertexArray(m_VAO);
+	glDrawArrays(GL_TRIANGLES, 0, m_mesh.vertex.size());
+	API->UnbindVertexArray();
 
 	//renderQuad();
 

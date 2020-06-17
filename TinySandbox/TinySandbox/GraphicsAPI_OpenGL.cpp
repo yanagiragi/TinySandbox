@@ -234,12 +234,12 @@ void GraphicsAPI_OpenGL::SetupVAO(unsigned int* _VAO, Mesh* _mesh, GraphicsAPI_D
 
 	// Bind VBO to VAO
 	GenerateVertexArrays(_VAO, 1);
-	BindVertexArray(_VAO[0]);
+	BindVertexArray(*_VAO);
 
 	EnableVertexArrayAttribute(0);
 	BindBuffer(GraphicsAPI_DataType::ARRAY_BUFFER, VBO[0]); // vertices
 	SetVertexArray(0, 3, GraphicsAPI_DataType::FLOAT, GraphicsAPI_DataType::FALSE, 0, 0);
-
+	
 	EnableVertexArrayAttribute(1);
 	BindBuffer(GraphicsAPI_DataType::ARRAY_BUFFER, VBO[1]); // normal
 	SetVertexArray(1, 3, GraphicsAPI_DataType::FLOAT, GraphicsAPI_DataType::FALSE, 0, 0);
@@ -248,12 +248,11 @@ void GraphicsAPI_OpenGL::SetupVAO(unsigned int* _VAO, Mesh* _mesh, GraphicsAPI_D
 	BindBuffer(GraphicsAPI_DataType::ARRAY_BUFFER, VBO[2]); // uv0
 	SetVertexArray(2, 2, GraphicsAPI_DataType::FLOAT, GraphicsAPI_DataType::FALSE, 0, 0);
 
-	// Cleanup resources & Unbind all
-	DisableVertexArrayAttribute(0);
-	DisableVertexArrayAttribute(1);
-	DisableVertexArrayAttribute(2);
-	
+	// Cleanup resources & Unbind all	
 	UnbindVertexArray();
+	for (auto i = 0; i < vboSize; ++i) {
+		DisableVertexArrayAttribute(i);
+	}
 	UnbindBuffer(GraphicsAPI_DataType::ARRAY_BUFFER);
 
 	delete[] VBO;

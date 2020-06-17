@@ -5,6 +5,8 @@
 #include "Component.hpp"
 #include "Mesh.hpp"
 
+#include "GLFW_Windows.hpp"
+
 namespace TinySandbox
 {
 	class MeshRenderer : public Component
@@ -53,3 +55,5 @@ namespace TinySandbox
 			unsigned int m_VAO;
 	};
 }
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
