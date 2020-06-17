@@ -11,7 +11,6 @@ namespace TinySandbox
 
 	Mesh::Mesh(const char* _filename) : filename(_filename)
 	{
-		std::string inputfile = "Resources/bunnyLow.obj";
 		tinyobj::attrib_t attrib;
 		std::vector<tinyobj::shape_t> shapes;
 		std::vector<tinyobj::material_t> materials;
@@ -19,7 +18,7 @@ namespace TinySandbox
 		std::string warn;
 		std::string err;
 
-		bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, inputfile.c_str());
+		bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, _filename);
 
 		if (!warn.empty()) {
 			std::cout << warn << std::endl;

@@ -34,7 +34,7 @@ namespace TinySandbox
 		TinySandbox::MeshRenderer* meshRenderer = new TinySandbox::MeshRenderer();
 
 		// setup meshes
-		TinySandbox::Mesh mesh("../Resources/bunnyLow.obj");
+		TinySandbox::Mesh mesh("Resources/monkey.obj");
 		meshRenderer->SetMesh(mesh);
 
 		TinySandbox::Entity* testEntity = new TinySandbox::Entity("Test");
