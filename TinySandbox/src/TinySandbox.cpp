@@ -1,11 +1,8 @@
 // always include GraphicsAPI first, since it may contains header need to include first
+
 #include "GraphicsAPI_OpenGL.hpp"
-
 #include "GLFW_Windows.hpp"
-
 #include "Scene.hpp"
-
-#include "MeshRenderer.hpp"
 
 #include <iostream>
 
@@ -19,17 +16,10 @@ TinySandbox::GLFW_Windows* window;
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
-
-void Draw()
-{
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);	
-}
-
 void ProcessInput(GLFWwindow *window)
 {
-	//if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-	//	glfwSetWindowShouldClose(window, true);
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
 
 	TinySandbox::Camera* mainCamera = TinySandbox::Scene::GetMainCamera();
 
@@ -69,7 +59,6 @@ void ProcessInput(GLFWwindow *window)
 
 	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) {
 		mainCamera->Phi(mainCamera->Phi() + 1);
-
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
@@ -94,23 +83,22 @@ int main()
 	// However we provide SetAPI() if multiple api instance exists
 	const TinySandbox::GraphicsAPI_OpenGL* apiInstance = new TinySandbox::GraphicsAPI_OpenGL();
 
-	window = new TinySandbox::GLFW_Windows(SCR_WIDTH, SCR_HEIGHT, "NSD!", NULL, NULL);
-
-	TinySandbox::Scene* mainScene = TinySandbox::Scene::Instance();
+	window = new TinySandbox::GLFW_Windows(SCR_WIDTH, SCR_HEIGHT, "NSD!", NULL, NULL);	
 
 	// for reshape callback, the last parameter is a function point
 	// there is no way to cast it from a lambda or std::function
 	// and it has to be static function
 	glfwSetFramebufferSizeCallback(window->instance(), framebuffer_size_callback);
 
-	// glfwSetCursorPosCallback(window->instance(), mouse_callback);
-	
+	// Mouse Callback
+	// glfwSetCursorPosCallback(window->instance(), mouse_callback);	
 
 	window->SetInputCallback(ProcessInput);
-	window->SetRenderCallback(TinySandbox::Scene::Draw);
-	TinySandbox::Scene::Instance()->InitSceneSettings();
-	window->SetScene(mainScene);
 
+	TinySandbox::Scene* mainScene = TinySandbox::Scene::Instance();
+	mainScene->InitSceneSettings();
+	
+	window->SetScene(mainScene);
 	window->Loop();
 
 	// cleanup resources

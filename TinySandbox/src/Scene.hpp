@@ -75,7 +75,7 @@ namespace TinySandbox
 			}
 
 			virtual void InitSceneSettings();
-			static void Draw();
+			
 			// static void ProcessInput(GLFWwindow* w) {} ;
 
 		private:

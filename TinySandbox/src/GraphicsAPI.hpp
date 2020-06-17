@@ -166,7 +166,7 @@ namespace TinySandbox
 
 			virtual void ClearScreenColor() const = 0;
 			virtual void ClearScreenDepth() const = 0;
-			virtual void ClearScreenScreen() const = 0;
+			virtual void ClearScreenStencil() const = 0;
 
 			virtual void EnableDepthTest() const = 0;
 			virtual void DisableDepthTest() const = 0;

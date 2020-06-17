@@ -56,6 +56,7 @@ namespace TinySandbox
 			// 0. Init Screen
 			API->ClearScreenColor();
 			API->ClearScreenDepth();
+			API->ClearScreenStencil();
 
 			// 1. Process Input
             this->inputCallback(this->m_glfwInstance);
@@ -81,10 +82,6 @@ namespace TinySandbox
 
     void GLFW_Windows::SetInputCallback(std::function<void(GLFWwindow*)> _inputCallback) {
 		this->inputCallback = _inputCallback;
-    }
-
-    void GLFW_Windows::SetRenderCallback(std::function<void(void)> _renderCallback) {
-        this->renderCallback = _renderCallback;
     }
 
     // helper function for now

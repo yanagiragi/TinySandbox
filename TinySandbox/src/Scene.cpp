@@ -34,20 +34,20 @@ namespace TinySandbox
 		API->EnableDepthTest();
 		
 		/***** Setup Scene Entity & Setting *****/
-		//TinySandbox::Component* testComponent = new TinySandbox::TestComponent();
-		TinySandbox::MeshRenderer* meshRenderer = new TinySandbox::MeshRenderer();
-		meshRenderer->SetMaterial(new NormalDebugMaterial(meshRenderer));
-
-		// setup meshes
-		TinySandbox::Mesh mesh("../Resources/monkey.obj");
-		meshRenderer->SetMesh(mesh);
-
+		
 		TinySandbox::Entity* testEntity = new TinySandbox::Entity("Test");
-		testEntity->Add(meshRenderer); // implicitly cast to TinySandbox::Component
-		
+		TinySandbox::MeshRenderer* meshRenderer = new TinySandbox::MeshRenderer();
+		TinySandbox::Mesh mesh("../Resources/monkey.obj");
 		Transform* testTransform = testEntity->GetTransform();
+
+		testEntity->Add(meshRenderer); // implicitly cast to TinySandbox::Component
+		meshRenderer->SetMesh(mesh);
+		meshRenderer->SetMaterial(new NormalDebugMaterial(meshRenderer));
 		testTransform->Rotation(glm::vec3(-90.0f, 0.0f, 90.0f));
+
+		Scene::Instance()->Add(testEntity);
 		
+		// Main Camera Setting
 		m_mainCamera->Aspect(1.33f);
 		m_mainCamera->NearPlaneDistance(0.01f);
 		m_mainCamera->FarPlaneDistance(100.0f);
@@ -55,21 +55,6 @@ namespace TinySandbox
 		m_mainCamera->Position(glm::vec3(0, 0, 3));
 		m_mainCamera->Phi(90.0f);
 		m_mainCamera->Theta(0.0f);
-
-		Scene::Instance()->Add(testEntity);
-
-		
-	}
-
-	void Scene::Draw()
-	{
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		// std::cout << Scene::Instance() << std::endl;
-
-		// debug code
-		// Scene::Instance()->Start();
 	}
 
 	/*void Scene::ProcessInput(GLFWwindow *window)
