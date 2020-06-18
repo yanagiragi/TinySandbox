@@ -2,6 +2,8 @@
 
 #include "GraphicsAPI.hpp"
 
+#include "Scene.hpp"
+
 namespace TinySandbox
 {
     GLFW_Windows::GLFW_Windows

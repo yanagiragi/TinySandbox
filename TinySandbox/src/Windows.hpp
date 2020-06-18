@@ -1,6 +1,9 @@
 #pragma once
 
-#include "Scene.hpp"
+// Forward Declaration
+namespace TinySandbox {
+	class Scene;
+}
 
 namespace TinySandbox {
 

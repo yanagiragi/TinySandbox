@@ -10,6 +10,11 @@
 
 namespace TinySandbox
 {
+	class SkyboxRenderer;
+}
+
+namespace TinySandbox
+{
 	class Scene : public Component
 	{
 		public:
@@ -49,5 +54,6 @@ namespace TinySandbox
 			std::vector<Entity*> m_entitiesList;
 			static Scene* m_instance; // singleton instance
 			Camera* m_mainCamera;
+			SkyboxRenderer* m_SkyboxRenderer;
 	};
 }

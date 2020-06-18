@@ -63,6 +63,15 @@
     <ClInclude Include="Texture.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="UnlitMaterial.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyboxMaterial.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyboxRenderer.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GLFW_Windows.cpp">
@@ -91,6 +100,18 @@
     </ClCompile>
     <ClCompile Include="..\includes\glad.c">
       <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyboxMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CubemapConverter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyboxRenderer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

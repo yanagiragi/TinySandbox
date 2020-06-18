@@ -1,10 +1,11 @@
 #include "Scene.hpp"
 
-#include "GLFW_Windows.hpp"
 #include "MeshRenderer.hpp"
 
 #include "NormalDebugMaterial.hpp"
 #include "UnlitMaterial.hpp"
+
+#include "SkyboxRenderer.hpp"
 
 // initialize static member
 TinySandbox::Scene* TinySandbox::Scene::m_instance = nullptr;
@@ -15,11 +16,15 @@ namespace TinySandbox
 	Scene::Scene()
 	{
 		m_mainCamera = new Camera();
+		Texture* test = new Texture("../Resources/test.png", TextureType::TEXTURE_2D, false, true, 512);
+		m_SkyboxRenderer = new SkyboxRenderer();
+		m_SkyboxRenderer->SetTexture(test);
 	}
 
 	Scene::~Scene()
 	{
 		delete m_mainCamera;
+		delete m_SkyboxRenderer;
 		if (Scene::Instance() != nullptr) {
 			for (auto entity : Scene::Instance()->m_entitiesList)
 			{
@@ -37,7 +42,7 @@ namespace TinySandbox
 		/***** Setup Scene Entity & Setting *****/		
 		TinySandbox::Entity* testEntity = new TinySandbox::Entity("Test");
 		TinySandbox::MeshRenderer* meshRenderer = new TinySandbox::MeshRenderer();
-		TinySandbox::Mesh mesh("../Resources/monkey.obj");
+		TinySandbox::Mesh* mesh = new TinySandbox::Mesh("../Resources/monkey.obj");
 		Transform* testTransform = testEntity->GetTransform();
 
 		testEntity->Add(meshRenderer); // implicitly cast to TinySandbox::Component
@@ -48,6 +53,9 @@ namespace TinySandbox
 
 		Scene::Instance()->Add(testEntity);
 		
+		// Skybox Setting
+		// m_SkyboxRenderer->SetTexture();
+
 		// Main Camera Setting
 		m_mainCamera->Aspect(1.33f);
 		m_mainCamera->NearPlaneDistance(0.01f);

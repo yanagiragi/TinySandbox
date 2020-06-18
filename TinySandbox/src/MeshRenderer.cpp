@@ -40,7 +40,7 @@ void MeshRenderer::OnRender()
 
 	// Draw Mesh
 	m_api->BindVertexArray(m_VAO);
-	m_api->DrawArrays(GraphicsAPI_DataType::TRIANGLES, m_mesh.vertex.size());
+	m_api->DrawArrays(GraphicsAPI_DataType::TRIANGLES, m_mesh->vertex.size());
 	
 	// Clean up
 	m_api->UnbindVertexArray();

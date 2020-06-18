@@ -89,5 +89,17 @@ namespace TinySandbox
 		void EnableTexture2D() const override;
 		void DisableTexture2D() const override;
 		void UnbindTexture2D() const override;
+		void EnableSeamlessCubemap() const override;
+		void DisableSeamlessCubemap() const override;
+
+		void GenerateFrameBuffers(unsigned int* _ids, unsigned int _length) const override;
+		void BindFrameBuffer(GraphicsAPI_DataType _type, unsigned int _id) const override;
+		void UnbindFrameBuffer(GraphicsAPI_DataType _type) const override;
+		void AttachRenderBufferToFrameBuffer(GraphicsAPI_DataType _target, GraphicsAPI_DataType _attachment, GraphicsAPI_DataType _renderBufferTarget, unsigned int _renderBuffer) const override;
+
+		void GenerateRenderBuffers(unsigned int* _ids, unsigned int _length) const override;
+		void BindRenderBuffer(GraphicsAPI_DataType _type, unsigned int _id) const override;
+		void UnbindRenderBuffer(GraphicsAPI_DataType _type) const override;
+		void SetRenderBuffer(GraphicsAPI_DataType _target, GraphicsAPI_DataType _internalFormat, unsigned int _width, unsigned int _height) const override;
 	};
 }

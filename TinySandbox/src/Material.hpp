@@ -112,6 +112,17 @@ namespace TinySandbox
 				m_textureIncrementId += 1; // auto increment id
 			}
 
+			void SetTextureCubemap(const std::string &name, const unsigned int _textureId, const int _id = -1)
+			{
+				const int id = (_id == -1) ? m_textureIncrementId : _id;
+
+				m_api->ActiveTexture(id);
+				m_api->BindTexture(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, _textureId);
+				m_api->SetInt(m_program, name, id);
+
+				m_textureIncrementId += 1; // auto increment id
+			}
+
 		private:
 			
 			void Compile() {

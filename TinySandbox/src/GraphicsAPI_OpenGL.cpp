@@ -235,9 +235,6 @@ float GraphicsAPI_OpenGL::GetType(GraphicsAPI_DataType _dataType) const
 		case GraphicsAPI_DataType::STENCIL_INDEX:
 			type = GL_STENCIL_INDEX; break;
 
-		case GraphicsAPI_DataType::DEPTH_COMPONENT:
-			type = GL_DEPTH_COMPONENT; break;
-
 		case GraphicsAPI_DataType::DEPTH_STENCIL:
 			type = GL_DEPTH_STENCIL; break;
 
@@ -313,9 +310,6 @@ float GraphicsAPI_OpenGL::GetType(GraphicsAPI_DataType _dataType) const
 		case GraphicsAPI_DataType::BLUE:
 			type = GL_BLUE; break;
 
-		case GraphicsAPI_DataType::ALPHA:
-			type = GL_ALPHA; break;
-
 		case GraphicsAPI_DataType::ZERO:
 			type = GL_ZERO; break;
 
@@ -345,7 +339,194 @@ float GraphicsAPI_OpenGL::GetType(GraphicsAPI_DataType _dataType) const
 
 		case GraphicsAPI_DataType::TEXTURE0:
 			type = GL_TEXTURE0; break;
+
+		case GraphicsAPI_DataType::TEXTURE_CUBE_MAP:
+			type = GL_TEXTURE_CUBE_MAP; break;
+
+		case GraphicsAPI_DataType::DRAW_FRAMEBUFFER:
+			type = GL_DRAW_FRAMEBUFFER; break;
+
+		case GraphicsAPI_DataType::READ_FRAMEBUFFER:
+			type = GL_READ_FRAMEBUFFER; break;
+
+		case GraphicsAPI_DataType::FRAMEBUFFER:
+			type = GL_FRAMEBUFFER; break;
+
+		case GraphicsAPI_DataType::RENDERBUFFER:
+			type = GL_RENDERBUFFER; break;
 			
+		case GraphicsAPI_DataType::COLOR_ATTACHMENT0:
+			type = GL_COLOR_ATTACHMENT0; break;
+
+		case GraphicsAPI_DataType::DEPTH_ATTACHMENT:
+			type = GL_DEPTH_ATTACHMENT; break;
+
+		case GraphicsAPI_DataType::STENCIL_ATTACHMENT:
+			type = GL_STENCIL_ATTACHMENT; break;
+
+		case GraphicsAPI_DataType::ALPHA:
+			type = GL_ALPHA; break;
+
+		case GraphicsAPI_DataType::ALPHA4:
+			type = GL_ALPHA4; break;
+
+		case GraphicsAPI_DataType::ALPHA8:
+			type = GL_ALPHA8; break;
+
+		case GraphicsAPI_DataType::ALPHA12:
+			type = GL_ALPHA12; break;
+
+		case GraphicsAPI_DataType::ALPHA16:
+			type = GL_ALPHA16; break;
+
+		case GraphicsAPI_DataType::COMPRESSED_ALPHA:
+			type = GL_COMPRESSED_ALPHA; break;
+
+		case GraphicsAPI_DataType::COMPRESSED_LUMINANCE:
+			type = GL_COMPRESSED_LUMINANCE; break;
+
+		case GraphicsAPI_DataType::COMPRESSED_LUMINANCE_ALPHA:
+			type = GL_COMPRESSED_LUMINANCE_ALPHA; break;
+
+		case GraphicsAPI_DataType::COMPRESSED_INTENSITY:
+			type = GL_COMPRESSED_INTENSITY; break;
+
+		case GraphicsAPI_DataType::COMPRESSED_RGB:
+			type = GL_COMPRESSED_RGB; break;
+
+		case GraphicsAPI_DataType::COMPRESSED_RGBA:
+			type = GL_COMPRESSED_RGBA; break;
+
+		case GraphicsAPI_DataType::DEPTH_COMPONENT:
+			type = GL_DEPTH_COMPONENT; break;
+
+		case GraphicsAPI_DataType::DEPTH_COMPONENT16:
+			type = GL_DEPTH_COMPONENT16; break;
+
+		case GraphicsAPI_DataType::DEPTH_COMPONENT24:
+			type = GL_DEPTH_COMPONENT24; break;
+
+		case GraphicsAPI_DataType::DEPTH_COMPONENT32:
+			type = GL_DEPTH_COMPONENT32; break;
+
+		case GraphicsAPI_DataType::LUMINANCE:
+			type = GL_LUMINANCE; break;
+
+		case GraphicsAPI_DataType::LUMINANCE4:
+			type = GL_LUMINANCE4; break;
+
+		case GraphicsAPI_DataType::LUMINANCE8:
+			type = GL_LUMINANCE8; break;
+
+		case GraphicsAPI_DataType::LUMINANCE12:
+			type = GL_LUMINANCE12; break;
+
+		case GraphicsAPI_DataType::LUMINANCE16:
+			type = GL_LUMINANCE16; break;
+
+		case GraphicsAPI_DataType::LUMINANCE_ALPHA:
+			type = GL_LUMINANCE_ALPHA; break;
+
+		case GraphicsAPI_DataType::LUMINANCE4_ALPHA4:
+			type = GL_LUMINANCE4_ALPHA4; break;
+
+		case GraphicsAPI_DataType::LUMINANCE6_ALPHA2:
+			type = GL_LUMINANCE6_ALPHA2; break;
+
+		case GraphicsAPI_DataType::LUMINANCE8_ALPHA8:
+			type = GL_LUMINANCE8_ALPHA8; break;
+
+		case GraphicsAPI_DataType::LUMINANCE12_ALPHA4:
+			type = GL_LUMINANCE12_ALPHA4; break;
+
+		case GraphicsAPI_DataType::LUMINANCE12_ALPHA12:
+			type = GL_LUMINANCE12_ALPHA12; break;
+
+		case GraphicsAPI_DataType::LUMINANCE16_ALPHA16:
+			type = GL_LUMINANCE16_ALPHA16; break;
+
+		case GraphicsAPI_DataType::INTENSITY:
+			type = GL_INTENSITY; break;
+
+		case GraphicsAPI_DataType::INTENSITY4:
+			type = GL_INTENSITY4; break;
+
+		case GraphicsAPI_DataType::INTENSITY8:
+			type = GL_INTENSITY8; break;
+
+		case GraphicsAPI_DataType::INTENSITY12:
+			type = GL_INTENSITY12; break;
+
+		case GraphicsAPI_DataType::INTENSITY16:
+			type = GL_INTENSITY16; break;
+
+		case GraphicsAPI_DataType::R3_G3_B2:
+			type = GL_R3_G3_B2; break;
+
+		case GraphicsAPI_DataType::RGB4:
+			type = GL_RGB4; break;
+
+		case GraphicsAPI_DataType::RGB5:
+			type = GL_RGB5; break;
+
+		case GraphicsAPI_DataType::RGB8:
+			type = GL_RGB8; break;
+
+		case GraphicsAPI_DataType::RGB10:
+			type = GL_RGB10; break;
+
+		case GraphicsAPI_DataType::RGB12:
+			type = GL_RGB12; break;
+
+		case GraphicsAPI_DataType::RGB16:
+			type = GL_RGB16; break;
+
+		case GraphicsAPI_DataType::RGBA2:
+			type = GL_RGBA2; break;
+
+		case GraphicsAPI_DataType::RGBA4:
+			type = GL_RGBA4; break;
+
+		case GraphicsAPI_DataType::RGB5_A1:
+			type = GL_RGB5_A1; break;
+
+		case GraphicsAPI_DataType::RGBA8:
+			type = GL_RGBA8; break;
+
+		case GraphicsAPI_DataType::RGB10_A2:
+			type = GL_RGB10_A2; break;
+
+		case GraphicsAPI_DataType::RGBA12:
+			type = GL_RGBA12; break;
+
+		case GraphicsAPI_DataType::RGBA16:
+			type = GL_RGBA16; break;
+
+		case GraphicsAPI_DataType::SLUMINANCE:
+			type = GL_SLUMINANCE; break;
+
+		case GraphicsAPI_DataType::SLUMINANCE8:
+			type = GL_SLUMINANCE8; break;
+
+		case GraphicsAPI_DataType::SLUMINANCE_ALPHA:
+			type = GL_SLUMINANCE_ALPHA; break;
+
+		case GraphicsAPI_DataType::SLUMINANCE8_ALPHA8:
+			type = GL_SLUMINANCE8_ALPHA8; break;
+
+		case GraphicsAPI_DataType::SRGB:
+			type = GL_SRGB; break;
+
+		case GraphicsAPI_DataType::SRGB8:
+			type = GL_SRGB8; break;
+
+		case GraphicsAPI_DataType::SRGB_ALPHA:
+			type = GL_SRGB_ALPHA; break;
+
+		case GraphicsAPI_DataType::SRGB8_ALPHA8:
+			type = GL_SRGB8_ALPHA8; break;
+
+
 		/* OpenGL 4.4 Contexts */
 
 		case GraphicsAPI_DataType::FIXED:
@@ -895,4 +1076,85 @@ void GraphicsAPI_OpenGL::DisableTexture2D() const
 void GraphicsAPI_OpenGL::UnbindTexture2D() const
 {
 	glBindTexture(GL_TEXTURE_2D, NULL);
+}
+
+void GraphicsAPI_OpenGL::EnableSeamlessCubemap() const
+{
+	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+}
+
+void GraphicsAPI_OpenGL::DisableSeamlessCubemap() const
+{
+	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+}
+
+void GraphicsAPI_OpenGL::GenerateFrameBuffers(unsigned int* _ids, unsigned int _length) const
+{
+	const GLsizei n = static_cast<GLsizei>(_length);
+	GLuint* ids = static_cast<GLuint*>(_ids);
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGenFramebuffers.xhtml
+	glGenFramebuffers(n, ids);
+}
+
+void GraphicsAPI_OpenGL::BindFrameBuffer(GraphicsAPI_DataType _type, unsigned int _id) const
+{
+	const GLenum target = static_cast<GLenum>(_type);
+	const GLuint framebuffer = static_cast<GLuint>(_id);
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindFramebuffer.xhtml
+	glBindFramebuffer(target, framebuffer);
+}
+
+void GraphicsAPI_OpenGL::UnbindFrameBuffer(GraphicsAPI_DataType _type) const
+{
+	const GLenum target = static_cast<GLenum>(_type);
+	glBindFramebuffer(target, NULL);
+}
+
+void GraphicsAPI_OpenGL::AttachRenderBufferToFrameBuffer(GraphicsAPI_DataType _target, GraphicsAPI_DataType _attachment, GraphicsAPI_DataType _renderBufferTarget, unsigned int _renderBuffer) const
+{
+	const GLenum target = static_cast<GLenum>(this->GetType(_target));
+	const GLenum attachment = static_cast<GLenum>(this->GetType(_attachment));
+	const GLenum renderbuffertarget = static_cast<GLenum>(this->GetType(_renderBufferTarget));
+	const GLuint renderbuffer = static_cast<GLuint>(_renderBuffer);
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glFramebufferRenderbuffer.xml
+	glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer);
+}
+
+void GraphicsAPI_OpenGL::GenerateRenderBuffers(unsigned int* _ids, unsigned int _length) const
+{
+	const GLsizei n = static_cast<GLsizei>(_length);
+	GLuint* renderbuffers = static_cast<GLuint*>(_ids);
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glGenRenderbuffers.xml
+	glGenRenderbuffers(n, renderbuffers);
+}
+
+void GraphicsAPI_OpenGL::BindRenderBuffer(GraphicsAPI_DataType _type, unsigned int _id) const
+{
+	const GLenum target = static_cast<GLenum>(_type);
+	const GLuint renderbuffer = static_cast<GLuint>(_id);
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glBindRenderbuffer.xml
+	glBindRenderbuffer(target, renderbuffer);
+}
+
+void GraphicsAPI_OpenGL::UnbindRenderBuffer(GraphicsAPI_DataType _type) const
+{
+	const GLenum target = static_cast<GLenum>(_type);
+	
+	glBindRenderbuffer(target, NULL);
+}
+
+void GraphicsAPI_OpenGL::SetRenderBuffer(GraphicsAPI_DataType _target, GraphicsAPI_DataType _internalFormat, unsigned int _width, unsigned int _height) const
+{
+	const GLenum target = static_cast<GLenum>(this->GetType(_target));
+	const GLenum internalformat = static_cast<GLenum>(this->GetType(_internalFormat));
+	const GLsizei width = static_cast<GLsizei>(_width);
+	const GLsizei height = static_cast<GLsizei>(_height);
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glRenderbufferStorage.xhtml
+	glRenderbufferStorage(target, internalformat, width, height);
 }

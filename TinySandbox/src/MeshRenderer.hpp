@@ -3,10 +3,8 @@
 #include "GraphicsAPI.hpp"
 
 #include "Renderer.hpp"
-#include "Mesh.hpp"
 #include "Material.hpp"
-
-#include "GLFW_Windows.hpp"
+#include "Mesh.hpp"
 
 namespace TinySandbox
 {
@@ -21,38 +19,40 @@ namespace TinySandbox
 
 			~MeshRenderer()
 			{
-
+				if (m_mesh) {
+					delete m_mesh;
+				}
 			}
 
-			void SetMesh(Mesh& _mesh)
+			void SetMesh(Mesh* _mesh)
 			{
 				m_mesh = _mesh;
 				
 				BindVAO(); // update VAO
 			}
 
-			const Mesh& GetMesh() const
+			const Mesh* GetMesh() const
 			{
 				return m_mesh;
 			}
 
 			void BindVAO()
 			{
-				m_api->SetupVAO(&m_VAO, &m_mesh, GraphicsAPI_DataType::STATIC_DRAW);
+				m_api->SetupVAO(&m_VAO, m_mesh, GraphicsAPI_DataType::STATIC_DRAW);
 			}
 
 			void Start() override;
 
 			void Update() override;
 		
-			void OnGUI() override;
+			virtual void OnGUI() override;
 
-			void OnRender() override;
+			virtual void OnRender() override;
 
 			void SetEntity(Entity* _entity) override;
 
-		private:
-			Mesh m_mesh;
+		protected:
+			Mesh* m_mesh;
 			unsigned int m_VAO;
 	};
 }

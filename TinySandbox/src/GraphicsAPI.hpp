@@ -74,6 +74,73 @@ namespace TinySandbox
 		TRIANGLES_ADJACENCY,
 		PATCHES,
 
+		// FrameBuffers
+		DRAW_FRAMEBUFFER,
+		READ_FRAMEBUFFER,
+		FRAMEBUFFER,
+		RENDERBUFFER,
+
+		// interal formats
+		COLOR_ATTACHMENT0,
+		DEPTH_ATTACHMENT,
+		STENCIL_ATTACHMENT,
+		ALPHA,
+		ALPHA4,
+		ALPHA8,
+		ALPHA12,
+		ALPHA16,
+		COMPRESSED_ALPHA,
+		COMPRESSED_LUMINANCE,
+		COMPRESSED_LUMINANCE_ALPHA,
+		COMPRESSED_INTENSITY,
+		COMPRESSED_RGB,
+		COMPRESSED_RGBA,
+		DEPTH_COMPONENT,
+		DEPTH_COMPONENT16,
+		DEPTH_COMPONENT24,
+		DEPTH_COMPONENT32,
+		LUMINANCE,
+		LUMINANCE4,
+		LUMINANCE8,
+		LUMINANCE12,
+		LUMINANCE16,
+		LUMINANCE_ALPHA,
+		LUMINANCE4_ALPHA4,
+		LUMINANCE6_ALPHA2,
+		LUMINANCE8_ALPHA8,
+		LUMINANCE12_ALPHA4,
+		LUMINANCE12_ALPHA12,
+		LUMINANCE16_ALPHA16,
+		INTENSITY,
+		INTENSITY4,
+		INTENSITY8,
+		INTENSITY12,
+		INTENSITY16,
+		R3_G3_B2,
+		// RGB, // already appears
+		RGB4,
+		RGB5,
+		RGB8,
+		RGB10,
+		RGB12,
+		RGB16,
+		// RGBA, // already appears
+		RGBA2,
+		RGBA4,
+		RGB5_A1,
+		RGBA8,
+		RGB10_A2,
+		RGBA12,
+		RGBA16,
+		SLUMINANCE,
+		SLUMINANCE8,
+		SLUMINANCE_ALPHA,
+		SLUMINANCE8_ALPHA8,
+		SRGB,
+		SRGB8,
+		SRGB_ALPHA,
+		SRGB8_ALPHA8,
+
 		// texture
 		TEXTURE_2D,
 		PROXY_TEXTURE_2D,
@@ -89,6 +156,7 @@ namespace TinySandbox
 		TEXTURE_CUBE_MAP_NEGATIVE_Z,
 		PROXY_TEXTURE_CUBE_MAP,
 		TEXTURE0,
+		TEXTURE_CUBE_MAP,
 
 		// Pixel data format
 		RED,
@@ -104,7 +172,6 @@ namespace TinySandbox
 		RGBA_INTEGER,
 		BGRA_INTEGER,
 		STENCIL_INDEX,
-		DEPTH_COMPONENT,
 		DEPTH_STENCIL,
 		RGB16F,
 
@@ -137,7 +204,7 @@ namespace TinySandbox
 		// swizzle parameter, RED already appears at Pixel data format
 		GREEN,
 		BLUE,
-		ALPHA,
+		// ALPHA, appears in internal format
 		ZERO,
 		ONE,
 
@@ -285,8 +352,25 @@ namespace TinySandbox
 			virtual void ActiveTexture(unsigned int __texture) const = 0;
 			virtual void EnableTexture2D() const = 0;
 			virtual void DisableTexture2D() const = 0;
-			virtual void UnbindTexture2D() const = 0;
-			
+			virtual void UnbindTexture2D() const = 0;	
+
+			virtual void EnableSeamlessCubemap() const = 0;
+			virtual void DisableSeamlessCubemap() const = 0;
+
+			virtual void GenerateFrameBuffers(unsigned int* _ids, unsigned int _length) const = 0;
+			virtual void BindFrameBuffer(GraphicsAPI_DataType _type, unsigned int _id) const = 0;
+			virtual void UnbindFrameBuffer(GraphicsAPI_DataType _type) const = 0;
+			virtual void AttachRenderBufferToFrameBuffer(GraphicsAPI_DataType _target, GraphicsAPI_DataType _attachment, GraphicsAPI_DataType _renderBufferTarget, unsigned int _renderBuffer) const = 0;
+
+			virtual void GenerateRenderBuffers(unsigned int* _ids, unsigned int _length) const = 0;
+			virtual void BindRenderBuffer(GraphicsAPI_DataType _type, unsigned int _id) const = 0;
+			virtual void UnbindRenderBuffer(GraphicsAPI_DataType _type) const = 0;
+			virtual void SetRenderBuffer(GraphicsAPI_DataType _target, GraphicsAPI_DataType _internalFormat, unsigned int _width, unsigned int _height) const = 0;
+
+			// TODO:
+			// glDrawBuffer(GL_NONE);
+			// glReadBuffer(GL_NONE);
+
 		private:
             static GraphicsAPI_Type m_type;
 			static GraphicsAPI* m_api;
