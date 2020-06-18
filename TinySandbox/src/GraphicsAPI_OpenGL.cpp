@@ -7,7 +7,7 @@
 
 using namespace TinySandbox;
 
-int GraphicsAPI_OpenGL::GetType(GraphicsAPI_DataType _dataType) const
+float GraphicsAPI_OpenGL::GetType(GraphicsAPI_DataType _dataType) const
 {
 	int type = -2147483648; // magic number
 
@@ -157,6 +157,195 @@ int GraphicsAPI_OpenGL::GetType(GraphicsAPI_DataType _dataType) const
 		case GraphicsAPI_DataType::PATCHES:
 			type = GL_PATCHES; break;
 
+		case GraphicsAPI_DataType::TEXTURE_2D:
+			type = GL_TEXTURE_2D; break;
+
+		case GraphicsAPI_DataType::PROXY_TEXTURE_2D:
+			type = GL_PROXY_TEXTURE_2D; break;
+
+		case GraphicsAPI_DataType::TEXTURE_1D_ARRAY:
+			type = GL_TEXTURE_1D_ARRAY; break;
+
+		case GraphicsAPI_DataType::PROXY_TEXTURE_1D_ARRAY:
+			type = GL_PROXY_TEXTURE_1D_ARRAY; break;
+
+		case GraphicsAPI_DataType::TEXTURE_RECTANGLE:
+			type = GL_TEXTURE_RECTANGLE; break;
+
+		case GraphicsAPI_DataType::PROXY_TEXTURE_RECTANGLE:
+			type = GL_PROXY_TEXTURE_RECTANGLE; break;
+
+		case GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_X:
+			type = GL_TEXTURE_CUBE_MAP_POSITIVE_X; break;
+
+		case GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_X:
+			type = GL_TEXTURE_CUBE_MAP_NEGATIVE_X; break;
+
+		case GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_Y:
+			type = GL_TEXTURE_CUBE_MAP_POSITIVE_Y; break;
+
+		case GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_Y:
+			type = GL_TEXTURE_CUBE_MAP_NEGATIVE_Y; break;
+
+		case GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_Z:
+			type = GL_TEXTURE_CUBE_MAP_POSITIVE_Z; break;
+
+		case GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_Z:
+			type = GL_TEXTURE_CUBE_MAP_NEGATIVE_Z; break;
+
+		case GraphicsAPI_DataType::PROXY_TEXTURE_CUBE_MAP:
+			type = GL_PROXY_TEXTURE_CUBE_MAP; break;
+
+		case GraphicsAPI_DataType::RED:
+			type = GL_RED; break;
+
+		case GraphicsAPI_DataType::RG:
+			type = GL_RG; break;
+
+		case GraphicsAPI_DataType::RGB:
+			type = GL_RGB; break;
+
+		case GraphicsAPI_DataType::BGR:
+			type = GL_BGR; break;
+
+		case GraphicsAPI_DataType::RGBA:
+			type = GL_RGBA; break;
+
+		case GraphicsAPI_DataType::BGRA:
+			type = GL_BGRA; break;
+
+		case GraphicsAPI_DataType::RED_INTEGER:
+			type = GL_RED_INTEGER; break;
+
+		case GraphicsAPI_DataType::RG_INTEGER:
+			type = GL_RG_INTEGER; break;
+
+		case GraphicsAPI_DataType::RGB_INTEGER:
+			type = GL_RGB_INTEGER; break;
+
+		case GraphicsAPI_DataType::BGR_INTEGER:
+			type = GL_BGR_INTEGER; break;
+
+		case GraphicsAPI_DataType::RGBA_INTEGER:
+			type = GL_RGBA_INTEGER; break;
+
+		case GraphicsAPI_DataType::BGRA_INTEGER:
+			type = GL_BGRA_INTEGER; break;
+
+		case GraphicsAPI_DataType::STENCIL_INDEX:
+			type = GL_STENCIL_INDEX; break;
+
+		case GraphicsAPI_DataType::DEPTH_COMPONENT:
+			type = GL_DEPTH_COMPONENT; break;
+
+		case GraphicsAPI_DataType::DEPTH_STENCIL:
+			type = GL_DEPTH_STENCIL; break;
+
+		case GraphicsAPI_DataType::DEPTH_STENCIL_TEXTURE_MODE:
+			type = GL_DEPTH_STENCIL_TEXTURE_MODE; break;
+
+		case GraphicsAPI_DataType::TEXTURE_BASE_LEVEL:
+			type = GL_TEXTURE_BASE_LEVEL; break;
+
+		case GraphicsAPI_DataType::TEXTURE_COMPARE_FUNC:
+			type = GL_TEXTURE_COMPARE_FUNC; break;
+
+		case GraphicsAPI_DataType::TEXTURE_COMPARE_MODE:
+			type = GL_TEXTURE_COMPARE_MODE; break;
+
+		case GraphicsAPI_DataType::TEXTURE_LOD_BIAS:
+			type = GL_TEXTURE_LOD_BIAS; break;
+
+		case GraphicsAPI_DataType::TEXTURE_MIN_FILTER:
+			type = GL_TEXTURE_MIN_FILTER; break;
+
+		case GraphicsAPI_DataType::TEXTURE_MAG_FILTER:
+			type = GL_TEXTURE_MAG_FILTER; break;
+
+		case GraphicsAPI_DataType::TEXTURE_MIN_LOD:
+			type = GL_TEXTURE_MIN_LOD; break;
+
+		case GraphicsAPI_DataType::TEXTURE_MAX_LOD:
+			type = GL_TEXTURE_MAX_LOD; break;
+
+		case GraphicsAPI_DataType::TEXTURE_MAX_LEVEL:
+			type = GL_TEXTURE_MAX_LEVEL; break;
+
+		case GraphicsAPI_DataType::TEXTURE_SWIZZLE_R:
+			type = GL_TEXTURE_SWIZZLE_R; break;
+
+		case GraphicsAPI_DataType::TEXTURE_SWIZZLE_G:
+			type = GL_TEXTURE_SWIZZLE_G; break;
+
+		case GraphicsAPI_DataType::TEXTURE_SWIZZLE_B:
+			type = GL_TEXTURE_SWIZZLE_B; break;
+
+		case GraphicsAPI_DataType::TEXTURE_SWIZZLE_A:
+			type = GL_TEXTURE_SWIZZLE_A; break;
+
+		case GraphicsAPI_DataType::TEXTURE_WRAP_S:
+			type = GL_TEXTURE_WRAP_S; break;
+
+		case GraphicsAPI_DataType::TEXTURE_WRAP_T:
+			type = GL_TEXTURE_WRAP_T; break;
+
+		case GraphicsAPI_DataType::TEXTURE_WRAP_R:
+			type = GL_TEXTURE_WRAP_R; break;
+
+		case GraphicsAPI_DataType::CLAMP_TO_EDGE:
+			type = GL_CLAMP_TO_EDGE; break;
+
+		case GraphicsAPI_DataType::CLAMP_TO_BORDER:
+			type = GL_CLAMP_TO_BORDER; break;
+
+		case GraphicsAPI_DataType::MIRRORED_REPEAT:
+			type = GL_MIRRORED_REPEAT; break;
+
+		case GraphicsAPI_DataType::REPEAT:
+			type = GL_REPEAT; break;
+
+		case GraphicsAPI_DataType::MIRROR_CLAMP_TO_EDGE:
+			type = GL_MIRROR_CLAMP_TO_EDGE; break;
+
+		case GraphicsAPI_DataType::GREEN:
+			type = GL_GREEN; break;
+
+		case GraphicsAPI_DataType::BLUE:
+			type = GL_BLUE; break;
+
+		case GraphicsAPI_DataType::ALPHA:
+			type = GL_ALPHA; break;
+
+		case GraphicsAPI_DataType::ZERO:
+			type = GL_ZERO; break;
+
+		case GraphicsAPI_DataType::ONE:
+			type = GL_ONE; break;
+
+		case GraphicsAPI_DataType::NEAREST:
+			type = GL_NEAREST; break;
+
+		case GraphicsAPI_DataType::LINEAR:
+			type = GL_LINEAR; break;
+
+		case GraphicsAPI_DataType::NEAREST_MIPMAP_NEAREST:
+			type = GL_NEAREST_MIPMAP_NEAREST; break;
+
+		case GraphicsAPI_DataType::LINEAR_MIPMAP_NEAREST:
+			type = GL_LINEAR_MIPMAP_NEAREST; break;
+
+		case GraphicsAPI_DataType::NEAREST_MIPMAP_LINEAR:
+			type = GL_NEAREST_MIPMAP_LINEAR; break;
+
+		case GraphicsAPI_DataType::LINEAR_MIPMAP_LINEAR:
+			type = GL_LINEAR_MIPMAP_LINEAR; break;
+		
+		case GraphicsAPI_DataType::RGB16F:
+			type = GL_RGB16F; break;
+
+		case GraphicsAPI_DataType::TEXTURE0:
+			type = GL_TEXTURE0; break;
+			
 		/* OpenGL 4.4 Contexts */
 
 		case GraphicsAPI_DataType::FIXED:
@@ -190,7 +379,9 @@ int GraphicsAPI_OpenGL::GetType(GraphicsAPI_DataType _dataType) const
 			type = GL_UNIFORM_BUFFER; break;
 
 
-		default: break;
+		default: 
+			assert(false);
+			break;
 	}
 
 	// check if fails
@@ -199,13 +390,13 @@ int GraphicsAPI_OpenGL::GetType(GraphicsAPI_DataType _dataType) const
 	return type;
 }
 
-void GraphicsAPI_OpenGL::GenerateBuffers(unsigned int* _ids, int _length)
+void GraphicsAPI_OpenGL::GenerateBuffers(unsigned int* _ids, int _length) const
 {
 	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGenBuffers.xhtml
 	glGenBuffers(_length, _ids);
 }
 
-void GraphicsAPI_OpenGL::BindBuffer(GraphicsAPI_DataType _type, unsigned int _id)
+void GraphicsAPI_OpenGL::BindBuffer(GraphicsAPI_DataType _type, unsigned int _id) const
 {
 	const GLenum target = static_cast<GLenum>(this->GetType(_type));
 	const GLuint buffer = static_cast<GLuint>(_id);
@@ -214,12 +405,12 @@ void GraphicsAPI_OpenGL::BindBuffer(GraphicsAPI_DataType _type, unsigned int _id
 	glBindBuffer(target, buffer);
 }
 
-void GraphicsAPI_OpenGL::UnbindBuffer(GraphicsAPI_DataType _type)
+void GraphicsAPI_OpenGL::UnbindBuffer(GraphicsAPI_DataType _type) const
 {
 	BindBuffer(_type, NULL);
 }
 
-void GraphicsAPI_OpenGL::SetBuffers(GraphicsAPI_DataType _type, size_t _size, const void *_data, GraphicsAPI_DataType _additionalType)
+void GraphicsAPI_OpenGL::SetBuffers(GraphicsAPI_DataType _type, size_t _size, const void *_data, GraphicsAPI_DataType _additionalType) const
 {
 	// GLenum is a 32-bit integer
 	const GLenum target = static_cast<GLenum>(this->GetType(_type));
@@ -234,7 +425,7 @@ void GraphicsAPI_OpenGL::SetBuffers(GraphicsAPI_DataType _type, size_t _size, co
 	glBufferData(target, size, _data, usage);
 }
 
-void GraphicsAPI_OpenGL::EnableVertexArrayAttribute(unsigned int _VAOid) 
+void GraphicsAPI_OpenGL::EnableVertexArrayAttribute(unsigned int _VAOid) const
 {
 	const GLuint index = static_cast<GLuint>(_VAOid);
 
@@ -242,7 +433,7 @@ void GraphicsAPI_OpenGL::EnableVertexArrayAttribute(unsigned int _VAOid)
 	glEnableVertexAttribArray(index);
 }
 
-void GraphicsAPI_OpenGL::DisableVertexArrayAttribute(unsigned int _VAOid)
+void GraphicsAPI_OpenGL::DisableVertexArrayAttribute(unsigned int _VAOid) const
 {
 	const GLuint index = static_cast<GLuint>(_VAOid);
 
@@ -250,7 +441,7 @@ void GraphicsAPI_OpenGL::DisableVertexArrayAttribute(unsigned int _VAOid)
 	glDisableVertexAttribArray(index);
 }
 
-void GraphicsAPI_OpenGL::SetVertexArray(unsigned int _VAOid, unsigned int _size, GraphicsAPI_DataType _type, GraphicsAPI_DataType _normalized, unsigned int _stride, const void* ptr)
+void GraphicsAPI_OpenGL::SetVertexArray(unsigned int _VAOid, unsigned int _size, GraphicsAPI_DataType _type, GraphicsAPI_DataType _normalized, unsigned int _stride, const void* ptr) const
 {
 	const GLuint index = static_cast<GLuint>(_VAOid);
 	const GLint size = static_cast<GLint>(_size);
@@ -262,7 +453,7 @@ void GraphicsAPI_OpenGL::SetVertexArray(unsigned int _VAOid, unsigned int _size,
 	glVertexAttribPointer(index, size, type, normalized, stride, ptr);
 }
 
-void GraphicsAPI_OpenGL::BindVertexArray(unsigned int _id)
+void GraphicsAPI_OpenGL::BindVertexArray(unsigned int _id) const
 {
 	const GLuint array = static_cast<GLuint>(_id);
 
@@ -270,12 +461,12 @@ void GraphicsAPI_OpenGL::BindVertexArray(unsigned int _id)
 	glBindVertexArray(array);
 }
 
-void GraphicsAPI_OpenGL::UnbindVertexArray()
+void GraphicsAPI_OpenGL::UnbindVertexArray() const
 {
 	BindVertexArray(NULL);
 }
 
-void GraphicsAPI_OpenGL::GenerateVertexArrays(unsigned int* _ids, int _length)
+void GraphicsAPI_OpenGL::GenerateVertexArrays(unsigned int* _ids, int _length) const
 {
 	const GLsizei n = static_cast<GLsizei>(_length);
 	GLuint* arrays = static_cast<GLuint*> (_ids);
@@ -284,7 +475,7 @@ void GraphicsAPI_OpenGL::GenerateVertexArrays(unsigned int* _ids, int _length)
 	glGenVertexArrays(n, arrays);
 }
 
-void GraphicsAPI_OpenGL::SetupVAO(unsigned int* _VAO, Mesh* _mesh, GraphicsAPI_DataType _type)
+void GraphicsAPI_OpenGL::SetupVAO(unsigned int* _VAO, Mesh* _mesh, GraphicsAPI_DataType _type) const
 {
 	const unsigned int vboSize = _mesh->dataSize;
 	const size_t vec3Size = _mesh->GetVec3Size();
@@ -329,7 +520,7 @@ void GraphicsAPI_OpenGL::SetupVAO(unsigned int* _VAO, Mesh* _mesh, GraphicsAPI_D
 	delete[] VBO;
 }
 
-unsigned int GraphicsAPI_OpenGL::CompileShader(std::string _vertexShaderSource, std::string _geometryShaderSource, std::string _fragmentShaderSouce)
+unsigned int GraphicsAPI_OpenGL::CompileShader(std::string _vertexShaderSource, std::string _geometryShaderSource, std::string _fragmentShaderSouce) const
 {
 	auto ReadFile = [](const char* filename) -> char* {
 		FILE *fp = fopen(filename, "rb");
@@ -464,12 +655,12 @@ unsigned int GraphicsAPI_OpenGL::CompileShader(std::string _vertexShaderSource, 
 	return static_cast<unsigned int>(program);
 }
 
-void GraphicsAPI_OpenGL::BindProgram(unsigned int _program)
+void GraphicsAPI_OpenGL::BindProgram(unsigned int _program) const
 {
 	glUseProgram(_program);
 }
 
-void GraphicsAPI_OpenGL::UnbindProgram()
+void GraphicsAPI_OpenGL::UnbindProgram() const
 {
 	glUseProgram(NULL);
 }
@@ -637,4 +828,71 @@ void GraphicsAPI_OpenGL::DrawArrays(GraphicsAPI_DataType _type, unsigned int _co
 
 	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawArrays.xhtml
 	glDrawArrays(mode, first, count);
+}
+
+void GraphicsAPI_OpenGL::GenerateTextures(unsigned int* _ids, unsigned int _length) const
+{
+	const GLsizei n = static_cast<GLsizei>(_length);
+	GLuint* textures = static_cast<GLuint*>(_ids);
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGenTextures.xhtml
+	glGenTextures(n, textures);
+}
+
+void GraphicsAPI_OpenGL::BindTexture(GraphicsAPI_DataType _type, unsigned int _id) const
+{
+	const GLenum target = static_cast<GLenum>(this->GetType(_type));
+	const GLuint texture = static_cast<GLuint>(_id);
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindTexture.xhtml
+	glBindTexture(target, texture);
+}
+
+void GraphicsAPI_OpenGL::SetTexture2D(GraphicsAPI_DataType _targetType, unsigned int _level, GraphicsAPI_DataType _channelType, unsigned int _width, unsigned int _height, int _border, GraphicsAPI_DataType _formatType, GraphicsAPI_DataType _type, const void* _data) const
+{
+	const GLenum target = static_cast<GLenum>(this->GetType(_targetType));
+	const GLint level = static_cast<GLint>(_level);
+	const GLint internalformat = static_cast<GLint>(this->GetType(_channelType));
+	const GLsizei width = static_cast<GLsizei>(_width);
+	const GLsizei height = static_cast<GLsizei>(_height);
+	const GLint border = static_cast<GLint>(_border);
+	const GLenum format = static_cast<GLenum>(this->GetType(_formatType));
+	const GLenum type = static_cast<GLenum>(this->GetType(_type));
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexImage2D.xhtml
+	glTexImage2D(target, level, internalformat, width, height, border, format, type, _data);
+}
+
+// map to glTextureParameteri For now
+void GraphicsAPI_OpenGL::SetTextureParameter(GraphicsAPI_DataType _targetType, GraphicsAPI_DataType _pname, GraphicsAPI_DataType _param) const
+{
+	const GLenum target = static_cast<GLenum>(this->GetType(_targetType));
+	const GLenum pname = static_cast<GLenum>(this->GetType(_pname));
+	const GLfloat param = static_cast<GLfloat>(this->GetType(_param));
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexParameter.xhtml
+	glTexParameteri(target, pname, param);
+}
+
+void GraphicsAPI_OpenGL::ActiveTexture(unsigned int _texture) const
+{
+	const GLenum texture = static_cast<GLenum>(this->GetType(GraphicsAPI_DataType::TEXTURE0) + _texture);
+	
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glActiveTexture.xhtml
+	glActiveTexture(texture);
+}
+
+void GraphicsAPI_OpenGL::EnableTexture2D() const
+{
+	glEnable(GL_TEXTURE_2D);
+}
+
+void GraphicsAPI_OpenGL::DisableTexture2D() const
+{
+	glDisable(GL_TEXTURE_2D);
+}
+
+void GraphicsAPI_OpenGL::UnbindTexture2D() const
+{
+	glBindTexture(GL_TEXTURE_2D, NULL);
 }

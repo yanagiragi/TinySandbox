@@ -29,6 +29,22 @@ namespace TinySandbox
 		TRUE,
 		FALSE,
 
+		// No these for now
+		/*
+			GL_UNSIGNED_BYTE_3_3_2,
+			GL_UNSIGNED_BYTE_2_3_3_REV,
+			GL_UNSIGNED_SHORT_5_6_5,
+			GL_UNSIGNED_SHORT_5_6_5_REV,
+			GL_UNSIGNED_SHORT_4_4_4_4,
+			GL_UNSIGNED_SHORT_4_4_4_4_REV,
+			GL_UNSIGNED_SHORT_5_5_5_1,
+			GL_UNSIGNED_SHORT_1_5_5_5_REV,
+			GL_UNSIGNED_INT_8_8_8_8,
+			GL_UNSIGNED_INT_8_8_8_8_REV,
+			GL_UNSIGNED_INT_10_10_10_2,
+			GL_UNSIGNED_INT_2_10_10_10_REV,
+		*/
+
 		// Depth Func
 		NEVER,
 		LESS,
@@ -57,6 +73,81 @@ namespace TinySandbox
 		TRIANGLE_STRIP_ADJACENCY,
 		TRIANGLES_ADJACENCY,
 		PATCHES,
+
+		// texture
+		TEXTURE_2D,
+		PROXY_TEXTURE_2D,
+		TEXTURE_1D_ARRAY,
+		PROXY_TEXTURE_1D_ARRAY,
+		TEXTURE_RECTANGLE,
+		PROXY_TEXTURE_RECTANGLE,
+		TEXTURE_CUBE_MAP_POSITIVE_X,
+		TEXTURE_CUBE_MAP_NEGATIVE_X,
+		TEXTURE_CUBE_MAP_POSITIVE_Y,
+		TEXTURE_CUBE_MAP_NEGATIVE_Y,
+		TEXTURE_CUBE_MAP_POSITIVE_Z,
+		TEXTURE_CUBE_MAP_NEGATIVE_Z,
+		PROXY_TEXTURE_CUBE_MAP,
+		TEXTURE0,
+
+		// Pixel data format
+		RED,
+		RG,
+		RGB,
+		BGR,
+		RGBA,
+		BGRA,
+		RED_INTEGER,
+		RG_INTEGER,
+		RGB_INTEGER,
+		BGR_INTEGER,
+		RGBA_INTEGER,
+		BGRA_INTEGER,
+		STENCIL_INDEX,
+		DEPTH_COMPONENT,
+		DEPTH_STENCIL,
+		RGB16F,
+
+		// Texture Parameter
+		DEPTH_STENCIL_TEXTURE_MODE,
+		TEXTURE_BASE_LEVEL,
+		TEXTURE_COMPARE_FUNC,
+		TEXTURE_COMPARE_MODE,
+		TEXTURE_LOD_BIAS,
+		TEXTURE_MIN_FILTER,
+		TEXTURE_MAG_FILTER,
+		TEXTURE_MIN_LOD,
+		TEXTURE_MAX_LOD,
+		TEXTURE_MAX_LEVEL,
+		TEXTURE_SWIZZLE_R,
+		TEXTURE_SWIZZLE_G,
+		TEXTURE_SWIZZLE_B,
+		TEXTURE_SWIZZLE_A,
+		TEXTURE_WRAP_S,
+		TEXTURE_WRAP_T,
+		TEXTURE_WRAP_R,
+
+		// warp parameter
+		CLAMP_TO_EDGE,
+		CLAMP_TO_BORDER,
+		MIRRORED_REPEAT,
+		REPEAT,
+		MIRROR_CLAMP_TO_EDGE,
+
+		// swizzle parameter, RED already appears at Pixel data format
+		GREEN,
+		BLUE,
+		ALPHA,
+		ZERO,
+		ONE,
+
+		// texture filter parameters
+		NEAREST,
+		LINEAR,
+		NEAREST_MIPMAP_NEAREST,
+		LINEAR_MIPMAP_NEAREST,
+		NEAREST_MIPMAP_LINEAR,
+		LINEAR_MIPMAP_LINEAR,
 
 		// others
 		ARRAY_BUFFER,
@@ -96,7 +187,7 @@ namespace TinySandbox
 
 			GraphicsAPI (GraphicsAPI* _api) {
 				GraphicsAPI::m_api = _api;
-				GraphicsAPI::m_type = _api->GetType();
+				GraphicsAPI::m_type = _api->GetAPIType();
 			};
 
 			/*GraphicsAPI& operator= (const GraphicsAPI& _api) {
@@ -113,7 +204,7 @@ namespace TinySandbox
 				return m_api;
 			}
 
-			const GraphicsAPI_Type& GetType() const {
+			const GraphicsAPI_Type& GetAPIType() const {
 				return m_type;
 			}
 
@@ -123,32 +214,32 @@ namespace TinySandbox
 			// i.e., virtual void BindTextures(Texture, uint_32t);
 
 			// Maps GraphicsAPI_DataType to actual MACRO type
-			virtual int GetType(GraphicsAPI_DataType _type) const = 0;
+			virtual float GetType(GraphicsAPI_DataType _type) const = 0;
 
-			virtual void GenerateBuffers(unsigned int* _ids, int _length) = 0;
-			virtual void BindBuffer(GraphicsAPI_DataType _type, unsigned int _id) = 0;
-			virtual void UnbindBuffer(GraphicsAPI_DataType _type) = 0;
+			virtual void GenerateBuffers(unsigned int* _ids, int _length) const = 0;
+			virtual void BindBuffer(GraphicsAPI_DataType _type, unsigned int _id) const = 0;
+			virtual void UnbindBuffer(GraphicsAPI_DataType _type) const = 0;
 			virtual void SetBuffers(
 				GraphicsAPI_DataType _type, 
 				size_t _size, 
 				const void* _data, 
 				GraphicsAPI_DataType _additionalType
-			) = 0;
+			) const = 0;
 
-			virtual void GenerateVertexArrays(unsigned int* _ids, int _length) = 0;
-			virtual void BindVertexArray(unsigned int _id) = 0;
-			virtual void UnbindVertexArray() = 0;
-			virtual void SetupVAO(unsigned int* _VAO, Mesh* _mesh, GraphicsAPI_DataType _type) = 0;
+			virtual void GenerateVertexArrays(unsigned int* _ids, int _length) const = 0;
+			virtual void BindVertexArray(unsigned int _id) const = 0;
+			virtual void UnbindVertexArray() const = 0;
+			virtual void SetupVAO(unsigned int* _VAO, Mesh* _mesh, GraphicsAPI_DataType _type) const = 0;
 			
-			virtual void EnableVertexArrayAttribute(unsigned int _VAOid) = 0;
-			virtual void DisableVertexArrayAttribute(unsigned int _VAOid) = 0;
+			virtual void EnableVertexArrayAttribute(unsigned int _VAOid) const = 0;
+			virtual void DisableVertexArrayAttribute(unsigned int _VAOid) const = 0;
 
-			virtual void SetVertexArray(unsigned int _VAOid, unsigned int _size, GraphicsAPI_DataType _type, GraphicsAPI_DataType _normalized, unsigned int _stride, const void* ptr) = 0;
+			virtual void SetVertexArray(unsigned int _VAOid, unsigned int _size, GraphicsAPI_DataType _type, GraphicsAPI_DataType _normalized, unsigned int _stride, const void* ptr) const = 0;
 
-			virtual unsigned int CompileShader(std::string _vertexShaderSource, std::string _geometryShaderSource, std::string _fragmentShaderSouce) = 0;
+			virtual unsigned int CompileShader(std::string _vertexShaderSource, std::string _geometryShaderSource, std::string _fragmentShaderSouce) const = 0;
 
-			virtual void BindProgram(unsigned int _program) = 0;
-			virtual void UnbindProgram() = 0;
+			virtual void BindProgram(unsigned int _program) const = 0;
+			virtual void UnbindProgram() const = 0;
 
 			// Set Uniforms
 			virtual void SetBool(unsigned int _program, const std::string &name, bool value) const = 0;
@@ -186,6 +277,15 @@ namespace TinySandbox
 			virtual void SetCullingMode(GraphicsAPI_DataType _type) const = 0;
 
 			virtual void DrawArrays(GraphicsAPI_DataType _type, unsigned int count, int _first = 0) const = 0;
+
+			virtual void GenerateTextures(unsigned int* _ids, unsigned int _length) const = 0;
+			virtual void BindTexture(GraphicsAPI_DataType _type, unsigned int _id) const = 0;
+			virtual void SetTexture2D(GraphicsAPI_DataType _targetType, unsigned int _level, GraphicsAPI_DataType _channelType, unsigned int width, unsigned int height, int border, GraphicsAPI_DataType _formatType, GraphicsAPI_DataType _type, const void* data) const = 0;
+			virtual void SetTextureParameter(GraphicsAPI_DataType _targetType, GraphicsAPI_DataType _pname, GraphicsAPI_DataType _param) const = 0;
+			virtual void ActiveTexture(unsigned int __texture) const = 0;
+			virtual void EnableTexture2D() const = 0;
+			virtual void DisableTexture2D() const = 0;
+			virtual void UnbindTexture2D() const = 0;
 			
 		private:
             static GraphicsAPI_Type m_type;

@@ -11,25 +11,25 @@ namespace TinySandbox
 		// if multiple api instances exists, you should explicitly call SetAPI() instead.
 		GraphicsAPI_OpenGL() : GraphicsAPI(this) {}
 
-		int GetType(GraphicsAPI_DataType _type) const override;
+		float GetType(GraphicsAPI_DataType _type) const override;
 		
-		void SetupVAO(unsigned int* _VAO, Mesh* _mesh, GraphicsAPI_DataType _type) override;
+		void SetupVAO(unsigned int* _VAO, Mesh* _mesh, GraphicsAPI_DataType _type) const override;
 
 	private:
-		void GenerateBuffers(unsigned int* _ids, int _length) override;
-		void BindBuffer(GraphicsAPI_DataType _type, unsigned int _id) override;
-		void UnbindBuffer(GraphicsAPI_DataType _type) override;
-		void SetBuffers(GraphicsAPI_DataType _type, size_t _size, const void *_data, GraphicsAPI_DataType _additionalType) override;
+		void GenerateBuffers(unsigned int* _ids, int _length) const override;
+		void BindBuffer(GraphicsAPI_DataType _type, unsigned int _id) const override;
+		void UnbindBuffer(GraphicsAPI_DataType _type) const override;
+		void SetBuffers(GraphicsAPI_DataType _type, size_t _size, const void *_data, GraphicsAPI_DataType _additionalType) const override;
 
-		void GenerateVertexArrays(unsigned int* _ids, int _length) override;
-		void BindVertexArray(unsigned int _id) override;
-		void UnbindVertexArray() override;
-		void EnableVertexArrayAttribute(unsigned int _VAOid) override;
-		void DisableVertexArrayAttribute(unsigned int _VAOid) override;
-		void SetVertexArray(unsigned int _VAOid, unsigned int _size, GraphicsAPI_DataType _type, GraphicsAPI_DataType _normalized, unsigned int _stride, const void* ptr) override;
-		unsigned int CompileShader(std::string _vertexShaderSource, std::string _geometryShaderSource, std::string _fragmentShaderSouce) override;
-		void BindProgram(unsigned int _program) override;
-		void UnbindProgram() override;
+		void GenerateVertexArrays(unsigned int* _ids, int _length) const override;
+		void BindVertexArray(unsigned int _id) const override;
+		void UnbindVertexArray() const override;
+		void EnableVertexArrayAttribute(unsigned int _VAOid) const override;
+		void DisableVertexArrayAttribute(unsigned int _VAOid) const override;
+		void SetVertexArray(unsigned int _VAOid, unsigned int _size, GraphicsAPI_DataType _type, GraphicsAPI_DataType _normalized, unsigned int _stride, const void* ptr) const override;
+		unsigned int CompileShader(std::string _vertexShaderSource, std::string _geometryShaderSource, std::string _fragmentShaderSouce) const override;
+		void BindProgram(unsigned int _program) const override;
+		void UnbindProgram() const override;
 
 		void SetBool(unsigned int _program, const std::string &name, bool value) const override;
 		void SetInt(unsigned int _program, const std::string &name, int value) const override;
@@ -70,5 +70,24 @@ namespace TinySandbox
 
 		void DrawArrays(GraphicsAPI_DataType _type, unsigned int _count, int _first = 0) const override;
 
+		void GenerateTextures(unsigned int* _ids, unsigned int _length) const override;
+		void BindTexture(GraphicsAPI_DataType _type, unsigned int _id) const override;
+		void SetTexture2D(
+			GraphicsAPI_DataType _targetType,
+			unsigned int _level,
+			GraphicsAPI_DataType _channelType, 
+			unsigned int _width,
+			unsigned int _height,
+			int _border,
+			GraphicsAPI_DataType _formatType,
+			GraphicsAPI_DataType _type,
+			const void* _data
+		) const override;
+		void SetTextureParameter(GraphicsAPI_DataType _targetType, GraphicsAPI_DataType _pname, GraphicsAPI_DataType _param) const override;
+		void ActiveTexture(unsigned int _texture) const override;
+
+		void EnableTexture2D() const override;
+		void DisableTexture2D() const override;
+		void UnbindTexture2D() const override;
 	};
 }
