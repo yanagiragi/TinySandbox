@@ -105,11 +105,8 @@ namespace TinySandbox
 							data
 						);
 					}
-					else { // components = 3
-
-						glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, *width, *height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-
-						/*m_api->SetTexture2D(
+					else if (*components == 3) {
+						m_api->SetTexture2D(
 							GraphicsAPI_DataType::TEXTURE_2D,
 							0, // lod level = 0
 							GraphicsAPI_DataType::RGB, // internal format, since we have 4 components, each for 8 bytes
@@ -117,7 +114,13 @@ namespace TinySandbox
 							GraphicsAPI_DataType::RGB, // type
 							GraphicsAPI_DataType::UNSIGNED_BYTE,
 							data
-						);*/
+						);
+					}
+					else {
+						stbi_image_free(data);
+						m_api->UnbindTexture2D();
+
+						throw "Current Not Support Channel 2 Texture";
 					}
 
 					m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_2D, GraphicsAPI_DataType::TEXTURE_WRAP_S, _wrapFlag);
@@ -126,9 +129,8 @@ namespace TinySandbox
 					m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_2D, GraphicsAPI_DataType::TEXTURE_MIN_FILTER, GraphicsAPI_DataType::LINEAR);
 					m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_2D, GraphicsAPI_DataType::TEXTURE_MAG_FILTER, GraphicsAPI_DataType::LINEAR);
 
-					m_api->UnbindTexture2D();
-
 					stbi_image_free(data);
+					m_api->UnbindTexture2D();
 				}
 				else {
 					std::cout << "Failed to load image, " << stbi_failure_reason() << std::endl;
