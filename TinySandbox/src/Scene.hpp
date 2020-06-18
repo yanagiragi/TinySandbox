@@ -27,52 +27,19 @@ namespace TinySandbox
 			Scene& operator= (const Scene& _scene) = delete;
 			Scene& operator= (const Scene&& _scene) = delete;
 
-			void Start() override
-			{
-				for (auto entity : Scene::Instance()->m_entitiesList) {
-					entity->Start();
-				}
-			}
+			void Start() override;
 
-			void Update() override
-			{
-				for (auto entity : Scene::Instance()->m_entitiesList) {
-					entity->Update();
-				}
-			}
+			void Update() override;
 
-			void OnGUI() override
-			{
-				for (auto entity : Scene::Instance()->m_entitiesList) {
-					entity->OnGUI();
-				}
-			}
+			void OnGUI() override;
 
-			void OnRender() override
-			{
-				for (auto entity : Scene::Instance()->m_entitiesList) {
-					entity->OnRender();
-				}
-			}
+			void OnRender() override;
 
-			void Add(Entity* _entity)
-			{
-				Scene::Instance()->m_entitiesList.push_back(_entity);
-			}
+			void Add(Entity* _entity);
 
-			static Scene* Instance()
-			{
-				if (Scene::m_instance == nullptr)
-				{
-					Scene::m_instance = new Scene();
-				}
-				return m_instance;
-			}
+			static Scene* Instance();
 
-			static Camera* GetMainCamera()
-			{
-				return Scene::Instance()->m_mainCamera;
-			}
+			static Camera* GetMainCamera();
 
 			virtual void InitSceneSettings();
 			

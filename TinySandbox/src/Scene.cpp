@@ -4,6 +4,7 @@
 #include "MeshRenderer.hpp"
 
 #include "NormalDebugMaterial.hpp"
+#include "UnlitMaterial.hpp"
 
 // initialize static member
 TinySandbox::Scene* TinySandbox::Scene::m_instance = nullptr;
@@ -41,7 +42,8 @@ namespace TinySandbox
 
 		testEntity->Add(meshRenderer); // implicitly cast to TinySandbox::Component
 		meshRenderer->SetMesh(mesh);
-		meshRenderer->SetMaterial(new NormalDebugMaterial(meshRenderer));
+		meshRenderer->SetMaterial(new UnlitMaterial(meshRenderer, "../Resources/test.png"));
+		//meshRenderer->SetMaterial(new UnlitMaterial(meshRenderer));
 		testTransform->Rotation(glm::vec3(-90.0f, 0.0f, 90.0f));
 
 		Scene::Instance()->Add(testEntity);
@@ -54,6 +56,54 @@ namespace TinySandbox
 		m_mainCamera->Position(glm::vec3(0, 0, 5));
 		m_mainCamera->Phi(90.0f);
 		m_mainCamera->Theta(0.0f);
+	}
+
+
+	void Scene::Start()
+	{
+		for (auto entity : Scene::Instance()->m_entitiesList) {
+			entity->Start();
+		}
+	}
+
+	void Scene::Update()
+	{
+		for (auto entity : Scene::Instance()->m_entitiesList) {
+			entity->Update();
+		}
+	}
+
+	void Scene::OnGUI()
+	{
+		for (auto entity : Scene::Instance()->m_entitiesList) {
+			entity->OnGUI();
+		}
+	}
+
+	void Scene::OnRender()
+	{
+		for (auto entity : Scene::Instance()->m_entitiesList) {
+			entity->OnRender();
+		}
+	}
+
+	void Scene::Add(Entity* _entity)
+	{
+		Scene::Instance()->m_entitiesList.push_back(_entity);
+	}
+
+	Scene* Scene::Instance()
+	{
+		if (Scene::m_instance == nullptr)
+		{
+			Scene::m_instance = new Scene();
+		}
+		return m_instance;
+	}
+
+	Camera* Scene::GetMainCamera()
+	{
+		return Scene::Instance()->m_mainCamera;
 	}
 
 	/*void Scene::ProcessInput(GLFWwindow *window)

@@ -11,7 +11,6 @@ namespace TinySandbox
 				: Material("../Shaders/normalDebug.vert", "", "../Shaders/normalDebug.frag")
 			{
 				m_renderer = _renderer;
-				entity = m_renderer->entity;
 			}
 
 			/*NormalDebugMaterial(const char* _vertexShaderSource, const char* _geometryShaderSource, const char* _fragmentShaderSource)
@@ -23,9 +22,7 @@ namespace TinySandbox
 			NormalDebugMaterial& operator=(const NormalDebugMaterial& _other)
 			{
 				this->m_program = _other.m_program;
-				this->m_API = _other.m_API;
-				this->m_renderer = _other.m_renderer;
-				this->entity = _other.entity;
+				this->m_api = _other.m_api;
 			}
 
 			void OnGUI() override
@@ -41,7 +38,7 @@ namespace TinySandbox
 				// Bind Uniform Variables
 				const glm::mat4 viewMatrix = Scene::GetMainCamera()->ViewMatrix();
 				const glm::mat4 projectionMatrix = Scene::GetMainCamera()->ProjectionMatrix();
-				const glm::mat4 modelMatrix = entity->GetTransform()->toMatrix();
+				const glm::mat4 modelMatrix = m_renderer->entity->GetTransform()->toMatrix();
 
 				this->SetMat4("u_Model", modelMatrix);
 				this->SetMat4("u_View", viewMatrix);
