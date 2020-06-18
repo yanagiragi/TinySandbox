@@ -32,8 +32,7 @@ namespace TinySandbox
 
 			void Use() override
 			{
-				GraphicsAPI* API = GraphicsAPI::GetAPI();
-				API->BindProgram(m_program);
+				m_api->BindProgram(m_program);
 
 				// Bind Uniform Variables
 				const glm::mat4 viewMatrix = Scene::GetMainCamera()->ViewMatrix();

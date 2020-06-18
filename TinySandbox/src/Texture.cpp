@@ -72,7 +72,7 @@ namespace TinySandbox
 		}
 
 		if (isCubemap) {
-			CubemapConverter::Convert(*this);
+			// m_textureId = CubemapConverter::Convert(*this);
 		}
 	}
 

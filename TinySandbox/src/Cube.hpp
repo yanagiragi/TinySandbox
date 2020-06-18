@@ -8,14 +8,16 @@ namespace TinySandbox
 	{
 		public:
 			
-			Cube() 
+			Cube() : Mesh("../Resources/cube.obj")
 			{
-				Mesh::Mesh("../Resources/cube.obj");
+				
 			}
 
 			~ Cube() 
 			{
 
 			}
+
+
 	};
 }

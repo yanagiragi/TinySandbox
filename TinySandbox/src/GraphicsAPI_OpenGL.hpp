@@ -96,10 +96,13 @@ namespace TinySandbox
 		void BindFrameBuffer(GraphicsAPI_DataType _type, unsigned int _id) const override;
 		void UnbindFrameBuffer(GraphicsAPI_DataType _type) const override;
 		void AttachRenderBufferToFrameBuffer(GraphicsAPI_DataType _target, GraphicsAPI_DataType _attachment, GraphicsAPI_DataType _renderBufferTarget, unsigned int _renderBuffer) const override;
+		void SetFrameBuffer2D(GraphicsAPI_DataType _target, GraphicsAPI_DataType _attachment, GraphicsAPI_DataType _textarget, unsigned int _texture, int _level) const override;
 
 		void GenerateRenderBuffers(unsigned int* _ids, unsigned int _length) const override;
 		void BindRenderBuffer(GraphicsAPI_DataType _type, unsigned int _id) const override;
 		void UnbindRenderBuffer(GraphicsAPI_DataType _type) const override;
 		void SetRenderBuffer(GraphicsAPI_DataType _target, GraphicsAPI_DataType _internalFormat, unsigned int _width, unsigned int _height) const override;
+
+
 	};
 }

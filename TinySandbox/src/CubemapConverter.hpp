@@ -2,22 +2,30 @@
 
 #include "GraphicsAPI.hpp"
 #include "Texture.hpp"
+#include "Material.hpp"
+#include "MeshRenderer.hpp"
+#include "EquirectangularToCubemapMaterial.hpp"
 
 namespace TinySandbox
 {
-	class CubemapConverter
+	class CubemapConverter : public MeshRenderer
 	{
 		public:
 
 			CubemapConverter();
 
-			static void Convert(Texture& _tex);
+			static unsigned int Convert(Texture& _tex);
+
+			static CubemapConverter* Instance();
 
 		private:
 
-			static void InitializeFrameBufferObjects(GraphicsAPI* m_api);
+			void InitializeFrameBufferObjects(GraphicsAPI* m_api);
 
-			static unsigned int m_frameBufferObject;
-			static unsigned int m_renderBufferObject;
+			unsigned int m_frameBufferObject;
+			unsigned int m_renderBufferObject;
+			EquirectangularToCubemapMaterial* m_ConvertMaterial;
+
+			static CubemapConverter* m_instance;
 	};
 }

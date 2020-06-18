@@ -8,8 +8,10 @@ namespace TinySandbox
 {
 	SkyboxRenderer::SkyboxRenderer()
 	{
-		m_mesh = new Cube();
 		m_material = new SkyboxMaterial(this);
+		
+		m_mesh = new Cube();
+		this->BindVAO();
 	}
 
 	SkyboxRenderer::~SkyboxRenderer()

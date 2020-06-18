@@ -1158,3 +1158,15 @@ void GraphicsAPI_OpenGL::SetRenderBuffer(GraphicsAPI_DataType _target, GraphicsA
 	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glRenderbufferStorage.xhtml
 	glRenderbufferStorage(target, internalformat, width, height);
 }
+
+void GraphicsAPI_OpenGL::SetFrameBuffer2D(GraphicsAPI_DataType _target, GraphicsAPI_DataType _attachment, GraphicsAPI_DataType _textarget, unsigned int _texture, int _level) const
+{
+	const GLenum target = static_cast<GLenum>(this->GetType(_target));
+	const GLenum attachment = static_cast<GLenum>(this->GetType(_attachment));
+	const GLenum textarget = static_cast<GLenum>(this->GetType(_textarget));
+	const GLuint texture = static_cast<GLuint>(_texture);
+	const GLint level = static_cast<GLint>(_level);
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glFramebufferTexture2D.xml
+	glFramebufferTexture2D(target, attachment, textarget, texture, level);
+}

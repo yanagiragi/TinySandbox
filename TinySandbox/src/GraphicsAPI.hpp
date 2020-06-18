@@ -361,6 +361,7 @@ namespace TinySandbox
 			virtual void BindFrameBuffer(GraphicsAPI_DataType _type, unsigned int _id) const = 0;
 			virtual void UnbindFrameBuffer(GraphicsAPI_DataType _type) const = 0;
 			virtual void AttachRenderBufferToFrameBuffer(GraphicsAPI_DataType _target, GraphicsAPI_DataType _attachment, GraphicsAPI_DataType _renderBufferTarget, unsigned int _renderBuffer) const = 0;
+			virtual void SetFrameBuffer2D(GraphicsAPI_DataType _target, GraphicsAPI_DataType _attachment, GraphicsAPI_DataType _textarget, unsigned int _texture, int _level) const = 0;
 
 			virtual void GenerateRenderBuffers(unsigned int* _ids, unsigned int _length) const = 0;
 			virtual void BindRenderBuffer(GraphicsAPI_DataType _type, unsigned int _id) const = 0;

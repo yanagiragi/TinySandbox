@@ -2,33 +2,45 @@
 
 #include "Cube.hpp"
 #include "SkyboxMaterial.hpp"
+#include "EquirectangularToCubemapMaterial.hpp"
 
-unsigned int TinySandbox::CubemapConverter::m_frameBufferObject = 4294967294;
-unsigned int TinySandbox::CubemapConverter::m_renderBufferObject = 4294967294;
+TinySandbox::CubemapConverter* TinySandbox::CubemapConverter::m_instance = nullptr;
 
 namespace TinySandbox
 {
 	CubemapConverter::CubemapConverter()
 	{
+		this->SetMesh(new Cube());
+		m_frameBufferObject = 4294967294;
+		m_renderBufferObject= 4294967294;
 
+		m_ConvertMaterial = new EquirectangularToCubemapMaterial(nullptr);
 	}
 
-	void CubemapConverter::Convert(Texture& _tex)
+	CubemapConverter* CubemapConverter::Instance()
+	{
+		if (CubemapConverter::m_instance == nullptr) {
+			m_instance = new CubemapConverter();
+		}
+		return m_instance;
+	}
+
+	unsigned int CubemapConverter::Convert(Texture& _tex)
 	{
 		GraphicsAPI* m_api = GraphicsAPI::GetAPI();
 
 		unsigned int _cubemapResolution = _tex.GetCubemapResolution();
 
 		// Setup Textures				
-		if (m_frameBufferObject == 4294967295 || m_renderBufferObject == 4294967295) {
-			CubemapConverter::InitializeFrameBufferObjects(m_api);
+		if (CubemapConverter::Instance()->m_frameBufferObject == 4294967294 || CubemapConverter::Instance()->m_renderBufferObject == 4294967294) {
+			CubemapConverter::Instance()->InitializeFrameBufferObjects(m_api);
 		}
 
-		m_api->BindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER, m_frameBufferObject);
-		m_api->BindRenderBuffer(GraphicsAPI_DataType::RENDERBUFFER, m_renderBufferObject);
+		m_api->BindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER, CubemapConverter::Instance()->m_frameBufferObject);
+		m_api->BindRenderBuffer(GraphicsAPI_DataType::RENDERBUFFER, CubemapConverter::Instance()->m_renderBufferObject);
 
 		m_api->SetRenderBuffer(GraphicsAPI_DataType::RENDERBUFFER, GraphicsAPI_DataType::DEPTH_COMPONENT24, _cubemapResolution, _cubemapResolution);
-		m_api->AttachRenderBufferToFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER, GraphicsAPI_DataType::DEPTH_ATTACHMENT, GraphicsAPI_DataType::RENDERBUFFER, m_renderBufferObject);
+		m_api->AttachRenderBufferToFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER, GraphicsAPI_DataType::DEPTH_ATTACHMENT, GraphicsAPI_DataType::RENDERBUFFER, CubemapConverter::Instance()->m_renderBufferObject);
 
 		unsigned int cubemapID;
 		m_api->GenerateTextures(&cubemapID, 1);
@@ -50,13 +62,13 @@ namespace TinySandbox
 		for (int i = 0; i < 6; ++i) {
 
 			switch (i) {
-			case 0: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_X; break;
-			case 1: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_X; break;
-			case 2: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_Y; break;
-			case 3: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_Y; break;
-			case 4: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_Z; break;
-			case 5: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_Z; break;
-			default: throw "undefined targetType"; break;
+				case 0: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_X; break;
+				case 1: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_X; break;
+				case 2: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_Y; break;
+				case 3: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_Y; break;
+				case 4: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_Z; break;
+				case 5: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_Z; break;
+				default: throw "undefined targetType"; break;
 			}
 
 			m_api->SetTexture2D(
@@ -79,31 +91,39 @@ namespace TinySandbox
 		m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, GraphicsAPI_DataType::TEXTURE_MIN_FILTER, GraphicsAPI_DataType::LINEAR);
 		m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, GraphicsAPI_DataType::TEXTURE_MAG_FILTER, GraphicsAPI_DataType::LINEAR);
 
+		m_api->BindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER, CubemapConverter::Instance()->m_frameBufferObject);
+		
+		CubemapConverter::Instance()->m_ConvertMaterial->SetMainTexture(&_tex);
+
 		// Start Equirectangular To Cubemap Conversion
-		/*program = equirectangularToCubemapProgram;
-		glUseProgram(program);
-
-		GLint equirectangularMapLocation = glGetUniformLocation(program, "equirectangularMap");
-		glUniform1d(equirectangularMapLocation, 0);
-
-		GLint projectionLocation = glGetUniformLocation(program, "projection");
-		glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &captureProjection[0][0]);
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, hdrTextureID);
-
-		glViewport(0, 0, envCubemapResolution, envCubemapResolution); // don't forget to configure the viewport to the capture dimensions.
-		glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-		for (unsigned int i = 0; i < 6; ++i)
+		for (int i = 0; i < 6; ++i)
 		{
-			GLint viewLocation = glGetUniformLocation(program, "view");
-			glUniformMatrix4fv(viewLocation, 1, GL_FALSE, &captureViews[i][0][0]);
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, envCubemapID, 0);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			CubemapConverter::Instance()->m_ConvertMaterial->Use(i);
 
-			DrawCube();
+			switch (i) {
+				case 0: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_X; break;
+				case 1: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_X; break;
+				case 2: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_Y; break;
+				case 3: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_Y; break;
+				case 4: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_Z; break;
+				case 5: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_Z; break;
+				default: throw "undefined targetType"; break;
+			}
+
+			m_api->SetFrameBuffer2D(GraphicsAPI_DataType::FRAMEBUFFER, GraphicsAPI_DataType::COLOR_ATTACHMENT0, targetType, cubemapID, 0);
+			
+			m_api->ClearScreenColor();
+			m_api->ClearScreenDepth();
+			
+			m_api->BindVertexArray(CubemapConverter::Instance()->m_VAO);
+			m_api->DrawArrays(GraphicsAPI_DataType::TRIANGLES, CubemapConverter::Instance()->m_mesh->vertex.size());
 		}
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);*/
+		
+		// Clean up
+		m_api->UnbindVertexArray();
+		m_api->UnbindProgram();
+
+		return cubemapID;
 	}
 
 
