@@ -17,7 +17,7 @@ namespace TinySandbox
 	Scene::Scene()
 	{
 		m_mainCamera = new Camera();
-		Texture* test = new Texture("../Resources/Newport_Loft_Ref.hdr", TextureType::TEXTURE_2D, true, true, 512);
+		Texture* test = new Texture("../Resources/Newport_Loft_8k.jpg", TextureType::TEXTURE_2D, false, true, 512);
 		m_SkyboxRenderer = new SkyboxRenderer();
 		m_SkyboxRenderer->SetTexture(test);
 	}
@@ -48,8 +48,8 @@ namespace TinySandbox
 
 		testEntity->Add(meshRenderer); // implicitly cast to TinySandbox::Component
 		meshRenderer->SetMesh(mesh);
-		meshRenderer->SetMaterial(new UnlitMaterial(meshRenderer, "../Resources/Newport_Loft_8k.jpg"));
-		//meshRenderer->SetMaterial(new UnlitMaterial(meshRenderer));
+		//meshRenderer->SetMaterial(new UnlitMaterial(meshRenderer, "../Resources/Newport_Loft_8k.jpg"));
+		meshRenderer->SetMaterial(new NormalDebugMaterial(meshRenderer));
 		testTransform->Rotation(glm::vec3(-90.0f, 0.0f, 90.0f));
 
 		Scene::Instance()->Add(testEntity);
@@ -91,6 +91,10 @@ namespace TinySandbox
 
 	void Scene::OnRender()
 	{
+		// GraphicsAPI::GetAPI()->UnbindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER);
+
+		// m_SkyboxRenderer->OnRender();
+
 		for (auto entity : Scene::Instance()->m_entitiesList) {
 			entity->OnRender();
 		}

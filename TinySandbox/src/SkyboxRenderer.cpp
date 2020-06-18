@@ -29,6 +29,7 @@ namespace TinySandbox
 		m_api->DrawArrays(GraphicsAPI_DataType::TRIANGLES, m_mesh->vertex.size());
 
 		// Clean up
+		m_material->Unuse();
 		m_api->UnbindVertexArray();
 		m_api->UnbindProgram();
 	}

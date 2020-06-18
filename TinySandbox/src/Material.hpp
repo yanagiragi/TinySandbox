@@ -123,6 +123,9 @@ namespace TinySandbox
 				m_textureIncrementId += 1; // auto increment id
 			}
 
+			// Debug Only
+			GLuint program() { return m_program; }
+
 		private:
 			
 			void Compile() {
@@ -134,8 +137,9 @@ namespace TinySandbox
 			std::string m_geometryShaderSource = "";
 			std::string m_fragmentShaderSource = "";
 
-		protected:
 
+		protected:
+		
 			Renderer* m_renderer; // current only support one renderer per material
 
 			unsigned int m_textureIncrementId = 0;

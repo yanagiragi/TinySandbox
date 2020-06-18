@@ -18,6 +18,8 @@ namespace TinySandbox
 
 			static CubemapConverter* Instance();
 
+			GLuint ConvertEquirectangularToCubemap(Texture& _tex);
+
 		private:
 
 			void InitializeFrameBufferObjects(GraphicsAPI* m_api);

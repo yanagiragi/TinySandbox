@@ -45,4 +45,5 @@ void MeshRenderer::OnRender()
 	// Clean up
 	m_api->UnbindVertexArray();
 	m_api->UnbindProgram();
+	m_material->Unuse();
 }

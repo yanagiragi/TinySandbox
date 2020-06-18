@@ -919,13 +919,17 @@ void GraphicsAPI_OpenGL::ClearScreenStencil() const
 	glClear(GL_STENCIL_BUFFER_BIT);
 }
 
+int count = 0;
+
 void GraphicsAPI_OpenGL::EnableDepthTest() const 
 {
+	count++;
 	glEnable(GL_DEPTH_TEST);
 }
 
 void GraphicsAPI_OpenGL::DisableDepthTest() const 
 {
+	count--;
 	glDisable(GL_DEPTH_TEST);
 }
 
@@ -1099,7 +1103,7 @@ void GraphicsAPI_OpenGL::GenerateFrameBuffers(unsigned int* _ids, unsigned int _
 
 void GraphicsAPI_OpenGL::BindFrameBuffer(GraphicsAPI_DataType _type, unsigned int _id) const
 {
-	const GLenum target = static_cast<GLenum>(_type);
+	const GLenum target = static_cast<GLenum>(this->GetType(_type));
 	const GLuint framebuffer = static_cast<GLuint>(_id);
 
 	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindFramebuffer.xhtml
@@ -1108,7 +1112,7 @@ void GraphicsAPI_OpenGL::BindFrameBuffer(GraphicsAPI_DataType _type, unsigned in
 
 void GraphicsAPI_OpenGL::UnbindFrameBuffer(GraphicsAPI_DataType _type) const
 {
-	const GLenum target = static_cast<GLenum>(_type);
+	const GLenum target = static_cast<GLenum>(this->GetType(_type));
 	glBindFramebuffer(target, NULL);
 }
 
@@ -1134,7 +1138,7 @@ void GraphicsAPI_OpenGL::GenerateRenderBuffers(unsigned int* _ids, unsigned int 
 
 void GraphicsAPI_OpenGL::BindRenderBuffer(GraphicsAPI_DataType _type, unsigned int _id) const
 {
-	const GLenum target = static_cast<GLenum>(_type);
+	const GLenum target = static_cast<GLenum>(this->GetType(_type));
 	const GLuint renderbuffer = static_cast<GLuint>(_id);
 
 	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glBindRenderbuffer.xml
@@ -1143,7 +1147,7 @@ void GraphicsAPI_OpenGL::BindRenderBuffer(GraphicsAPI_DataType _type, unsigned i
 
 void GraphicsAPI_OpenGL::UnbindRenderBuffer(GraphicsAPI_DataType _type) const
 {
-	const GLenum target = static_cast<GLenum>(_type);
+	const GLenum target = static_cast<GLenum>(this->GetType(_type));
 	
 	glBindRenderbuffer(target, NULL);
 }

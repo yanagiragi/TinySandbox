@@ -54,8 +54,8 @@ namespace TinySandbox
 
 		this->SetMat4("u_ViewMatrix", viewMatrix);
 		this->SetMat4("u_ProjectionMatrix", projectionMatrix);
-		// this->SetTextureCubemap("u_environmentMap", m_mainTexture->GetID());
-		this->SetTexture2D("u_environmentMap", m_mainTexture->GetID());
+		this->SetTextureCubemap("u_environmentMap", m_mainTexture->GetID());
+		// this->SetTexture2D("u_environmentMap", m_mainTexture->GetID());
 	}
 
 	void SkyboxMaterial::SetMainTexture(Texture* _other)

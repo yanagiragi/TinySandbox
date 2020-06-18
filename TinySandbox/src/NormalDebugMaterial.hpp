@@ -30,8 +30,16 @@ namespace TinySandbox
 
 			}
 
+			void Unuse() override
+			{
+				m_api->DisableDepthTest();
+
+				Material::Unuse();
+			}
+
 			void Use() override
 			{
+				m_api->EnableDepthTest();
 				m_api->BindProgram(m_program);
 
 				// Bind Uniform Variables
