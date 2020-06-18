@@ -38,9 +38,7 @@ namespace TinySandbox
 
 			void BindVAO()
 			{
-				GraphicsAPI* API = GraphicsAPI::GetAPI();
-
-				API->SetupVAO(&m_VAO, &m_mesh, GraphicsAPI_DataType::STATIC_DRAW);
+				m_api->SetupVAO(&m_VAO, &m_mesh, GraphicsAPI_DataType::STATIC_DRAW);
 			}
 
 			void Start() override;

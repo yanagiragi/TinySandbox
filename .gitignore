@@ -356,3 +356,5 @@ MigrationBackup/
 *.o
 a.out
 *.swp
+TinySandbox/Resources/test.png
+TinySandbox/Resources/*.mtl

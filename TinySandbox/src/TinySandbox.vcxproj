@@ -32,6 +32,7 @@
     <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="TestComponent.hpp" />
+    <ClInclude Include="Texture.hpp" />
     <ClInclude Include="Transform.hpp" />
     <ClInclude Include="Windows.hpp" />
   </ItemGroup>
