@@ -6,6 +6,7 @@
 #include "UnlitMaterial.hpp"
 
 #include "SkyboxRenderer.hpp"
+#include "SkyboxMaterial.hpp"
 
 // initialize static member
 TinySandbox::Scene* TinySandbox::Scene::m_instance = nullptr;

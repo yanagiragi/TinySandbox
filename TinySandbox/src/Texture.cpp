@@ -59,18 +59,16 @@ namespace TinySandbox
 
 	Texture::~Texture()
 	{
-		if (m_filename) {
-			free((char*)m_filename);
-		}
+
 	}
 
 	void Texture::SetupTexture(GraphicsAPI_DataType _flag)
 	{
 		if (isHighDynamicRange) {
-			m_textureId = LoadHDRTexture_STB(m_filename, &m_width, &m_height, &m_channel, _flag);
+			m_textureId = LoadHDRTexture_STB(m_filename.c_str(), &m_width, &m_height, &m_channel, _flag);
 		}
 		else {
-			m_textureId = LoadTexture_STB(m_filename, &m_width, &m_height, &m_channel, _flag);
+			m_textureId = LoadTexture_STB(m_filename.c_str(), &m_width, &m_height, &m_channel, _flag);
 		}
 
 		if (isCubemap) {

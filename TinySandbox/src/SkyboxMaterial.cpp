@@ -59,7 +59,9 @@ namespace TinySandbox
 
 	void SkyboxMaterial::SetMainTexture(Texture* _other)
 	{
-		delete this->m_mainTexture;
+		if (this->m_mainTexture) {
+			delete this->m_mainTexture;
+		}
 		this->m_mainTexture = _other;
 	}
 

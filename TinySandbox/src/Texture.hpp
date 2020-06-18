@@ -2,6 +2,7 @@
 
 #include "GraphicsAPI.hpp"
 
+#include <string>
 
 namespace TinySandbox
 {
@@ -39,7 +40,7 @@ namespace TinySandbox
 			unsigned int LoadTexture_STB(const char* name, int* width, int* height, int* components, GraphicsAPI_DataType _wrapFlag);
 			unsigned int LoadHDRTexture_STB(const char* name, int* width, int* height, int* components, GraphicsAPI_DataType _wrapFlag);
 
-			const char* m_filename;
+			std::string m_filename;
 			int m_width, m_height, m_channel;
 			int m_cubemapResolution;
 			unsigned int m_textureId;
