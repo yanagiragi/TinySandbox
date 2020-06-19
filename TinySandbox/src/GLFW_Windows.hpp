@@ -15,6 +15,7 @@ namespace TinySandbox {
 	{
 		public:
 
+			GLFW_Windows();
 			GLFW_Windows(int width, int height, const char* title, ::GLFWmonitor *monitor, ::GLFWwindow *share);
 			~GLFW_Windows();
 
@@ -24,18 +25,21 @@ namespace TinySandbox {
 
 			void SetInputCallback(std::function<void(GLFWwindow*)> _inputCallback);
 			// void SetInputCallback(void(*_inputCallback)(GLFWwindow*));
-			//void SetInputCallback(void (TinySandbox::Scene::*ProcessInput)(GLFWwindow*));
-
-			GLFWwindow* instance(); // helper function for now			
-			const char *name = "GLFW";
-
+			//void SetInputCallback(void (TinySandbox::Scene::*ProcessInput)(GLFWwindow*));			
+			
+			GLFWwindow* GetGLFWInstance();
+			
 		private:
 			
+			
+
 			GLFWwindow *m_glfwInstance;
 			
 			std::function<void(GLFWwindow*)> inputCallback;
 			// void(*inputCallback)(GLFWwindow*);
 			
 			std::function<void(void)> renderCallback;
+
+			
 	};
 }

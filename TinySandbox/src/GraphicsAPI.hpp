@@ -352,7 +352,7 @@ namespace TinySandbox
 			virtual void ActiveTexture(unsigned int __texture) const = 0;
 			virtual void EnableTexture2D() const = 0;
 			virtual void DisableTexture2D() const = 0;
-			virtual void UnbindTexture2D() const = 0;	
+			virtual void UnbindTexture(GraphicsAPI_DataType _type) const = 0;
 
 			virtual void EnableSeamlessCubemap() const = 0;
 			virtual void DisableSeamlessCubemap() const = 0;
@@ -367,6 +367,8 @@ namespace TinySandbox
 			virtual void BindRenderBuffer(GraphicsAPI_DataType _type, unsigned int _id) const = 0;
 			virtual void UnbindRenderBuffer(GraphicsAPI_DataType _type) const = 0;
 			virtual void SetRenderBuffer(GraphicsAPI_DataType _target, GraphicsAPI_DataType _internalFormat, unsigned int _width, unsigned int _height) const = 0;
+
+			virtual void SetViewport(int _x, int _y, unsigned int _width, unsigned int _height) const = 0;
 
 			// TODO:
 			// glDrawBuffer(GL_NONE);

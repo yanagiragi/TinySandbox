@@ -114,7 +114,7 @@ namespace TinySandbox
 			}
 			else {
 				stbi_image_free(data);
-				m_api->UnbindTexture2D();
+				m_api->UnbindTexture(GraphicsAPI_DataType::TEXTURE_2D);
 
 				throw "Current Not Support Channel 2 Texture";
 			}
@@ -126,7 +126,7 @@ namespace TinySandbox
 			m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_2D, GraphicsAPI_DataType::TEXTURE_MAG_FILTER, GraphicsAPI_DataType::LINEAR);
 
 			stbi_image_free(data);
-			m_api->UnbindTexture2D();
+			m_api->UnbindTexture(GraphicsAPI_DataType::TEXTURE_2D);
 		}
 		else {
 			std::cout << "Failed to load image, " << stbi_failure_reason() << std::endl;

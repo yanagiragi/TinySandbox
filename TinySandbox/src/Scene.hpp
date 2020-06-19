@@ -5,9 +5,11 @@
 #include "Component.hpp"
 #include "Entity.hpp"
 #include "Camera.hpp"
+#include "Windows.hpp"
 
 #include <vector>
 
+//#include "SkyboxRenderer.hpp"
 namespace TinySandbox
 {
 	class SkyboxRenderer;
@@ -47,7 +49,7 @@ namespace TinySandbox
 			static Camera* GetMainCamera();
 
 			virtual void InitSceneSettings();
-			
+						
 			// static void ProcessInput(GLFWwindow* w) {} ;
 
 		private:

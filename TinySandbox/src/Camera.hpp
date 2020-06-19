@@ -1,5 +1,7 @@
 #pragma once
 
+# include "Windows.hpp"
+
 #include <glmathematics/glm.hpp>
 #include <glmathematics/gtc/matrix_transform.hpp>
 
@@ -46,8 +48,10 @@ namespace TinySandbox
 			void FieldOfView(const float &val) { m_fieldOfView = val; }
 			const float FieldOfView() const { return m_fieldOfView;  }
 
-			void Aspect(const float &val) { m_aspect = val; }
-			const float Aspect() const { return m_aspect; }
+			const float Aspect() const { 
+				Windows* window = Windows::GetInstance();
+				return (float)window->GetWidth() / (float) window->GetHeight();
+			}
 
 			const glm::mat4 ViewMatrix() const  {
 
@@ -70,7 +74,7 @@ namespace TinySandbox
 			const glm::mat4 ProjectionMatrix() const {
 				return glm::perspective(
 					glm::radians(m_fieldOfView),
-					m_aspect,
+					Aspect(),
 					m_nearPlaneDistance,
 					m_farPlaneDistance
 				);
@@ -82,6 +86,5 @@ namespace TinySandbox
 			
 			float m_nearPlaneDistance, m_farPlaneDistance;
 			float m_fieldOfView; // degrees
-			float m_aspect;
 	};
 }

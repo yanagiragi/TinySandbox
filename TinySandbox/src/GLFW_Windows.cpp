@@ -6,8 +6,10 @@
 
 namespace TinySandbox
 {
+	GLFW_Windows::GLFW_Windows() : Windows("", 0, 0) {}
+
     GLFW_Windows::GLFW_Windows
-	(int width, int height, const char* title, ::GLFWmonitor *monitor, ::GLFWwindow *share) 
+	(int width, int height, const char* title, ::GLFWmonitor *monitor, ::GLFWwindow *share) : Windows(title, width, height)
 	{
 		glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -41,7 +43,6 @@ namespace TinySandbox
 	{
 		glfwTerminate();
 	}
-
         
     bool GLFW_Windows::ShouldClose() {
         return glfwWindowShouldClose(this->m_glfwInstance);
@@ -51,7 +52,7 @@ namespace TinySandbox
 
 		GraphicsAPI* API = GraphicsAPI::GetAPI();
 
-		mainScene->Start();
+		m_mainScene->Start();
 
         while (this->ShouldClose() == false)
         {
@@ -64,13 +65,13 @@ namespace TinySandbox
             this->inputCallback(this->m_glfwInstance);
 
 			// 2. Update Game Logics
-			mainScene->Update();
+			m_mainScene->Update();
 
 			// 3. Render the scene without UI
-			mainScene->OnRender();
+			m_mainScene->OnRender();
 
 			// 4. Render UI after the scene
-			mainScene->OnGUI();
+			m_mainScene->OnGUI();
 
 			// 5. Flush FrameBuffer
             glfwSwapBuffers(this->m_glfwInstance);
@@ -87,9 +88,10 @@ namespace TinySandbox
     }
 
     // helper function for now
-    GLFWwindow* GLFW_Windows::instance() {
-        return this->m_glfwInstance;
+    GLFWwindow* GLFW_Windows::GetGLFWInstance() {
+        return m_glfwInstance;
     }
+
 }
 
 void ProcessInput(GLFWwindow *window)
@@ -149,5 +151,5 @@ void framebuffer_size_callback(GLFWwindow* glfw_window, int width, int height)
 	// height will be significantly larger than specified on retina displays.
 	glViewport(0, 0, width, height);
 
-	// std::cout << window->name << std::endl;
+	TinySandbox::Windows::GetInstance()->SetWidthAndHeight(width, height);
 }

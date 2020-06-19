@@ -4,8 +4,7 @@
 #include "SkyboxMaterial.hpp"
 #include "EquirectangularToCubemapMaterial.hpp"
 
-#include <glmathematics/glm.hpp>
-#include <glmathematics/gtc/matrix_transform.hpp>
+#include "Windows.hpp"
 
 TinySandbox::CubemapConverter* TinySandbox::CubemapConverter::m_instance = nullptr;
 const glm::mat4 captureProjection = glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f);
@@ -40,43 +39,45 @@ namespace TinySandbox
 	unsigned int CubemapConverter::Convert(Texture& _tex)
 	{
 		GraphicsAPI* m_api = GraphicsAPI::GetAPI();
-
 		unsigned int _cubemapResolution = _tex.GetCubemapResolution();
+		unsigned int cubemapId;
 
-		// Setup FBO & RBO
-		if (CubemapConverter::Instance()->m_frameBufferObject == 4294967294 || CubemapConverter::Instance()->m_renderBufferObject == 4294967294) {
-			CubemapConverter::Instance()->InitializeFrameBufferObjects(m_api);
-		}
+		auto SetupFrameBufferAndRenderBuffer = [&m_api, _cubemapResolution]() -> void {
+			// Setup FBO & RBO
+			if (CubemapConverter::Instance()->m_frameBufferObject == 4294967294 || CubemapConverter::Instance()->m_renderBufferObject == 4294967294) {
+				CubemapConverter::Instance()->InitializeFrameBufferObjects(m_api);
+			}
 
-		m_api->BindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER, CubemapConverter::Instance()->m_frameBufferObject);
-		m_api->BindRenderBuffer(GraphicsAPI_DataType::RENDERBUFFER, CubemapConverter::Instance()->m_renderBufferObject);
+			m_api->BindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER, CubemapConverter::Instance()->m_frameBufferObject);
+			m_api->BindRenderBuffer(GraphicsAPI_DataType::RENDERBUFFER, CubemapConverter::Instance()->m_renderBufferObject);
 
-		m_api->SetRenderBuffer(GraphicsAPI_DataType::RENDERBUFFER, GraphicsAPI_DataType::DEPTH_COMPONENT24, _cubemapResolution, _cubemapResolution);
-		m_api->AttachRenderBufferToFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER, GraphicsAPI_DataType::DEPTH_ATTACHMENT, GraphicsAPI_DataType::RENDERBUFFER, CubemapConverter::Instance()->m_renderBufferObject);
+			m_api->SetRenderBuffer(GraphicsAPI_DataType::RENDERBUFFER, GraphicsAPI_DataType::DEPTH_COMPONENT24, _cubemapResolution, _cubemapResolution);
+			m_api->AttachRenderBufferToFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER, GraphicsAPI_DataType::DEPTH_ATTACHMENT, GraphicsAPI_DataType::RENDERBUFFER, CubemapConverter::Instance()->m_renderBufferObject);
 
-		m_api->UnbindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER);
+			m_api->UnbindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER);
+		};
 
-		// Setup cubeMap Texture
-		unsigned int cubemapID;
-		m_api->GenerateTextures(&cubemapID, 1);
-		m_api->BindTexture(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, cubemapID);
+		auto SetupCubemapTexture = [&m_api, &_tex, _cubemapResolution](unsigned int& cubemapID) -> void {
+			
+			m_api->GenerateTextures(&cubemapID, 1);
+			m_api->BindTexture(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, cubemapID);
 
-		GraphicsAPI_DataType channelType;
-		GraphicsAPI_DataType formatType;
+			GraphicsAPI_DataType channelType;
+			GraphicsAPI_DataType formatType;
 
-		if (_tex.isHighDynamicRange) {
-			channelType = GraphicsAPI_DataType::RGB16F;
-			formatType = GraphicsAPI_DataType::FLOAT;
-		}
-		else {
-			channelType = GraphicsAPI_DataType::RGB;
-			formatType = GraphicsAPI_DataType::UNSIGNED_BYTE;
-		}
+			if (_tex.isHighDynamicRange) {
+				channelType = GraphicsAPI_DataType::RGB16F;
+				formatType = GraphicsAPI_DataType::FLOAT;
+			}
+			else {
+				channelType = GraphicsAPI_DataType::RGB;
+				formatType = GraphicsAPI_DataType::UNSIGNED_BYTE;
+			}
 
-		GraphicsAPI_DataType targetType = GraphicsAPI_DataType::LEN;
-		for (int i = 0; i < 6; ++i) {
+			GraphicsAPI_DataType targetType = GraphicsAPI_DataType::LEN;
+			for (int i = 0; i < 6; ++i) {
 
-			switch (i) {
+				switch (i) {
 				case 0: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_X; break;
 				case 1: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_X; break;
 				case 2: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_Y; break;
@@ -84,37 +85,48 @@ namespace TinySandbox
 				case 4: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_Z; break;
 				case 5: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_Z; break;
 				default: throw "undefined targetType"; break;
+				}
+
+				m_api->SetTexture2D(
+					targetType,
+					0, // lod level = 0
+					channelType,
+					_cubemapResolution,
+					_cubemapResolution,
+					0, // border,
+					GraphicsAPI_DataType::RGB,
+					formatType,
+					nullptr
+				);
 			}
 
-			m_api->SetTexture2D(
-				targetType,
-				0, // lod level = 0
-				channelType,
-				_cubemapResolution,
-				_cubemapResolution,
-				0, // border,
-				GraphicsAPI_DataType::RGB,
-				formatType,
-				nullptr
-			);
-		}
+			m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, GraphicsAPI_DataType::TEXTURE_WRAP_S, GraphicsAPI_DataType::CLAMP_TO_EDGE);
+			m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, GraphicsAPI_DataType::TEXTURE_WRAP_T, GraphicsAPI_DataType::CLAMP_TO_EDGE);
+			m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, GraphicsAPI_DataType::TEXTURE_WRAP_R, GraphicsAPI_DataType::CLAMP_TO_EDGE);
 
-		m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, GraphicsAPI_DataType::TEXTURE_WRAP_S, GraphicsAPI_DataType::CLAMP_TO_EDGE);
-		m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, GraphicsAPI_DataType::TEXTURE_WRAP_T, GraphicsAPI_DataType::CLAMP_TO_EDGE);
-		m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, GraphicsAPI_DataType::TEXTURE_WRAP_R, GraphicsAPI_DataType::CLAMP_TO_EDGE);
+			m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, GraphicsAPI_DataType::TEXTURE_MIN_FILTER, GraphicsAPI_DataType::LINEAR);
+			m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, GraphicsAPI_DataType::TEXTURE_MAG_FILTER, GraphicsAPI_DataType::LINEAR);
 
-		m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, GraphicsAPI_DataType::TEXTURE_MIN_FILTER, GraphicsAPI_DataType::LINEAR);
-		m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, GraphicsAPI_DataType::TEXTURE_MAG_FILTER, GraphicsAPI_DataType::LINEAR);
+			m_api->UnbindTexture(GraphicsAPI_DataType::TEXTURE_CUBE_MAP);
+		};
 
-		glViewport(0, 0, 512, 512);
+		// 1. Setup FrameBuffer
+		SetupFrameBufferAndRenderBuffer();
 
-		m_api->BindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER, CubemapConverter::Instance()->m_frameBufferObject);
+		// 2. Initialize Texture
+		SetupCubemapTexture(cubemapId);
 		
-		CubemapConverter::Instance()->m_ConvertMaterial->SetMainTexture(&_tex);
+		// 3. Bilt EquirectangularConversionMaterial
 
-		// Start Equirectangular To Cubemap Conversion
-		for (int i = 0; i < 6; ++i)
-		{
+		// setup input texture conversion material to source texture
+		CubemapConverter::Instance()->m_ConvertMaterial->SetMainTexture(&_tex);		
+		
+		m_api->BindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER, CubemapConverter::Instance()->m_frameBufferObject);
+		m_api->SetViewport(0, 0, _cubemapResolution, _cubemapResolution);
+
+		GraphicsAPI_DataType targetType = GraphicsAPI_DataType::LEN;
+		for (int i = 0; i < 6; ++i) {
+			
 			CubemapConverter::Instance()->m_ConvertMaterial->Use(i);
 
 			switch (i) {
@@ -127,7 +139,7 @@ namespace TinySandbox
 				default: throw "undefined targetType"; break;
 			}
 
-			m_api->SetFrameBuffer2D(GraphicsAPI_DataType::FRAMEBUFFER, GraphicsAPI_DataType::COLOR_ATTACHMENT0, targetType, cubemapID, 0);
+			m_api->SetFrameBuffer2D(GraphicsAPI_DataType::FRAMEBUFFER, GraphicsAPI_DataType::COLOR_ATTACHMENT0, targetType, cubemapId, 0);
 			
 			m_api->ClearScreenColor();
 			m_api->ClearScreenDepth();
@@ -142,7 +154,11 @@ namespace TinySandbox
 		m_api->UnbindVertexArray();
 		m_api->UnbindProgram();
 
-		return cubemapID;
+
+		Windows* window = Windows::GetInstance();
+		m_api->SetViewport(0, 0, window->GetWidth(), window->GetHeight());
+
+		return cubemapId;
 	}
 
 

@@ -14,27 +14,30 @@ int main()
 	const unsigned int SCR_WIDTH = 800;
 	const unsigned int SCR_HEIGHT = 600;
 
-	// declared in GLFW_Windows
-	TinySandbox::GLFW_Windows* window = new TinySandbox::GLFW_Windows(SCR_WIDTH, SCR_HEIGHT, "NSD!", NULL, NULL);	
+	TinySandbox::GLFW_Windows* window = new TinySandbox::GLFW_Windows(SCR_WIDTH, SCR_HEIGHT, "NSD!", NULL, NULL);
+	TinySandbox::Scene* mainScene = TinySandbox::Scene::Instance();
+
+	TinySandbox::GLFW_Windows::SetInstance(window);
 
 	// for reshape callback, the last parameter is a function point
 	// there is no way to cast it from a lambda or std::function
 	// and it has to be static function
-	glfwSetFramebufferSizeCallback(window->instance(), framebuffer_size_callback);
+	glfwSetFramebufferSizeCallback(window->GetGLFWInstance(), framebuffer_size_callback);
 
 	// Mouse Callback
 	// glfwSetCursorPosCallback(window->instance(), mouse_callback);	
 
 	window->SetInputCallback(ProcessInput);
 
-	TinySandbox::Scene* mainScene = TinySandbox::Scene::Instance();
-	mainScene->InitSceneSettings();
-	
 	window->SetScene(mainScene);
-	window->Loop();
+	
+	// init scene after mainScene is attached to Windows
+	// The reason is scene need windows_instance to hold viewport settings"
+	mainScene->InitSceneSettings();
+
+	TinySandbox::GLFW_Windows::GetInstance()->Loop();
 
 	// cleanup resources
-	delete window;
 	delete apiInstance;
 
 	return 0;

@@ -11,32 +11,28 @@ namespace TinySandbox {
     {
         public:
 
-			Windows()
-			{
+			Windows(const char* _title, int _width, int _height);
 
-			}
+			~Windows();
 
-			Windows(Scene&& _mainLoop)
-			{
-				// mainScene = new Scene(_mainLoop);
-			}
-
-			~Windows()
-			{
-				delete mainScene;
-			}
-
-			void SetScene(Scene* _scene)
-			{
-				mainScene = _scene;
-			}
+			void SetScene(Scene* _scene);
 			
 			virtual bool ShouldClose() = 0;
 			virtual void Loop() = 0;
 
-		protected:
-			Scene* mainScene;
-    };
- 
-}
+			int GetWidth() const { return m_width; }
+			int GetHeight() const { return m_height; }
 
+			static Windows* GetInstance();
+
+			static void SetInstance(Windows*);
+
+			void SetWidthAndHeight(int _width, int _height);
+
+		protected:
+			Scene* m_mainScene;
+			static Windows *m_instance;
+			int m_width, m_height;
+			const char* m_name;
+    };
+}

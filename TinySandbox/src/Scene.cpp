@@ -17,9 +17,7 @@ namespace TinySandbox
 	Scene::Scene()
 	{
 		m_mainCamera = new Camera();
-		Texture* test = new Texture("../Resources/Newport_Loft_8k.jpg", TextureType::TEXTURE_2D, false, true, 512);
-		m_SkyboxRenderer = new SkyboxRenderer();
-		m_SkyboxRenderer->SetTexture(test);
+		m_SkyboxRenderer = nullptr;
 	}
 
 	Scene::~Scene()
@@ -39,6 +37,8 @@ namespace TinySandbox
 		/***** Setup Graphics Setting *****/
 		GraphicsAPI* API = GraphicsAPI::GetAPI();
 		API->EnableDepthTest();
+
+
 		
 		/***** Setup Scene Entity & Setting *****/		
 		TinySandbox::Entity* testEntity = new TinySandbox::Entity("Test");
@@ -55,10 +55,12 @@ namespace TinySandbox
 		Scene::Instance()->Add(testEntity);
 		
 		// Skybox Setting
-		// m_SkyboxRenderer->SetTexture();
+		Texture* test = new Texture("../Resources/Newport_Loft_8k.jpg", TextureType::TEXTURE_2D, false, true, 512);
+		m_SkyboxRenderer = new SkyboxRenderer();
+		m_SkyboxRenderer->SetTexture(test);
 
 		// Main Camera Setting
-		m_mainCamera->Aspect(1.33f);
+		// m_mainCamera->Aspect(1.33f);
 		m_mainCamera->NearPlaneDistance(0.01f);
 		m_mainCamera->FarPlaneDistance(100.0f);
 		m_mainCamera->FieldOfView(45.0f);

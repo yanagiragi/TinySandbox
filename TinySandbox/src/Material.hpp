@@ -34,7 +34,7 @@ namespace TinySandbox
 				m_api->UnbindProgram();
 				while (m_textureIncrementId > 0) {
 					m_api->ActiveTexture(m_textureIncrementId);
-					m_api->UnbindTexture2D();
+					m_api->UnbindTexture(GraphicsAPI_DataType::TEXTURE_2D);
 					m_textureIncrementId -= 1;
 				}
 				m_textureIncrementId = 0;

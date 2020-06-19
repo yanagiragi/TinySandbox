@@ -1077,9 +1077,11 @@ void GraphicsAPI_OpenGL::DisableTexture2D() const
 	glDisable(GL_TEXTURE_2D);
 }
 
-void GraphicsAPI_OpenGL::UnbindTexture2D() const
+void GraphicsAPI_OpenGL::UnbindTexture(GraphicsAPI_DataType _type) const
 {
-	glBindTexture(GL_TEXTURE_2D, NULL);
+	const GLenum target = static_cast<GLenum>(this->GetType(_type));
+
+	glBindTexture(target, NULL);
 }
 
 void GraphicsAPI_OpenGL::EnableSeamlessCubemap() const
@@ -1173,4 +1175,15 @@ void GraphicsAPI_OpenGL::SetFrameBuffer2D(GraphicsAPI_DataType _target, Graphics
 
 	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glFramebufferTexture2D.xml
 	glFramebufferTexture2D(target, attachment, textarget, texture, level);
+}
+
+void GraphicsAPI_OpenGL::SetViewport(int _x, int _y, unsigned int _width, unsigned int _height) const
+{
+	const GLint x = static_cast<GLint>(_x);
+	const GLint y = static_cast<GLint>(_y);
+	const GLsizei width = static_cast<GLsizei>(_width);
+	const GLsizei height = static_cast<GLsizei>(_height);
+
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glViewport.xml
+	glViewport(x, y, width, height);
 }
