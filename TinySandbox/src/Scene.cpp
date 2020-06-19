@@ -178,6 +178,20 @@ namespace TinySandbox
 		if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) {
 			m_SkyboxRenderer->SetDisplayMode(Skybox_DisplayType::IRRADIANCE);
 		}
+		
+		if (glfwGetKey(window, GLFW_KEY_COMMA) == GLFW_PRESS) {
+			m_SkyboxRenderer->SetDisplayMode(Skybox_DisplayType::PREFILTER);
+		}
+
+		std::cout << m_SkyboxRenderer->GetLod() << std::endl;
+
+		if (glfwGetKey(window, GLFW_KEY_EQUAL) == GLFW_PRESS) {
+			m_SkyboxRenderer->SetLod(m_SkyboxRenderer->GetLod() + 0.1);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_MINUS) == GLFW_PRESS) {
+			m_SkyboxRenderer->SetLod(m_SkyboxRenderer->GetLod() - 0.1);
+		}
 	}
 
 	void Scene::ProcessReshape(Windows* _window, int _width, int _height)

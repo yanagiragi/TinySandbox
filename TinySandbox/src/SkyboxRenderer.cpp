@@ -39,7 +39,7 @@ namespace TinySandbox
 	void SkyboxRenderer::SetDisplayMode(Skybox_DisplayType _mode)
 	{
 		SkyboxMaterial* mat = dynamic_cast<SkyboxMaterial*>(m_material);
-		mat->SetDisplayMode(_mode);
+		mat->m_mode = _mode;
 	}
 
 	void SkyboxRenderer::SetTexture(Texture* _other)

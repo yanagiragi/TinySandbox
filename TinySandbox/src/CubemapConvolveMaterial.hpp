@@ -5,13 +5,13 @@
 
 namespace TinySandbox
 {
-	class CubemapIrradianceConvolutionMaterial : public Cubemap_BaseMaterial
+	class CubemapConvolveMaterial : public Cubemap_BaseMaterial
 	{
 		public:
 
-			CubemapIrradianceConvolutionMaterial() = delete;
+			CubemapConvolveMaterial() = delete;
 
-			CubemapIrradianceConvolutionMaterial(Renderer* _renderer);
+			CubemapConvolveMaterial(Renderer* _renderer);
 
 			void OnGUI() override;
 

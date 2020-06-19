@@ -9,6 +9,7 @@ namespace TinySandbox
 		m_renderer = _renderer;
 		m_mainTexture = new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false);
 		m_mode = Skybox_DisplayType::REGULAR;
+		m_lod = 0;
 	}
 
 	SkyboxMaterial::SkyboxMaterial(Renderer* _renderer, const char* _filename, bool _isHDR) : BaseMaterial("../Shaders/skybox.vert", "", "../Shaders/skybox.frag")
@@ -16,6 +17,7 @@ namespace TinySandbox
 		m_renderer = _renderer;
 		m_mainTexture = new Texture(_filename, TextureType::TEXTURE_2D, _isHDR);
 		m_mode = Skybox_DisplayType::REGULAR;
+		m_lod = 0;
 	}
 
 	SkyboxMaterial& SkyboxMaterial::operator=(const SkyboxMaterial& _other)
@@ -24,6 +26,7 @@ namespace TinySandbox
 		this->m_api = _other.m_api;
 		this->m_mainTexture = _other.m_mainTexture;
 		this->m_mode = _other.m_mode;
+		this->m_lod = _other.m_lod;
 
 		return *this;
 	}
@@ -57,6 +60,7 @@ namespace TinySandbox
 
 		this->SetMat4("u_ViewMatrix", viewMatrix);
 		this->SetMat4("u_ProjectionMatrix", projectionMatrix);
+		this->SetFloat("u_lod", m_lod);
 		
 		if (m_mode == Skybox_DisplayType::REGULAR) {
 			this->SetTextureCubemap("u_environmentMap", m_mainTexture->GetID(CubemapTextureType::REGULAR));
@@ -64,7 +68,7 @@ namespace TinySandbox
 		else if (m_mode == Skybox_DisplayType::IRRADIANCE) {
 			this->SetTextureCubemap("u_environmentMap", m_mainTexture->GetID(CubemapTextureType::IRRADIANCE));
 		}
-		else if (m_mode == Skybox_DisplayType::REGULAR) {
+		else if (m_mode == Skybox_DisplayType::PREFILTER) {
 			this->SetTextureCubemap("u_environmentMap", m_mainTexture->GetID(CubemapTextureType::PREFILTER));
 		}
 		else {
@@ -79,10 +83,4 @@ namespace TinySandbox
 		}
 		this->m_mainTexture = _other;
 	}
-
-	void SkyboxMaterial::SetDisplayMode(Skybox_DisplayType _mode)
-	{
-		m_mode = _mode;
-	}
-
 }

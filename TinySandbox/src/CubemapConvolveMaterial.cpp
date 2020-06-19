@@ -1,20 +1,20 @@
-#include "CubemapIrradianceConvolutionMaterial.hpp"
+#include "CubemapConvolveMaterial.hpp"
 
 namespace TinySandbox
 {
-	CubemapIrradianceConvolutionMaterial::CubemapIrradianceConvolutionMaterial(Renderer* _renderer) :
-		Cubemap_BaseMaterial("../Shaders/cubemap.vert", "", "../Shaders/irradianceConvolution.frag")
+	CubemapConvolveMaterial::CubemapConvolveMaterial(Renderer* _renderer) :
+		Cubemap_BaseMaterial("../Shaders/cubemap.vert", "", "../Shaders/CubemapIrradianceConvolution.frag")
 	{
 		m_renderer = _renderer;
 		m_mainTexture = new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false);
 	}
 
-	void CubemapIrradianceConvolutionMaterial::OnGUI()
+	void CubemapConvolveMaterial::OnGUI()
 	{
 
 	}
 
-	void CubemapIrradianceConvolutionMaterial::Use(int index)
+	void CubemapConvolveMaterial::Use(int index)
 	{
 		m_api->BindProgram(m_program);
 		m_api->EnableTexture2D();
@@ -25,7 +25,7 @@ namespace TinySandbox
 		this->SetMat4("u_viewMatrix", captureViews[index]);
 	}
 
-	void CubemapIrradianceConvolutionMaterial::Unuse()
+	void CubemapConvolveMaterial::Unuse()
 	{
 		m_api->DisableTexture2D();
 

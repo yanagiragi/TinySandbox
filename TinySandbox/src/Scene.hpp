@@ -4,6 +4,7 @@
 #include "Entity.hpp"
 #include "Camera.hpp"
 
+#include <iostream>
 #include <vector>
 
 //#include "SkyboxRenderer.hpp"

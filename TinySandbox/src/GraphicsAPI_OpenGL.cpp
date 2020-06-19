@@ -1187,3 +1187,11 @@ void GraphicsAPI_OpenGL::SetViewport(int _x, int _y, unsigned int _width, unsign
 	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glViewport.xml
 	glViewport(x, y, width, height);
 }
+
+void GraphicsAPI_OpenGL::GenerateMipmap(GraphicsAPI_DataType _target) const
+{
+	const GLenum target = static_cast<GLenum>(this->GetType(_target));
+	
+	// Reference: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGenerateMipmap.xhtml
+	glGenerateMipmap(target);
+}

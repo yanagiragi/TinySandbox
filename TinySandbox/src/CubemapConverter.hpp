@@ -6,7 +6,8 @@
 
 #include "MeshRenderer.hpp"
 #include "EquirectangularToCubemapMaterial.hpp"
-#include "CubemapIrradianceConvolutionMaterial.hpp"
+#include "CubemapConvolveMaterial.hpp"
+#include "CubemapPrefilterMaterial.hpp"
 
 namespace TinySandbox
 {
@@ -38,8 +39,9 @@ namespace TinySandbox
 
 			unsigned int m_frameBufferObject;
 			unsigned int m_renderBufferObject;
-			EquirectangularToCubemapMaterial* m_ConvertMaterial;
-			CubemapIrradianceConvolutionMaterial* m_ConvoluteMaterial;
+			EquirectangularToCubemapMaterial* m_convertMaterial;
+			CubemapConvolveMaterial* m_convoluteMaterial;
+			CubemapPrefilterMaterial* m_prefilterMaterial;
 
 			static CubemapConverter* m_instance;
 	};

@@ -104,5 +104,7 @@ namespace TinySandbox
 		void SetRenderBuffer(GraphicsAPI_DataType _target, GraphicsAPI_DataType _internalFormat, unsigned int _width, unsigned int _height) const override;
 
 		void SetViewport(int _x, int _y, unsigned int _width, unsigned int _height) const override;
+
+		void GenerateMipmap(GraphicsAPI_DataType _target) const override;
 	};
 }

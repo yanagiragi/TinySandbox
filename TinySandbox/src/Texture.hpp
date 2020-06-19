@@ -61,6 +61,8 @@ namespace TinySandbox
 				}				
 			}
 
+			int GetMaxLod() const { return m_mipsLevel;  }
+
 			bool isHighDynamicRange, isCubemap, isPrefiltered;
 		
 		private:

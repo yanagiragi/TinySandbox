@@ -22,7 +22,8 @@
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="CubemapConverter.hpp" />
-    <ClInclude Include="CubemapIrradianceConvolutionMaterial.hpp" />
+    <ClInclude Include="CubemapConvolveMaterial.hpp" />
+    <ClInclude Include="CubemapPrefilterMaterial.hpp" />
     <ClInclude Include="Cubemap_BaseMaterial.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="EquirectangularToCubemapMaterial.hpp" />
@@ -47,7 +48,8 @@
     <ClCompile Include="..\includes\glad.c" />
     <ClCompile Include="..\includes\TinyObjLoader\tiny_obj_loader.cc" />
     <ClCompile Include="CubemapConverter.cpp" />
-    <ClCompile Include="CubemapIrradianceConvolutionMaterial.cpp" />
+    <ClCompile Include="CubemapConvolveMaterial.cpp" />
+    <ClCompile Include="CubemapPrefilterMaterial.cpp" />
     <ClCompile Include="EquirectangularToCubemapMaterial.cpp" />
     <ClCompile Include="GLFW_Windows.cpp" />
     <ClCompile Include="GraphicsAPI.cpp" />

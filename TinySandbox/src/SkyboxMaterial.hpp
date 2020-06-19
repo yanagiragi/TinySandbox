@@ -20,6 +20,8 @@ namespace TinySandbox
 
 	class SkyboxMaterial : public BaseMaterial
 	{
+		friend class SkyboxRenderer;
+
 		public:
 			SkyboxMaterial(Renderer* _renderer);
 
@@ -35,10 +37,9 @@ namespace TinySandbox
 
 			void SetMainTexture(Texture* _other);
 
-			void SetDisplayMode(Skybox_DisplayType _mode);
-
 		private:
 			Texture* m_mainTexture;
 			Skybox_DisplayType m_mode;
+			float m_lod; // for debug
 	};
 }

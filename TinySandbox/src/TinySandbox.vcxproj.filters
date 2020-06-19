@@ -75,13 +75,16 @@
     <ClInclude Include="EquirectangularToCubemapMaterial.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="CubemapIrradianceConvolutionMaterial.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Cubemap_BaseMaterial.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="BaseMaterial.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CubemapPrefilterMaterial.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CubemapConvolveMaterial.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -131,10 +134,13 @@
     <ClCompile Include="Windows.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CubemapIrradianceConvolutionMaterial.cpp">
+    <ClCompile Include="BaseMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BaseMaterial.cpp">
+    <ClCompile Include="CubemapPrefilterMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CubemapConvolveMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

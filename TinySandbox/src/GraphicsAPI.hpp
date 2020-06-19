@@ -370,6 +370,8 @@ namespace TinySandbox
 
 			virtual void SetViewport(int _x, int _y, unsigned int _width, unsigned int _height) const = 0;
 
+			virtual void GenerateMipmap(GraphicsAPI_DataType _target) const = 0;
+
 			// TODO:
 			// glDrawBuffer(GL_NONE);
 			// glReadBuffer(GL_NONE);
