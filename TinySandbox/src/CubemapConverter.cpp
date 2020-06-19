@@ -163,64 +163,20 @@ namespace TinySandbox
 	unsigned int CubemapConverter::ConvertEquirectangularToCubemap(Texture& _tex)
 	{
 		GraphicsAPI* m_api = GraphicsAPI::GetAPI();
-		unsigned int _cubemapResolution = _tex.m_cubemapResolution;
+		unsigned int cubemapResolution = _tex.m_cubemapResolution;
 		unsigned int cubemapId;
 
-		auto BiltEquirectangular = [&m_api, &_tex, &cubemapId, _cubemapResolution]() -> void
-		{
-			// setup input texture conversion material to source texture
-			CubemapConverter::Instance()->m_ConvertMaterial->SetMainTexture(&_tex);
-
-			m_api->BindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER, CubemapConverter::Instance()->m_frameBufferObject);
-			m_api->SetViewport(0, 0, _cubemapResolution, _cubemapResolution);
-
-			GraphicsAPI_DataType targetType = GraphicsAPI_DataType::LEN;
-			for (int i = 0; i < 6; ++i) {
-
-				CubemapConverter::Instance()->m_ConvertMaterial->Use(i);
-
-				switch (i) {
-					case 0: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_X; break;
-					case 1: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_X; break;
-					case 2: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_Y; break;
-					case 3: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_Y; break;
-					case 4: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_Z; break;
-					case 5: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_NEGATIVE_Z; break;
-					default: throw "undefined targetType"; break;
-				}
-
-				m_api->SetFrameBuffer2D(GraphicsAPI_DataType::FRAMEBUFFER, GraphicsAPI_DataType::COLOR_ATTACHMENT0, targetType, cubemapId, 0);
-
-				m_api->ClearScreenColor();
-				m_api->ClearScreenDepth();
-
-				m_api->BindVertexArray(CubemapConverter::Instance()->m_VAO);
-				m_api->DrawArrays(GraphicsAPI_DataType::TRIANGLES, CubemapConverter::Instance()->m_mesh->vertex.size());
-			}
-
-			// Clean up
-			CubemapConverter::Instance()->m_ConvertMaterial->Unuse();
-			m_api->UnbindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER);
-			m_api->UnbindVertexArray();
-			m_api->UnbindProgram();
-
-
-			Windows* window = Windows::GetInstance();
-			m_api->SetViewport(0, 0, window->GetWidth(), window->GetHeight());
-
-		};
-				
 		// 1. Setup FrameBuffer
-		CubemapConverter::SetupFrameBufferAndRenderBuffer(_cubemapResolution);
+		CubemapConverter::SetupFrameBufferAndRenderBuffer(cubemapResolution);
 
 		// 2. Initialize Texture
-		CubemapConverter::SetupCubemapTexture(cubemapId, _cubemapResolution, _tex.isHighDynamicRange);
+		CubemapConverter::SetupCubemapTexture(cubemapId, cubemapResolution, _tex.isHighDynamicRange);
 
 		// 3. Bilt EquirectangularConversionMaterial
 
 		// setup input texture conversion material to source texture
 		CubemapConverter::Instance()->m_ConvertMaterial->SetMainTexture(&_tex);
-		CubemapConverter::BiltCubemap(cubemapId, CubemapConverter::Instance()->m_ConvertMaterial, _cubemapResolution);
+		CubemapConverter::BiltCubemap(cubemapId, CubemapConverter::Instance()->m_ConvertMaterial, cubemapResolution);
 
 		return cubemapId;
 	}
@@ -228,28 +184,48 @@ namespace TinySandbox
 	unsigned int CubemapConverter::ConvertCubemapToConvolutedCubemap(Texture& _tex)
 	{
 		GraphicsAPI* m_api = GraphicsAPI::GetAPI();
-		unsigned int _cubemapResolution = _tex.m_convCubemapResolution;
+		unsigned int cubemapResolution = _tex.m_convCubemapResolution;
 		unsigned int cubemapId;
 
 		// 1. Setup FrameBuffer
-		CubemapConverter::SetupFrameBufferAndRenderBuffer(_cubemapResolution);
+		CubemapConverter::SetupFrameBufferAndRenderBuffer(cubemapResolution);
 
 		// 2. Initialize Texture
-		CubemapConverter::SetupCubemapTexture(cubemapId, _cubemapResolution, _tex.isHighDynamicRange);
+		CubemapConverter::SetupCubemapTexture(cubemapId, cubemapResolution, _tex.isHighDynamicRange);
 
 		// 3. Bilt ConvolutionMaterial
 		
 		// setup input texture conversion material to source texture
 		CubemapConverter::Instance()->m_ConvoluteMaterial->SetMainTexture(&_tex);
 
-		CubemapConverter::BiltCubemap(cubemapId, CubemapConverter::Instance()->m_ConvoluteMaterial, _cubemapResolution);
+		CubemapConverter::BiltCubemap(cubemapId, CubemapConverter::Instance()->m_ConvoluteMaterial, cubemapResolution);
 
 		return cubemapId;
 	}
 
 	unsigned int CubemapConverter::ConvertCubemapToPrefilteredCubemap(Texture& _tex)
 	{
-		return -1;
+		GraphicsAPI* m_api = GraphicsAPI::GetAPI();
+		unsigned int cubemapResolution = _tex.m_prefiltercubemapResolution;
+		unsigned int mipsLevel = _tex.m_mipsLevel;
+		unsigned int cubemapId;
+
+		// 1. Setup FrameBuffer
+		CubemapConverter::SetupFrameBufferAndRenderBuffer(cubemapResolution);
+
+		// 2. Initialize Texture
+		CubemapConverter::SetupCubemapTexture(cubemapId, cubemapResolution, _tex.isHighDynamicRange);
+
+		// 3. Bilt PrefilterMaterial with Lod Settings
+
+		// do something, might not able to use BiltCubemap!
+
+		// setup input texture conversion material to source texture
+		/*CubemapConverter::Instance()->m_ConvoluteMaterial->SetMainTexture(&_tex);
+
+		CubemapConverter::BiltCubemap(cubemapId, CubemapConverter::Instance()->m_ConvoluteMaterial, _cubemapResolution);*/
+
+		return cubemapId;
 	}
 
 	void CubemapConverter::ConvertToCubemapAndFilter(Texture& _tex)

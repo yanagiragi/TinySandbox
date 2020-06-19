@@ -28,7 +28,7 @@ namespace TinySandbox
 		this->SetupTexture(GraphicsAPI_DataType::REPEAT);
 	}
 
-	Texture::Texture(const char* filename, TextureType _textureType, bool _isHDR, bool _isCubemap, int isPrefilter, int _cubemapResolution, int _convCubemapResolution, int _prefiltercubemapResolution) : m_filename(filename)
+	Texture::Texture(const char* filename, TextureType _textureType, bool _isHDR, bool _isCubemap, int isPrefilter, int _cubemapResolution, int _convubemapResolution, int _prefiltercubemapResolution, int _mipsLevel) : m_filename(filename)
 	{
 		m_textureType = _textureType;
 		m_api = GraphicsAPI::GetAPI();
@@ -36,7 +36,8 @@ namespace TinySandbox
 		isCubemap = _isCubemap;
 		isPrefiltered = isPrefilter;
 		m_cubemapResolution = _cubemapResolution;
-		m_convCubemapResolution = _convCubemapResolution;
+		m_convCubemapResolution = m_convCubemapResolution;
+		m_mipsLevel = _mipsLevel;
 		m_prefiltercubemapResolution = _prefiltercubemapResolution;
 
 		this->SetupTexture(GraphicsAPI_DataType::REPEAT);

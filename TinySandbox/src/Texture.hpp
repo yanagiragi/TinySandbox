@@ -30,7 +30,7 @@ namespace TinySandbox
 			
 			// Sometimes texture is loaded with external resources, e.g. create a texture to catch frame buffer
 			Texture();
-			Texture(const char* filename, TextureType _textureType, bool _isHDR, bool _isCubemap, int isPrefilter, int _cubemapResolution, int _convCubemapResolution, int _PrefiltercubemapResolution);
+			Texture(const char* filename, TextureType _textureType, bool _isHDR, bool _isCubemap, int isPrefilter, int _cubemapResolution, int _convCubemapResolution, int _PrefiltercubemapResolution, int _mipsLevel);
 			Texture(const char* filename, TextureType _textureType, bool _isHDR, bool _isCubemap, int _cubemapResolution);
 			Texture(const char* filename, TextureType _textureType, bool _isHDR);
 			Texture(const Texture& _other);		
@@ -70,7 +70,7 @@ namespace TinySandbox
 
 			std::string m_filename;
 			int m_width, m_height, m_channel;
-			int m_cubemapResolution, m_convCubemapResolution, m_prefiltercubemapResolution;
+			int m_cubemapResolution, m_convCubemapResolution, m_prefiltercubemapResolution, m_mipsLevel;
 			unsigned int m_textureId, m_convTextureId, m_prefilterTextureId;
 			TextureType m_textureType; // define it is a 2D/3D texture
 			
