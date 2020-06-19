@@ -94,62 +94,12 @@ namespace TinySandbox
 
 }
 
-void ProcessInput(GLFWwindow *window)
+void ProcessInput(GLFWwindow* _glfw_window)
 {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
-
-	TinySandbox::Camera* mainCamera = TinySandbox::Scene::GetMainCamera();
-
-	const float sentivity = 0.1;
-
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		mainCamera->Position(mainCamera->Position() + glm::vec3(0, 0, -1) * sentivity);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		mainCamera->Position(mainCamera->Position() + glm::vec3(0, 0, 1) * sentivity);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-		mainCamera->Position(mainCamera->Position() + glm::vec3(-1, 0, 0) * sentivity);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-		mainCamera->Position(mainCamera->Position() + glm::vec3(1, 0, 0) * sentivity);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-		mainCamera->Position(mainCamera->Position() + glm::vec3(0, 1, 0) * sentivity);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
-		mainCamera->Position(mainCamera->Position() + glm::vec3(0, -1, 0) * sentivity);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) {
-		mainCamera->Theta(mainCamera->Theta() + 1);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS) {
-		mainCamera->Theta(mainCamera->Theta() - 1);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) {
-		mainCamera->Phi(mainCamera->Phi() + 1);
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
-		mainCamera->Phi(mainCamera->Phi() - 1);
-	}
-
+	TinySandbox::Scene::Instance()->ProcessInput(TinySandbox::Windows::GetInstance());
 }
 
-void framebuffer_size_callback(GLFWwindow* glfw_window, int width, int height)
+void framebuffer_size_callback(GLFWwindow* _glfw_window, int _width, int _height)
 {
-	// make sure the viewport matches the new window dimensions; note that width and 
-	// height will be significantly larger than specified on retina displays.
-	glViewport(0, 0, width, height);
-
-	TinySandbox::Windows::GetInstance()->SetWidthAndHeight(width, height);
+	TinySandbox::Scene::Instance()->ProcessReshape(TinySandbox::Windows::GetInstance(), _width, _height);
 }

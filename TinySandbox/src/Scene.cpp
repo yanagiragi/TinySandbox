@@ -8,6 +8,9 @@
 #include "SkyboxRenderer.hpp"
 #include "SkyboxMaterial.hpp"
 
+#include <GLFW/glfw3.h>
+#include "GLFW_Windows.hpp"
+
 // initialize static member
 TinySandbox::Scene* TinySandbox::Scene::m_instance = nullptr;
 
@@ -37,8 +40,6 @@ namespace TinySandbox
 		/***** Setup Graphics Setting *****/
 		GraphicsAPI* API = GraphicsAPI::GetAPI();
 		API->EnableDepthTest();
-
-
 		
 		/***** Setup Scene Entity & Setting *****/		
 		TinySandbox::Entity* testEntity = new TinySandbox::Entity("Test");
@@ -49,18 +50,17 @@ namespace TinySandbox
 		testEntity->Add(meshRenderer); // implicitly cast to TinySandbox::Component
 		meshRenderer->SetMesh(mesh);
 		meshRenderer->SetMaterial(new UnlitMaterial(meshRenderer, "../Resources/test.png"));
-		// meshRenderer->SetMaterial(new NormalDebugMaterial(meshRenderer));
+		meshRenderer->SetMaterial(new NormalDebugMaterial(meshRenderer));
 		testTransform->Rotation(glm::vec3(-90.0f, 0.0f, 90.0f));
 
 		Scene::Instance()->Add(testEntity);
 		
 		// Skybox Setting
-		Texture* test = new Texture("../Resources/Newport_Loft_8k.jpg", TextureType::TEXTURE_2D, false, true, 1024);
+		Texture* test = new Texture("../Resources/incskies_024_8k.hdr", TextureType::TEXTURE_2D, true, true, 1024);
 		m_SkyboxRenderer = new SkyboxRenderer();
 		m_SkyboxRenderer->SetTexture(test);
 
 		// Main Camera Setting
-		// m_mainCamera->Aspect(1.33f);
 		m_mainCamera->NearPlaneDistance(0.01f);
 		m_mainCamera->FarPlaneDistance(100.0f);
 		m_mainCamera->FieldOfView(45.0f);
@@ -93,15 +93,11 @@ namespace TinySandbox
 
 	void Scene::OnRender()
 	{
-		// GraphicsAPI::GetAPI()->UnbindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER);
-
-		// m_SkyboxRenderer->OnRender();
-
 		for (auto entity : Scene::Instance()->m_entitiesList) {
 			entity->OnRender();
 		}
 
-		m_SkyboxRenderer->OnRender();
+		m_SkyboxRenderer->OnRender(); // render at last
 	}
 
 	void Scene::Add(Entity* _entity)
@@ -123,18 +119,64 @@ namespace TinySandbox
 		return Scene::Instance()->m_mainCamera;
 	}
 
-	/*void Scene::ProcessInput(GLFWwindow *window)
+	void Scene::ProcessInput(Windows* _window)
 	{
-		//if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		//	glfwSetWindowShouldClose(window, true);
+		GLFWwindow* window = dynamic_cast<GLFW_Windows*>(_window)->GetGLFWInstance();
+
+		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+			glfwSetWindowShouldClose(window, true);
+
+		TinySandbox::Camera* mainCamera = TinySandbox::Scene::GetMainCamera();
+
+		const float sentivity = 0.1;
+
+		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+			mainCamera->Position(mainCamera->Position() + glm::vec3(0, 0, -1) * sentivity);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+			mainCamera->Position(mainCamera->Position() + glm::vec3(0, 0, 1) * sentivity);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+			mainCamera->Position(mainCamera->Position() + glm::vec3(-1, 0, 0) * sentivity);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+			mainCamera->Position(mainCamera->Position() + glm::vec3(1, 0, 0) * sentivity);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+			mainCamera->Position(mainCamera->Position() + glm::vec3(0, 1, 0) * sentivity);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
+			mainCamera->Position(mainCamera->Position() + glm::vec3(0, -1, 0) * sentivity);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS) {
+			mainCamera->Theta(mainCamera->Theta() + 1);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS) {
+			mainCamera->Theta(mainCamera->Theta() - 1);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) {
+			mainCamera->Phi(mainCamera->Phi() + 1);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
+			mainCamera->Phi(mainCamera->Phi() - 1);
+		}
 	}
 
-	void Scene::framebuffer_size_callback(GLFWwindow* glfw_window, int width, int height)
+	void Scene::ProcessReshape(Windows* _window, int _width, int _height)
 	{
-		// make sure the viewport matches the new window dimensions; note that width and
+		// make sure the viewport matches the new window dimensions; note that width and 
 		// height will be significantly larger than specified on retina displays.
-		glViewport(0, 0, width, height);
+		glViewport(0, 0, _width, _height);
 
-		// std::cout << window->name << std::endl;
-	}*/
+		TinySandbox::Windows::GetInstance()->SetWidthAndHeight(_width, _height);
+	}
 }

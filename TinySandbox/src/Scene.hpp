@@ -1,11 +1,8 @@
 #pragma once
 
-#include <glad/glad.h>
-
 #include "Component.hpp"
 #include "Entity.hpp"
 #include "Camera.hpp"
-#include "Windows.hpp"
 
 #include <vector>
 
@@ -13,6 +10,7 @@
 namespace TinySandbox
 {
 	class SkyboxRenderer;
+	class Windows;
 }
 
 namespace TinySandbox
@@ -50,7 +48,9 @@ namespace TinySandbox
 
 			virtual void InitSceneSettings();
 						
-			// static void ProcessInput(GLFWwindow* w) {} ;
+			void ProcessInput(Windows* _window);
+
+			void ProcessReshape(Windows* _window, int _width, int _height);
 
 		private:
 			std::vector<Entity*> m_entitiesList;
