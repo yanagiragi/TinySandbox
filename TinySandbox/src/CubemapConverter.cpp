@@ -37,74 +37,7 @@ namespace TinySandbox
 		return m_instance;
 	}
 
-	GLuint CubemapConverter::ConvertEquirectangularToCubemap(Texture& _tex)
-	{
-		// pbr: setup cubemap to render to and attach to framebuffer
-		// ---------------------------------------------------------
-
-		CubemapConverter::Instance()->InitializeFrameBufferObjects(GraphicsAPI::GetAPI());
-
-		GLuint captureFBO = CubemapConverter::Instance()->m_frameBufferObject;
-		GLuint captureRBO = CubemapConverter::Instance()->m_renderBufferObject;
-		int envCubemapResolution = 512;
-		GLuint envCubemapID;
-
-		glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-		glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, envCubemapResolution, envCubemapResolution);
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, captureRBO);
-
-		glGenTextures(1, &envCubemapID);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemapID);
-		for (unsigned int i = 0; i < 6; ++i)
-		{
-			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, envCubemapResolution, envCubemapResolution, 0, GL_RGB, GL_FLOAT, nullptr);
-		}
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		GLuint program = GraphicsAPI::GetAPI()->CompileShader("../Shaders/EquirectangularToCubemap.vert", "", "../Shaders/EquirectangularToCubemap.frag");
-
-		// Start Equirectangular To Cubemap Conversion
-		glUseProgram(program);
-
-		GLint projectionLocation = glGetUniformLocation(program, "u_projectionMatrix");
-		glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &captureProjection[0][0]);
-
-		glEnable(GL_TEXTURE_2D);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, _tex.GetID());
-		// GLint equirectangularMapLocation = glGetUniformLocation(program, "u_equirectangularMap");
-		// glUniform1d(equirectangularMapLocation, 0);
-
-		glViewport(0, 0, envCubemapResolution, envCubemapResolution); // don't forget to configure the viewport to the capture dimensions.
-		glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-		for (unsigned int i = 0; i < 6; ++i)
-		{
-			GLint viewLocation = glGetUniformLocation(program, "u_viewMatrix");
-			glUniformMatrix4fv(viewLocation, 1, GL_FALSE, &captureViews[i][0][0]);
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, envCubemapID, 0);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			m_api->BindVertexArray(CubemapConverter::Instance()->m_VAO);
-			m_api->DrawArrays(GraphicsAPI_DataType::TRIANGLES, CubemapConverter::Instance()->m_mesh->vertex.size());
-		}
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-		glViewport(0, 0, 800, 600); // don't forget to configure the viewport to the capture dimensions.
-
-		return envCubemapID;
-	}
-
 	unsigned int CubemapConverter::Convert(Texture& _tex)
-	{
-		return CubemapConverter::Instance()->ConvertEquirectangularToCubemap(_tex);
-	}
-
-	/*unsigned int CubemapConverter::Convert(Texture& _tex)
 	{
 		GraphicsAPI* m_api = GraphicsAPI::GetAPI();
 
@@ -173,7 +106,7 @@ namespace TinySandbox
 		m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, GraphicsAPI_DataType::TEXTURE_MIN_FILTER, GraphicsAPI_DataType::LINEAR);
 		m_api->SetTextureParameter(GraphicsAPI_DataType::TEXTURE_CUBE_MAP, GraphicsAPI_DataType::TEXTURE_MAG_FILTER, GraphicsAPI_DataType::LINEAR);
 
-		// glViewport(0, 0, 512, 512);
+		glViewport(0, 0, 512, 512);
 
 		m_api->BindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER, CubemapConverter::Instance()->m_frameBufferObject);
 		
@@ -210,7 +143,7 @@ namespace TinySandbox
 		m_api->UnbindProgram();
 
 		return cubemapID;
-	}*/
+	}
 
 
 	void CubemapConverter::InitializeFrameBufferObjects(GraphicsAPI* m_api)

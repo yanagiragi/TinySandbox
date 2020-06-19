@@ -8,6 +8,9 @@ namespace TinySandbox
 	class EquirectangularToCubemapMaterial : public Material
 	{
 		public:
+
+			EquirectangularToCubemapMaterial() = delete;
+
 			EquirectangularToCubemapMaterial(Renderer* _renderer);
 
 			void OnGUI() override;
@@ -24,5 +27,7 @@ namespace TinySandbox
 		
 		private:
 			Texture* m_mainTexture;
+			const glm::mat4 captureProjection;
+			const glm::mat4 captureViews[6];
 	};
 }

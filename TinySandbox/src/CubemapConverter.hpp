@@ -16,11 +16,9 @@ namespace TinySandbox
 
 			static unsigned int Convert(Texture& _tex);
 
-			static CubemapConverter* Instance();
-
-			GLuint ConvertEquirectangularToCubemap(Texture& _tex);
-
 		private:
+
+			static CubemapConverter* Instance();
 
 			void InitializeFrameBufferObjects(GraphicsAPI* m_api);
 
