@@ -79,11 +79,7 @@ namespace TinySandbox
         }
     }
 
-	/*void GLFW_Windows::SetInputCallback(void (_inputCallback)(GLFWwindow*)) {
-		//this->inputCallback = _inputCallback;
-	}*/
-
-    void GLFW_Windows::SetInputCallback(std::function<void(GLFWwindow*)> _inputCallback) {
+	void GLFW_Windows::SetInputCallback(std::function<void(GLFWwindow*)> _inputCallback) {
 		this->inputCallback = _inputCallback;
     }
 
