@@ -48,14 +48,14 @@ namespace TinySandbox
 
 		testEntity->Add(meshRenderer); // implicitly cast to TinySandbox::Component
 		meshRenderer->SetMesh(mesh);
-		//meshRenderer->SetMaterial(new UnlitMaterial(meshRenderer, "../Resources/Newport_Loft_8k.jpg"));
-		meshRenderer->SetMaterial(new NormalDebugMaterial(meshRenderer));
+		meshRenderer->SetMaterial(new UnlitMaterial(meshRenderer, "../Resources/test.png"));
+		// meshRenderer->SetMaterial(new NormalDebugMaterial(meshRenderer));
 		testTransform->Rotation(glm::vec3(-90.0f, 0.0f, 90.0f));
 
 		Scene::Instance()->Add(testEntity);
 		
 		// Skybox Setting
-		Texture* test = new Texture("../Resources/Newport_Loft_8k.jpg", TextureType::TEXTURE_2D, false, true, 512);
+		Texture* test = new Texture("../Resources/Newport_Loft_8k.jpg", TextureType::TEXTURE_2D, false, true, 1024);
 		m_SkyboxRenderer = new SkyboxRenderer();
 		m_SkyboxRenderer->SetTexture(test);
 

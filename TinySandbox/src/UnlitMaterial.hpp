@@ -36,6 +36,7 @@ namespace TinySandbox
 
 			void Unuse() override
 			{
+				m_api->DisableDepthTest();
 				m_api->DisableTexture2D();
 
 				Material::Unuse();
@@ -45,6 +46,7 @@ namespace TinySandbox
 			{
 				m_api->BindProgram(m_program);
 				m_api->EnableTexture2D();
+				m_api->EnableDepthTest();
 
 				// Bind Uniform Variables
 				const glm::mat4 viewMatrix = Scene::GetMainCamera()->ViewMatrix();
@@ -59,11 +61,6 @@ namespace TinySandbox
 				this->SetVec3("u_tint", 1.0, 1.0, 1.0);
 				this->SetFloat("u_alpha", 1.0);
 				this->SetFloat("u_emission", 1.0);
-
-				glEnable(GL_TEXTURE_2D);
-				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, m_mainTexture->GetID());
-				glUniform1i(glGetUniformLocation(m_program, "u_albedo"), 0);
 			}
 
 		private:
