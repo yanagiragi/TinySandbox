@@ -2,6 +2,7 @@
 
 #include "MeshRenderer.hpp"
 #include "Texture.hpp"
+#include "SkyboxMaterial.hpp"
 
 namespace TinySandbox
 {
@@ -16,6 +17,9 @@ namespace TinySandbox
 			void OnRender() override;
 
 			void SetTexture(Texture* _other);
+
+			// helper function
+			void SetDisplayMode(Skybox_DisplayType _mode);
 
 		private:
 			

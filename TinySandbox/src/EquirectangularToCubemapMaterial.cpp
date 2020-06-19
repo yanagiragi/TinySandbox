@@ -8,16 +8,7 @@
 namespace TinySandbox
 {
 	EquirectangularToCubemapMaterial::EquirectangularToCubemapMaterial(Renderer* _renderer) : 
-		Material("../Shaders/EquirectangularToCubemap.vert", "", "../Shaders/EquirectangularToCubemap.frag"),
-		captureProjection( glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f) ),
-		captureViews {
-			glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
-			glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
-			glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  1.0f,  0.0f), glm::vec3(0.0f,  0.0f,  1.0f)),
-			glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f,  0.0f), glm::vec3(0.0f,  0.0f, -1.0f)),
-			glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
-			glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f))
-		}
+		Cubemap_BaseMaterial("../Shaders/cubemap.vert", "", "../Shaders/EquirectangularToCubemap.frag")
 	{
 		m_renderer = _renderer;
 		m_mainTexture = new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false);
@@ -43,14 +34,6 @@ namespace TinySandbox
 	{
 		m_api->DisableTexture2D();
 
-		Material::Unuse();
-	}
-
-	void EquirectangularToCubemapMaterial::SetMainTexture(Texture* _other)
-	{
-		if (this->m_mainTexture) {
-			delete this->m_mainTexture;
-		}
-		this->m_mainTexture = _other;
+		BaseMaterial::Unuse();
 	}
 }

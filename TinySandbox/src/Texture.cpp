@@ -23,6 +23,21 @@ namespace TinySandbox
 		isHighDynamicRange = _isHDR;
 		isCubemap = _isCubemap;
 		m_cubemapResolution = _cubemapResolution;
+		isPrefiltered = false;
+
+		this->SetupTexture(GraphicsAPI_DataType::REPEAT);
+	}
+
+	Texture::Texture(const char* filename, TextureType _textureType, bool _isHDR, bool _isCubemap, int isPrefilter, int _cubemapResolution, int _convCubemapResolution, int _prefiltercubemapResolution) : m_filename(filename)
+	{
+		m_textureType = _textureType;
+		m_api = GraphicsAPI::GetAPI();
+		isHighDynamicRange = _isHDR;
+		isCubemap = _isCubemap;
+		isPrefiltered = isPrefilter;
+		m_cubemapResolution = _cubemapResolution;
+		m_convCubemapResolution = _convCubemapResolution;
+		m_prefiltercubemapResolution = _prefiltercubemapResolution;
 
 		this->SetupTexture(GraphicsAPI_DataType::REPEAT);
 	}
@@ -33,7 +48,7 @@ namespace TinySandbox
 		m_api = GraphicsAPI::GetAPI();
 		isHighDynamicRange = _isHDR;
 		isCubemap = false;
-		m_cubemapResolution = 512;
+		isPrefiltered = false;
 
 		this->SetupTexture(GraphicsAPI_DataType::REPEAT);
 	}
@@ -72,7 +87,7 @@ namespace TinySandbox
 		}
 
 		if (isCubemap) {
-			m_textureId = CubemapConverter::Convert(*this);
+			CubemapConverter::ConvertToCubemapAndFilter(*this);
 		}
 	}
 

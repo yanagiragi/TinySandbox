@@ -1,22 +1,22 @@
 #pragma once
 
-#include "Material.hpp"
+#include "BaseMaterial.hpp"
 #include "Texture.hpp"
 
 #include "../includes/glad/glad.h"
 
 namespace TinySandbox
 {
-	class UnlitMaterial : public Material
+	class UnlitMaterial : public BaseMaterial
 	{
 		public:
-			UnlitMaterial(Renderer* _renderer) : Material("../Shaders/unlit.vert", "", "../Shaders/unlit.frag")
+			UnlitMaterial(Renderer* _renderer) : BaseMaterial("../Shaders/unlit.vert", "", "../Shaders/unlit.frag")
 			{
 				m_renderer = _renderer;
 				m_mainTexture = new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false);
 			}
 
-			UnlitMaterial(Renderer* _renderer, const char* _filename) : Material("../Shaders/unlit.vert", "", "../Shaders/unlit.frag")
+			UnlitMaterial(Renderer* _renderer, const char* _filename) : BaseMaterial("../Shaders/unlit.vert", "", "../Shaders/unlit.frag")
 			{
 				m_renderer = _renderer;
 				m_mainTexture = new Texture(_filename, TextureType::TEXTURE_2D, false);
@@ -39,7 +39,7 @@ namespace TinySandbox
 				m_api->DisableDepthTest();
 				m_api->DisableTexture2D();
 
-				Material::Unuse();
+				BaseMaterial::Unuse();
 			}
 
 			void Use() override

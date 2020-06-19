@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Material.hpp"
+#include "BaseMaterial.hpp"
 
 namespace TinySandbox
 {
-	class NormalDebugMaterial : public Material
+	class NormalDebugMaterial : public BaseMaterial
 	{
 		public:
 			NormalDebugMaterial(Renderer* _renderer)
-				: Material("../Shaders/normalDebug.vert", "", "../Shaders/normalDebug.frag")
+				: BaseMaterial("../Shaders/normalDebug.vert", "", "../Shaders/normalDebug.frag")
 			{
 				m_renderer = _renderer;
 			}
@@ -34,7 +34,7 @@ namespace TinySandbox
 			{
 				m_api->DisableDepthTest();
 
-				Material::Unuse();
+				BaseMaterial::Unuse();
 			}
 
 			void Use() override

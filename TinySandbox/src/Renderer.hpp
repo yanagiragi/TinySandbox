@@ -5,7 +5,7 @@
 
 namespace TinySandbox
 {
-	class Material;
+	class BaseMaterial;
 
 	class Renderer : public Component
 	{
@@ -28,11 +28,11 @@ namespace TinySandbox
 		virtual void OnGUI() override = 0;
 		virtual void OnRender() override = 0;
 
-		void SetMaterial(Material* _mat) { m_material = _mat; }
-		Material* GetMaterial() const { return m_material; }
+		void SetMaterial(BaseMaterial* _mat) { m_material = _mat; }
+		BaseMaterial* GetMaterial() const { return m_material; }
 
 		protected:
-			Material* m_material;
+			BaseMaterial* m_material;
 			GraphicsAPI* m_api;
 	};
 }

@@ -12,6 +12,8 @@ namespace TinySandbox
 		
 		m_mesh = new Cube();
 		this->BindVAO();
+
+		SetDisplayMode(Skybox_DisplayType::REGULAR);
 	}
 
 	SkyboxRenderer::~SkyboxRenderer()
@@ -34,9 +36,15 @@ namespace TinySandbox
 		m_api->UnbindProgram();
 	}
 
+	void SkyboxRenderer::SetDisplayMode(Skybox_DisplayType _mode)
+	{
+		SkyboxMaterial* mat = dynamic_cast<SkyboxMaterial*>(m_material);
+		mat->SetDisplayMode(_mode);
+	}
+
 	void SkyboxRenderer::SetTexture(Texture* _other)
 	{
-		SkyboxMaterial* mat = static_cast<SkyboxMaterial*>(m_material);
+		SkyboxMaterial* mat = dynamic_cast<SkyboxMaterial*>(m_material);
 		mat->SetMainTexture(_other);
 	}
 }

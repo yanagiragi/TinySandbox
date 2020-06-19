@@ -11,11 +11,11 @@ namespace TinySandbox
 {
 	class Renderer;
 
-	class Material
+	class BaseMaterial
 	{
 		public:
 
-			Material(const char* _vertexShaderSource, const char* _geometryShaderSource, const char* _fragmentShaderSouce);
+			BaseMaterial(const char* _vertexShaderSource, const char* _geometryShaderSource, const char* _fragmentShaderSouce);
 
 			// child class must override OnGUI function
 			virtual void OnGUI() = 0;

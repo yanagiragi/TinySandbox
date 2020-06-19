@@ -2,9 +2,11 @@
 
 #include "GraphicsAPI.hpp"
 #include "Texture.hpp"
-#include "Material.hpp"
+#include "Cubemap_BaseMaterial.hpp"
+
 #include "MeshRenderer.hpp"
 #include "EquirectangularToCubemapMaterial.hpp"
+#include "CubemapIrradianceConvolutionMaterial.hpp"
 
 namespace TinySandbox
 {
@@ -13,10 +15,22 @@ namespace TinySandbox
 		public:
 
 			CubemapConverter();
+			~CubemapConverter();
 
-			static unsigned int Convert(Texture& _tex);
+			static void ConvertToCubemapAndFilter(Texture& _tex);
+
+			static unsigned int ConvertEquirectangularToCubemap(Texture& _tex);
+			static unsigned int ConvertCubemapToConvolutedCubemap(Texture& _tex);
+			static unsigned int ConvertCubemapToPrefilteredCubemap(Texture& _tex);
+
+			static void SetupFrameBufferAndRenderBuffer(unsigned int _resolution);
+			
+			// assign source texture to check if source is hdr image
+			static void SetupCubemapTexture(unsigned int& _target, unsigned int _resolution, bool isHDR);
 
 		private:
+
+			static void BiltCubemap(unsigned int _targetTextureId, Cubemap_BaseMaterial* _material, unsigned int _resolution);
 
 			static CubemapConverter* Instance();
 
@@ -25,6 +39,7 @@ namespace TinySandbox
 			unsigned int m_frameBufferObject;
 			unsigned int m_renderBufferObject;
 			EquirectangularToCubemapMaterial* m_ConvertMaterial;
+			CubemapIrradianceConvolutionMaterial* m_ConvoluteMaterial;
 
 			static CubemapConverter* m_instance;
 	};

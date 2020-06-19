@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Material.hpp"
+#include "BaseMaterial.hpp"
 
 namespace TinySandbox
 {
@@ -10,7 +10,15 @@ namespace TinySandbox
 
 namespace TinySandbox
 {
-	class SkyboxMaterial : public Material
+	enum class Skybox_DisplayType
+	{
+		REGULAR,
+		IRRADIANCE,
+		PREFILTER,
+		LEN
+	};
+
+	class SkyboxMaterial : public BaseMaterial
 	{
 		public:
 			SkyboxMaterial(Renderer* _renderer);
@@ -27,7 +35,10 @@ namespace TinySandbox
 
 			void SetMainTexture(Texture* _other);
 
+			void SetDisplayMode(Skybox_DisplayType _mode);
+
 		private:
 			Texture* m_mainTexture;
+			Skybox_DisplayType m_mode;
 	};
 }

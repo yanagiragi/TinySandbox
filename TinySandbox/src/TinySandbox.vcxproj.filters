@@ -45,9 +45,6 @@
     <ClInclude Include="GraphicsAPI_OpenGL.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Material.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Mesh.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -76,6 +73,15 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="EquirectangularToCubemapMaterial.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CubemapIrradianceConvolutionMaterial.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cubemap_BaseMaterial.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseMaterial.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -125,7 +131,10 @@
     <ClCompile Include="Windows.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Material.cpp">
+    <ClCompile Include="CubemapIrradianceConvolutionMaterial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

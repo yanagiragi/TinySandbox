@@ -3,7 +3,7 @@
 #include "GraphicsAPI.hpp"
 
 #include "Renderer.hpp"
-#include "Material.hpp"
+#include "BaseMaterial.hpp"
 #include "Mesh.hpp"
 
 namespace TinySandbox

@@ -56,7 +56,7 @@ namespace TinySandbox
 		Scene::Instance()->Add(testEntity);
 		
 		// Skybox Setting
-		Texture* test = new Texture("../Resources/incskies_024_8k.hdr", TextureType::TEXTURE_2D, true, true, 1024);
+		Texture* test = new Texture("../Resources/Newport_Loft_Ref.hdr", TextureType::TEXTURE_2D, true, true, true, 1024, 512, 512);
 		m_SkyboxRenderer = new SkyboxRenderer();
 		m_SkyboxRenderer->SetTexture(test);
 
@@ -168,6 +168,15 @@ namespace TinySandbox
 
 		if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
 			mainCamera->Phi(mainCamera->Phi() - 1);
+		}
+
+		// debug
+		if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS) {
+			m_SkyboxRenderer->SetDisplayMode(Skybox_DisplayType::REGULAR);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) {
+			m_SkyboxRenderer->SetDisplayMode(Skybox_DisplayType::IRRADIANCE);
 		}
 	}
 
