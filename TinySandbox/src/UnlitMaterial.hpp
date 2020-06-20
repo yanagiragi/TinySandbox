@@ -59,10 +59,7 @@ namespace TinySandbox
 				this->SetMat4("u_ModelMatrix", modelMatrix);
 				this->SetMat4("u_ViewMatrix", viewMatrix);
 				this->SetMat4("u_ProjectionMatrix", projectionMatrix);
-				//this->SetTexture2D("u_albedo", GetMainTexture()->GetID());
-
-				this->SetTexture2D("u_albedo", BRDFLutGenerator::GetLutID());
-
+				this->SetTexture2D("u_albedo", GetMainTexture()->GetID());
 				this->SetVec2("u_tiling", 1.0, 1.0);
 				this->SetVec3("u_tint", 1.0, 1.0, 1.0);
 				this->SetFloat("u_alpha", 1.0);

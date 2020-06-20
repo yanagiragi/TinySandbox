@@ -22,7 +22,7 @@ namespace TinySandbox
 			void Use() override;
 
 		private:
-			Texture *m_cubemapTexture, *m_brdfTexture;
+			Texture *m_cubemapTexture;
 			float m_metallic, m_roughness, m_ambientOcculusion;
 			glm::vec3 m_tint;
 	};

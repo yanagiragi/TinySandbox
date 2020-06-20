@@ -26,7 +26,7 @@ uniform mat4 u_ViewMatrix;
 
 uniform vec3 u_lightColor;
 uniform float u_lightIntensity;
-uniform float u_lightPosition;
+uniform vec3 u_lightPosition;
 
 out vec4 outColor;
 
@@ -80,6 +80,8 @@ float GeometrySmith (vec3 N, vec3 V, vec3 L, float roughness)
 
 vec3 FresnelSchlick (float cosTheta, vec3 F0)
 {
+	cosTheta = clamp(cosTheta, 0.0, 0.99);
+
 	// F0: the surface reflection at zero incidence
     return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
 }
@@ -118,7 +120,7 @@ vec3 BRDF(vec3 N, vec3 V, vec3 L, vec3 F0, vec3 albedo, float metallic, float ro
 
 vec3 FresnelSchlickRoughness(float cosTheta, vec3 F0, float roughness)
 {
-    return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(1.0 - cosTheta, 5.0);
+	return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(1.0 - cosTheta, 5.0);
 }
 
 mat4 rotationX( in float angle ) {
@@ -155,7 +157,7 @@ vec3 CollectLo(vec3 N, vec3 V, vec3 F0, vec3 albedo, float metallic, float rough
 
     // calculate Lo
     Lo += BRDF(N, V, L, F0, albedo, metallic, roughness) * radiance * NdotL;
-	
+
     return Lo;
 }
 
@@ -175,7 +177,7 @@ void main()
 	// most dielectric surfaces look visually correct with a constant F0 of 0.04
 	vec3 F0 = vec3(0.04); 
 	F0      = mix(F0, albedo, metallic);
-	
+
 	vec3 Lo = vec3(0.0);
 		
 	Lo = CollectLo(N, V, F0, albedo, metallic, roughness);

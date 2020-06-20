@@ -6,6 +6,7 @@
 
 #include "NormalDebugMaterial.hpp"
 #include "UnlitMaterial.hpp"
+#include "CookTorranceMaterial.hpp"
 
 #include "SkyboxRenderer.hpp"
 #include "SkyboxMaterial.hpp"
@@ -46,13 +47,14 @@ namespace TinySandbox
 		/***** Setup Scene Entity & Setting *****/		
 		TinySandbox::Entity* testEntity = new TinySandbox::Entity("Test");
 		TinySandbox::MeshRenderer* meshRenderer = new TinySandbox::MeshRenderer();
-		TinySandbox::Mesh* mesh = new TinySandbox::Mesh("../Resources/monkey.obj");
+		TinySandbox::Mesh* mesh = new TinySandbox::Mesh("../Resources/sphere.obj");
 		Transform* testTransform = testEntity->GetTransform();
 
 		testEntity->Add(meshRenderer); // implicitly cast to TinySandbox::Component
 		meshRenderer->SetMesh(mesh);
 		// meshRenderer->SetMaterial(new UnlitMaterial(meshRenderer, "../Resources/test.png"));
-		meshRenderer->SetMaterial(new NormalDebugMaterial());
+		//meshRenderer->SetMaterial(new NormalDebugMaterial());
+		meshRenderer->SetMaterial(new CookTorranceMaterial());
 		testTransform->Rotation(glm::vec3(-90.0f, 0.0f, 90.0f));
 
 		TinySandbox::Entity* cubeEntity = new TinySandbox::Entity("Cube");
@@ -89,7 +91,9 @@ namespace TinySandbox
 		m_mainCamera->NearPlaneDistance(0.01f);
 		m_mainCamera->FarPlaneDistance(100.0f);
 		m_mainCamera->FieldOfView(45.0f);
-		m_mainCamera->Position(glm::vec3(0, 0, 10));
+		// m_mainCamera->Position(glm::vec3(0, 0, 10));
+		// m_mainCamera->Position(glm::vec3(0, 0, 4.899));
+		m_mainCamera->Position(glm::vec3(0, 0, 4.99));
 		m_mainCamera->Phi(90.0f);
 		m_mainCamera->Theta(0.0f);
 
