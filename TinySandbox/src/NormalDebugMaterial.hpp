@@ -7,17 +7,17 @@ namespace TinySandbox
 	class NormalDebugMaterial : public BaseMaterial
 	{
 		public:
-			NormalDebugMaterial(Renderer* _renderer)
-				: BaseMaterial(_renderer, "../Shaders/normalDebug.vert", "", "../Shaders/normalDebug.frag")
+			NormalDebugMaterial()
+				: BaseMaterial(nullptr, "../Shaders/normalDebug.vert", "", "../Shaders/normalDebug.frag")
 			{
-				m_renderer = _renderer;
+				
 			}
 
-			/*NormalDebugMaterial(const char* _vertexShaderSource, const char* _geometryShaderSource, const char* _fragmentShaderSource)
-				: Material(_vertexShaderSource, _geometryShaderSource, _fragmentShaderSource)
+			NormalDebugMaterial(Renderer* _renderer)
+				: BaseMaterial(nullptr, "../Shaders/normalDebug.vert", "", "../Shaders/normalDebug.frag")
 			{
 
-			}*/
+			}
 
 			NormalDebugMaterial& operator=(const NormalDebugMaterial& _other)
 			{
@@ -47,9 +47,9 @@ namespace TinySandbox
 				const glm::mat4 projectionMatrix = Scene::GetMainCamera()->ProjectionMatrix();
 				const glm::mat4 modelMatrix = m_renderer->entity->GetTransform()->toMatrix();
 
-				this->SetMat4("u_Model", modelMatrix);
-				this->SetMat4("u_View", viewMatrix);
-				this->SetMat4("u_Projection", projectionMatrix);
+				this->SetMat4("u_ModelMatrix", modelMatrix);
+				this->SetMat4("u_ViewMatrix", viewMatrix);
+				this->SetMat4("u_ProjectionMatrix", projectionMatrix);
 			}
 	};
 }

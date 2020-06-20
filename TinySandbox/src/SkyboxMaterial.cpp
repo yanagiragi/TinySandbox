@@ -5,6 +5,13 @@
 
 namespace TinySandbox
 {	
+	SkyboxMaterial::SkyboxMaterial() : BaseMaterial(nullptr, "../Shaders/skybox.vert", "", "../Shaders/skybox.frag")
+	{
+		SetMainTexture(new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false));
+		m_mode = Skybox_DisplayType::REGULAR;
+		m_lod = 0;
+	}
+
 	SkyboxMaterial::SkyboxMaterial(Renderer* _renderer) : BaseMaterial(_renderer, "../Shaders/skybox.vert", "", "../Shaders/skybox.frag")
 	{
 		SetMainTexture( new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false) );

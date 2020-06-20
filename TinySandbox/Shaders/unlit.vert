@@ -8,12 +8,12 @@ uniform mat4 u_ModelMatrix;
 uniform mat4 u_ViewMatrix;
 uniform mat4 u_ProjectionMatrix;
 
-out vec3 normal;
+out vec3 _worldNormal;
 
-out vec2 textureCoord;
+out vec2 _texCoord;
 
 void main() {
-	normal = aNormal;
-	textureCoord = aTextureCoord;
+	_worldNormal = aNormal;
+	_texCoord = aTextureCoord;
 	gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix *  vec4(aPosition , 1.0);
 }

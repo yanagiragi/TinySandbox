@@ -60,6 +60,8 @@ namespace TinySandbox
 
 			Texture* GetMainTexture() const { return m_mainTexture; }
 
+			void SetRenderer(Renderer* _renderer) { m_renderer = _renderer; }
+
 			BaseMaterial& operator=(const BaseMaterial& _other)
 			{
 				this->m_program = _other.m_program;

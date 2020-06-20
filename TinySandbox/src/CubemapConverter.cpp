@@ -9,15 +9,6 @@
 #include "Windows.hpp"
 
 TinySandbox::CubemapConverter* TinySandbox::CubemapConverter::m_instance = nullptr;
-const glm::mat4 captureProjection = glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f);
-const glm::mat4 captureViews[] = {
-	glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
-	glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
-	glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  1.0f,  0.0f), glm::vec3(0.0f,  0.0f,  1.0f)),
-	glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f,  0.0f), glm::vec3(0.0f,  0.0f, -1.0f)),
-	glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
-	glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f))
-};
 
 namespace TinySandbox
 {
@@ -28,9 +19,9 @@ namespace TinySandbox
 		m_renderBufferObject= 4294967294;
 
 		// leave _renderer as nullptr since it is a lazy update
-		m_convertMaterial = new EquirectangularToCubemapMaterial(nullptr);
-		m_convoluteMaterial = new CubemapConvolveMaterial(nullptr);
-		m_prefilterMaterial = new CubemapPrefilterMaterial(nullptr);
+		m_convertMaterial = new EquirectangularToCubemapMaterial();
+		m_convoluteMaterial = new CubemapConvolveMaterial();
+		m_prefilterMaterial = new CubemapPrefilterMaterial();
 	}
 
 	CubemapConverter::~CubemapConverter()

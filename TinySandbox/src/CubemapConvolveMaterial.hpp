@@ -9,7 +9,7 @@ namespace TinySandbox
 	{
 		public:
 
-			CubemapConvolveMaterial() = delete;
+			CubemapConvolveMaterial();
 
 			CubemapConvolveMaterial(Renderer* _renderer);
 

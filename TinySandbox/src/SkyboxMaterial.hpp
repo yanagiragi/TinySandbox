@@ -23,6 +23,8 @@ namespace TinySandbox
 		friend class SkyboxRenderer;
 
 		public:
+			SkyboxMaterial();
+
 			SkyboxMaterial(Renderer* _renderer);
 
 			SkyboxMaterial(Renderer* _renderer, const char* _filename, bool _isHDR);

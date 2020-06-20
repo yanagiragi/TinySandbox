@@ -174,6 +174,7 @@ namespace TinySandbox
 		STENCIL_INDEX,
 		DEPTH_STENCIL,
 		RGB16F,
+		RG16F,
 
 		// Texture Parameter
 		DEPTH_STENCIL_TEXTURE_MODE,

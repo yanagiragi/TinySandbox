@@ -19,9 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BRDFLutGenerator.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="CookTorranceMaterial.hpp" />
+    <ClInclude Include="Cube.hpp" />
     <ClInclude Include="CubemapConverter.hpp" />
     <ClInclude Include="CubemapConvolveMaterial.hpp" />
     <ClInclude Include="CubemapPrefilterMaterial.hpp" />
@@ -48,6 +50,7 @@
   <ItemGroup>
     <ClCompile Include="..\includes\glad.c" />
     <ClCompile Include="..\includes\TinyObjLoader\tiny_obj_loader.cc" />
+    <ClCompile Include="BRDFLutGenerator.cpp" />
     <ClCompile Include="CookTorranceMaterial.cpp" />
     <ClCompile Include="CubemapConverter.cpp" />
     <ClCompile Include="CubemapConvolveMaterial.cpp" />
@@ -59,6 +62,7 @@
     <ClCompile Include="BaseMaterial.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SkyboxMaterial.cpp" />
     <ClCompile Include="SkyboxRenderer.cpp" />

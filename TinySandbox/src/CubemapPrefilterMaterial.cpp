@@ -2,6 +2,12 @@
 
 namespace TinySandbox
 {
+	CubemapPrefilterMaterial::CubemapPrefilterMaterial() :
+		Cubemap_BaseMaterial(nullptr, "../Shaders/cubemap.vert", "", "../Shaders/CubemapPrefilter.frag")
+	{
+		SetMainTexture(new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false));
+	}
+
 	CubemapPrefilterMaterial::CubemapPrefilterMaterial(Renderer* _renderer) :
 		Cubemap_BaseMaterial(_renderer, "../Shaders/cubemap.vert", "", "../Shaders/CubemapPrefilter.frag")
 	{

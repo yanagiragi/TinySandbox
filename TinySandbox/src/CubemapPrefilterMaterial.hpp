@@ -7,7 +7,7 @@ namespace TinySandbox
 	class CubemapPrefilterMaterial : public Cubemap_BaseMaterial
 	{
 		public:
-			CubemapPrefilterMaterial() = delete;
+			CubemapPrefilterMaterial();
 
 			CubemapPrefilterMaterial(Renderer* _renderer);
 

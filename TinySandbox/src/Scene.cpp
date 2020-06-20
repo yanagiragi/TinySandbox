@@ -1,6 +1,8 @@
 #include "Scene.hpp"
 
 #include "MeshRenderer.hpp"
+#include "Quad.hpp"
+#include "Cube.hpp"
 
 #include "NormalDebugMaterial.hpp"
 #include "UnlitMaterial.hpp"
@@ -49,11 +51,34 @@ namespace TinySandbox
 
 		testEntity->Add(meshRenderer); // implicitly cast to TinySandbox::Component
 		meshRenderer->SetMesh(mesh);
-		meshRenderer->SetMaterial(new UnlitMaterial(meshRenderer, "../Resources/test.png"));
-		meshRenderer->SetMaterial(new NormalDebugMaterial(meshRenderer));
+		// meshRenderer->SetMaterial(new UnlitMaterial(meshRenderer, "../Resources/test.png"));
+		meshRenderer->SetMaterial(new NormalDebugMaterial());
 		testTransform->Rotation(glm::vec3(-90.0f, 0.0f, 90.0f));
 
+		TinySandbox::Entity* cubeEntity = new TinySandbox::Entity("Cube");
+		TinySandbox::MeshRenderer* cubeMeshRenderer = new TinySandbox::MeshRenderer();
+		Transform* cubeTransform = cubeEntity->GetTransform();
+
+		cubeEntity->Add(cubeMeshRenderer); // implicitly cast to TinySandbox::Component
+		cubeMeshRenderer->SetMesh(new Cube());
+		cubeMeshRenderer->SetMaterial(new NormalDebugMaterial());
+		cubeTransform->Rotation(glm::vec3(0.0f, 0.0f, 0.0f));
+		cubeTransform->Position(glm::vec3(-3, 0, 0));
+
+		TinySandbox::Entity* quadEntity = new TinySandbox::Entity("Quad");
+		TinySandbox::MeshRenderer* quadMeshRenderer = new TinySandbox::MeshRenderer();
+		Transform* quadTransform = quadEntity->GetTransform();
+
+		quadEntity->Add(quadMeshRenderer); // implicitly cast to TinySandbox::Component
+		quadMeshRenderer->SetMesh(new Quad());
+		// quadMeshRenderer->SetMaterial(new NormalDebugMaterial());
+		quadMeshRenderer->SetMaterial(new UnlitMaterial("../Resources/test.png"));
+		quadTransform->Rotation(glm::vec3(0.0f, 0.0f, 0.0f));
+		quadTransform->Position(glm::vec3(3, 0, 0));
+
 		Scene::Instance()->Add(testEntity);
+		Scene::Instance()->Add(cubeEntity);
+		Scene::Instance()->Add(quadEntity);
 		
 		// Skybox Setting
 		Texture* test = new Texture("../Resources/Newport_Loft_Ref.hdr", TextureType::TEXTURE_2D, true, true, true, 1024, 512, 512, 5);
@@ -64,7 +89,7 @@ namespace TinySandbox
 		m_mainCamera->NearPlaneDistance(0.01f);
 		m_mainCamera->FarPlaneDistance(100.0f);
 		m_mainCamera->FieldOfView(45.0f);
-		m_mainCamera->Position(glm::vec3(0, 0, 5));
+		m_mainCamera->Position(glm::vec3(0, 0, 10));
 		m_mainCamera->Phi(90.0f);
 		m_mainCamera->Theta(0.0f);
 	}
@@ -131,6 +156,10 @@ namespace TinySandbox
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 			glfwSetWindowShouldClose(window, true);
 
+		// Should Set Input State and let Component Reacts to it
+
+		// For Debug, Direct Manipulate the Entity for now
+
 		TinySandbox::Camera* mainCamera = TinySandbox::Scene::GetMainCamera();
 
 		const float sentivity = 0.1;
@@ -188,14 +217,52 @@ namespace TinySandbox
 			m_SkyboxRenderer->SetDisplayMode(Skybox_DisplayType::PREFILTER);
 		}
 
-		std::cout << m_SkyboxRenderer->GetLod() << std::endl;
-
 		if (glfwGetKey(window, GLFW_KEY_EQUAL) == GLFW_PRESS) {
 			m_SkyboxRenderer->SetLod(m_SkyboxRenderer->GetLod() + 0.1);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_MINUS) == GLFW_PRESS) {
 			m_SkyboxRenderer->SetLod(m_SkyboxRenderer->GetLod() - 0.1);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS) {
+			const glm::vec3 pos = m_entitiesList[2]->GetTransform()->Position();
+			m_entitiesList[2]->GetTransform()->Position(pos + glm::vec3(1, 0, 0) * sentivity);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) {
+			const glm::vec3 pos = m_entitiesList[2]->GetTransform()->Position();
+			m_entitiesList[2]->GetTransform()->Position(pos + glm::vec3(-1, 0, 0) * sentivity);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS) {
+			const glm::vec3 pos = m_entitiesList[2]->GetTransform()->Rotation();
+			m_entitiesList[2]->GetTransform()->Rotation(pos + glm::vec3(1, 0, 0) * sentivity);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS) {
+			const glm::vec3 pos = m_entitiesList[2]->GetTransform()->Rotation();
+			m_entitiesList[2]->GetTransform()->Rotation(pos + glm::vec3(-1, 0, 0) * sentivity);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
+			const glm::vec3 pos = m_entitiesList[2]->GetTransform()->Rotation();
+			m_entitiesList[2]->GetTransform()->Rotation(pos + glm::vec3(0, 1, 0) * sentivity);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_V) == GLFW_PRESS) {
+			const glm::vec3 pos = m_entitiesList[2]->GetTransform()->Rotation();
+			m_entitiesList[2]->GetTransform()->Rotation(pos + glm::vec3(0, -1, 0) * sentivity);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS) {
+			const glm::vec3 pos = m_entitiesList[2]->GetTransform()->Rotation();
+			m_entitiesList[2]->GetTransform()->Rotation(pos + glm::vec3(0, 0, 1) * sentivity);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS) {
+			const glm::vec3 pos = m_entitiesList[2]->GetTransform()->Rotation();
+			m_entitiesList[2]->GetTransform()->Rotation(pos + glm::vec3(0, 0, -1) * sentivity);
 		}
 	}
 

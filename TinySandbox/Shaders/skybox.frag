@@ -3,13 +3,13 @@
 uniform samplerCube u_environmentMap;
 uniform float u_lod;
 
-in vec3 WorldPos;
+in vec3 _worldPos;
 
 out vec4 FragColor;
 
 void main()
 {		
-    vec3 envColor = textureLod(u_environmentMap, WorldPos, u_lod).rgb;
+    vec3 envColor = textureLod(u_environmentMap, _worldPos, u_lod).rgb;
     
     // HDR tonemap and gamma correct
     envColor = envColor / (envColor + vec3(1.0));

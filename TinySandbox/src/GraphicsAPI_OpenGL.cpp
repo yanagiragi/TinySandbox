@@ -337,6 +337,9 @@ float GraphicsAPI_OpenGL::GetType(GraphicsAPI_DataType _dataType) const
 		case GraphicsAPI_DataType::RGB16F:
 			type = GL_RGB16F; break;
 
+		case GraphicsAPI_DataType::RG16F:
+			type = GL_RG16F; break;
+
 		case GraphicsAPI_DataType::TEXTURE0:
 			type = GL_TEXTURE0; break;
 

@@ -2,6 +2,12 @@
 
 namespace TinySandbox
 {
+	CubemapConvolveMaterial::CubemapConvolveMaterial() :
+		Cubemap_BaseMaterial(nullptr, "../Shaders/cubemap.vert", "", "../Shaders/CubemapIrradianceConvolution.frag")
+	{
+		SetMainTexture(new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false));
+	}
+
 	CubemapConvolveMaterial::CubemapConvolveMaterial(Renderer* _renderer) :
 		Cubemap_BaseMaterial(_renderer, "../Shaders/cubemap.vert", "", "../Shaders/CubemapIrradianceConvolution.frag")
 	{

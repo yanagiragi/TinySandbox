@@ -9,7 +9,7 @@ namespace TinySandbox
 	{
 		public:
 
-			EquirectangularToCubemapMaterial() = delete;
+			EquirectangularToCubemapMaterial();
 
 			EquirectangularToCubemapMaterial(Renderer* _renderer);
 

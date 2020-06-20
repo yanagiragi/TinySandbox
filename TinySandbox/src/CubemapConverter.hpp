@@ -42,7 +42,7 @@ namespace TinySandbox
 			EquirectangularToCubemapMaterial* m_convertMaterial;
 			CubemapConvolveMaterial* m_convoluteMaterial;
 			CubemapPrefilterMaterial* m_prefilterMaterial;
-
+			
 			static CubemapConverter* m_instance;
 	};
 }

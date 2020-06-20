@@ -7,6 +7,12 @@
 
 namespace TinySandbox
 {
+	EquirectangularToCubemapMaterial::EquirectangularToCubemapMaterial() :
+		Cubemap_BaseMaterial(nullptr, "../Shaders/cubemap.vert", "", "../Shaders/EquirectangularToCubemap.frag")
+	{
+		SetMainTexture(new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false));
+	}
+
 	EquirectangularToCubemapMaterial::EquirectangularToCubemapMaterial(Renderer* _renderer) : 
 		Cubemap_BaseMaterial(_renderer, "../Shaders/cubemap.vert", "", "../Shaders/EquirectangularToCubemap.frag")
 	{

@@ -10,14 +10,24 @@ namespace TinySandbox
 	class UnlitMaterial : public BaseMaterial
 	{
 		public:
+
+			UnlitMaterial() : BaseMaterial(nullptr, "../Shaders/unlit.vert", "", "../Shaders/unlit.frag")
+			{
+				SetMainTexture(new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false));
+			}
+
 			UnlitMaterial(Renderer* _renderer) : BaseMaterial(_renderer, "../Shaders/unlit.vert", "", "../Shaders/unlit.frag")
 			{
 				SetMainTexture( new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false) );
 			}
 
+			UnlitMaterial(const char* _filename) : BaseMaterial(nullptr, "../Shaders/unlit.vert", "", "../Shaders/unlit.frag")
+			{
+				SetMainTexture(new Texture(_filename, TextureType::TEXTURE_2D, false));
+			}
+
 			UnlitMaterial(Renderer* _renderer, const char* _filename) : BaseMaterial(_renderer, "../Shaders/unlit.vert", "", "../Shaders/unlit.frag")
 			{
-				m_renderer = _renderer;
 				SetMainTexture( new Texture(_filename, TextureType::TEXTURE_2D, false) );
 			}
 

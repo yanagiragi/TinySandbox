@@ -11,28 +11,22 @@ namespace TinySandbox
 	{
 		public:
 
-		Renderer() {
-			m_material = nullptr;
-			m_api = GraphicsAPI::GetAPI();
-		}
+			Renderer();
 
-		~Renderer() {
-			if (m_material) {
-				delete m_material;
-			}			
-		}
+			~Renderer();
 
-		// child class should override functions in Components
-		virtual void Start() override = 0;
-		virtual void Update() override = 0;
-		virtual void OnGUI() override = 0;
-		virtual void OnRender() override = 0;
+			// child class should override functions in Components
+			virtual void Start() override = 0;
+			virtual void Update() override = 0;
+			virtual void OnGUI() override = 0;
+			virtual void OnRender() override = 0;
 
-		void SetMaterial(BaseMaterial* _mat) { m_material = _mat; }
-		BaseMaterial* GetMaterial() const { return m_material; }
+			void SetMaterial(BaseMaterial* _mat);
 
-		protected:
-			BaseMaterial* m_material;
-			GraphicsAPI* m_api;
+			BaseMaterial* GetMaterial() const { return m_material; }
+
+			protected:
+				BaseMaterial* m_material;
+				GraphicsAPI* m_api;
 	};
 }
