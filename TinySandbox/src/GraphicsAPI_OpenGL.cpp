@@ -1,9 +1,9 @@
 #include "GraphicsAPI_OpenGL.hpp"
 
+#include <glad/glad.h>
 #include <assert.h>
 #include <functional>
 
-#include <glad/glad.h>
 
 using namespace TinySandbox;
 

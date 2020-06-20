@@ -92,6 +92,10 @@ namespace TinySandbox
 		m_mainCamera->Position(glm::vec3(0, 0, 10));
 		m_mainCamera->Phi(90.0f);
 		m_mainCamera->Theta(0.0f);
+
+		// ViewPort Setting
+		Windows* window = Windows::GetInstance();
+		API->SetViewport(0, 0, window->GetWidth(), window->GetHeight());
 	}
 
 
@@ -270,7 +274,8 @@ namespace TinySandbox
 	{
 		// make sure the viewport matches the new window dimensions; note that width and 
 		// height will be significantly larger than specified on retina displays.
-		glViewport(0, 0, _width, _height);
+		const GraphicsAPI* m_api = GraphicsAPI::GetAPI();
+		m_api->SetViewport(0, 0, _width, _height);
 
 		TinySandbox::Windows::GetInstance()->SetWidthAndHeight(_width, _height);
 	}

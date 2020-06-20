@@ -1,7 +1,7 @@
+#include <glad/glad.h>
 #include "GLFW_Windows.hpp"
 
 #include "GraphicsAPI.hpp"
-
 #include "Scene.hpp"
 
 namespace TinySandbox

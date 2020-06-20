@@ -24,6 +24,10 @@ namespace TinySandbox
 		}
 	}
 
+	void BaseMaterial::Use() {
+		m_api->BindProgram(m_program);
+	}
+
 	void BaseMaterial::Unuse() {
 		m_api->UnbindProgram();
 		while (m_textureIncrementId > 0) {

@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BRDFLutGenerator.hpp" />
+    <ClInclude Include="BRDFLutMaterial.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="CookTorranceMaterial.hpp" />
@@ -51,6 +52,7 @@
     <ClCompile Include="..\includes\glad.c" />
     <ClCompile Include="..\includes\TinyObjLoader\tiny_obj_loader.cc" />
     <ClCompile Include="BRDFLutGenerator.cpp" />
+    <ClCompile Include="BRDFLutMaterial.cpp" />
     <ClCompile Include="CookTorranceMaterial.cpp" />
     <ClCompile Include="CubemapConverter.cpp" />
     <ClCompile Include="CubemapConvolveMaterial.cpp" />

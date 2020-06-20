@@ -20,7 +20,7 @@ namespace TinySandbox
 			// child class must override OnGUI function
 			virtual void OnGUI() = 0;
 
-			virtual void Use() = 0;
+			virtual void Use();
 			
 			virtual void Unuse();
 

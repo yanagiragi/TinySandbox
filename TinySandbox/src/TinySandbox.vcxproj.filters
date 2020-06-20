@@ -108,6 +108,9 @@
     <ClInclude Include="Cube.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="BRDFLutMaterial.hpp">
+      <Filter>Source Files\Materials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Mesh.cpp">
@@ -172,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BRDFLutMaterial.cpp">
+      <Filter>Source Files\Materials</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
