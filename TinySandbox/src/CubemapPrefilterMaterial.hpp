@@ -13,13 +13,15 @@ namespace TinySandbox
 
 			void OnGUI() override;
 
-			void Use(int _index) override
-			{
-				Use(_index, 1, 1);
-			}
-
-			void Use(int _index, int _lod, int _maxLod);
-
+			void Use() override;
+			
 			void Unuse() override;
+
+			void SetLod(int _lod) { m_lod = _lod; }
+
+			void SetMaxLod(int _maxLod) { m_maxLod = _maxLod; }
+
+		private:
+			int m_lod, m_maxLod;
 	};
 }

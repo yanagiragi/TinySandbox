@@ -15,7 +15,7 @@ namespace TinySandbox
 
 			void OnGUI() override;
 
-			void Use(int index) override;
+			void Use() override;
 
 			void Unuse() override;
 

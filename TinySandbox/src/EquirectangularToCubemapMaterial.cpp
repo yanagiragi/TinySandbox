@@ -25,7 +25,7 @@ namespace TinySandbox
 
 	}
 
-	void EquirectangularToCubemapMaterial::Use(int index)
+	void EquirectangularToCubemapMaterial::Use()
 	{
 		m_api->BindProgram(m_program);
 		m_api->EnableTexture2D();
@@ -33,7 +33,7 @@ namespace TinySandbox
 		// Note: this is Texture2D, since it is a equirectangular projected 2d image
 		this->SetTexture2D("u_equirectangularMap", GetMainTexture()->GetID());		
 		this->SetMat4("u_projectionMatrix", captureProjection);
-		this->SetMat4("u_viewMatrix", captureViews[index]);
+		this->SetMat4("u_viewMatrix", captureViews[m_index]);
 	}
 
 	void EquirectangularToCubemapMaterial::Unuse()

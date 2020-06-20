@@ -18,6 +18,7 @@ namespace TinySandbox
 		m_roughness = 0.0;
 		m_metallic = 0.0;
 		m_ambientOcculusion = 1.0;
+		m_tint = glm::vec3(1, 1, 1);
 	}
 
 	CookTorranceMaterial::CookTorranceMaterial(Renderer* _renderer)
@@ -29,6 +30,7 @@ namespace TinySandbox
 		m_roughness = 0.0;
 		m_metallic = 0.0;
 		m_ambientOcculusion = 1.0;
+		m_tint = glm::vec3(1, 1, 1);
 	}
 
 	CookTorranceMaterial::CookTorranceMaterial(Renderer* _renderer, const char* _filename)
@@ -40,6 +42,7 @@ namespace TinySandbox
 		m_roughness = 0.0;
 		m_metallic = 0.0;
 		m_ambientOcculusion = 1.0;
+		m_tint = glm::vec3(1, 1, 1);
 	}
 
 	void CookTorranceMaterial::OnGUI()
@@ -78,9 +81,7 @@ namespace TinySandbox
 		this->SetFloat("u_roughness", m_roughness);
 		this->SetFloat("u_ao", m_ambientOcculusion);
 
-		this->SetFloat("u_ao", 0.0);
-
-		this->SetVec3("u_tint", glm::vec3(1, 1, 1));
+		this->SetVec3("u_tint", m_tint);
 		this->SetTexture2D("u_albedo", GetMainTexture()->GetID());
 		
 		this->SetTextureCubemap("u_irradianceMap", m_cubemapTexture->GetID(CubemapTextureType::IRRADIANCE));

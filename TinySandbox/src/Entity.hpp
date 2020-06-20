@@ -24,6 +24,15 @@ namespace TinySandbox
 
 				entity = this; // override Componetn Ctor
 			}
+
+			// ctor
+			Entity(std::string _name) : m_name(_name)
+			{
+				m_transform = new Transform();
+
+				entity = this; // override Componetn Ctor
+			}
+
 		
 			// dtor
 			~Entity()
@@ -103,7 +112,7 @@ namespace TinySandbox
 			}
 
 		 private:
-			const char* m_name;
+			std::string m_name;
 			std::vector<Component*> m_components;
 			Transform* m_transform;
 	};

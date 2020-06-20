@@ -51,48 +51,114 @@ namespace TinySandbox
 		API->EnableDepthTest();
 		
 		/***** Setup Scene Entity & Setting *****/		
-		TinySandbox::Entity* testEntity = new TinySandbox::Entity("Test");
-		TinySandbox::MeshRenderer* meshRenderer = new TinySandbox::MeshRenderer();
-		TinySandbox::Mesh* mesh = new TinySandbox::Mesh("../Resources/sphere.obj");
-		Transform* testTransform = testEntity->GetTransform();
 
-		testEntity->Add(meshRenderer); // implicitly cast to TinySandbox::Component
-		meshRenderer->SetMesh(mesh);
-		// meshRenderer->SetMaterial(new UnlitMaterial(meshRenderer, "../Resources/test.png"));
-		//meshRenderer->SetMaterial(new NormalDebugMaterial());
-		meshRenderer->SetMaterial(new CookTorranceMaterial());
-		testTransform->Rotation(glm::vec3(-90.0f, 0.0f, 90.0f));
+		float shift = 14;
 
-		TinySandbox::Entity* cubeEntity = new TinySandbox::Entity("Cube");
-		TinySandbox::MeshRenderer* cubeMeshRenderer = new TinySandbox::MeshRenderer();
-		Transform* cubeTransform = cubeEntity->GetTransform();
+		// 1. Outer part of FOL
+		TinySandbox::Entity* outerEntity = new TinySandbox::Entity("Test (Outer)");
+		TinySandbox::MeshRenderer* outerMeshRenderer = new TinySandbox::MeshRenderer();
+		TinySandbox::Mesh* outerMesh = new TinySandbox::Mesh("../Resources/outer.obj");
+		Transform* outerTransform = outerEntity->GetTransform();
 
-		cubeEntity->Add(cubeMeshRenderer); // implicitly cast to TinySandbox::Component
-		cubeMeshRenderer->SetMesh(new Cube());
-		cubeMeshRenderer->SetMaterial(new NormalDebugMaterial());
-		cubeTransform->Rotation(glm::vec3(0.0f, 0.0f, 0.0f));
-		cubeTransform->Position(glm::vec3(-3, 0, 0));
+		outerEntity->Add(outerMeshRenderer); // implicitly cast to TinySandbox::Component
+		outerMeshRenderer->SetMesh(outerMesh);
+		
+		CookTorranceMaterial* outerMaterial = new CookTorranceMaterial();
+		outerMaterial->SetMetallic(1.0);
+		outerMaterial->SetRoughness(0.2);
+		outerMaterial->SetTint(glm::vec3(0.54, 0, 0));
+		outerMeshRenderer->SetMaterial(outerMaterial);
+		outerTransform->Rotation(glm::vec3(-90.0f, 0.0f, 90.0f));
+		outerTransform->Position(glm::vec3(shift + 0, 0, 0));
+		
+		Scene::Instance()->Add(outerEntity);
 
+		// 2. Inner part of FOL
+		TinySandbox::Entity* innerEntity = new TinySandbox::Entity("Test (Inner)");
+		TinySandbox::MeshRenderer* innerMeshRenderer = new TinySandbox::MeshRenderer();
+		TinySandbox::Mesh* innerMesh = new TinySandbox::Mesh("../Resources/inner.obj");
+		Transform* innerTransform = innerEntity->GetTransform();
+
+		innerEntity->Add(innerMeshRenderer); // implicitly cast to TinySandbox::Component
+		innerMeshRenderer->SetMesh(innerMesh);
+		
+		CookTorranceMaterial* innerMaterial = new CookTorranceMaterial();
+		innerMaterial->SetMetallic(1.0);
+		innerMaterial->SetRoughness(0.8);
+		innerMaterial->SetTint(glm::vec3(0.38, 0, 0));
+
+		innerMeshRenderer->SetMaterial(innerMaterial);
+		innerTransform->Rotation(glm::vec3(-90.0f, 0.0f, 90.0f));
+		innerTransform->Position(glm::vec3(shift + 0, 0, 0));
+
+		Scene::Instance()->Add(innerEntity);
+
+		// 3. Suzanne Monkey
+		TinySandbox::Entity* monkeyEntity = new TinySandbox::Entity("Suzanne");
+		TinySandbox::MeshRenderer* monkeyMeshRenderer = new TinySandbox::MeshRenderer();
+		Transform* monkeyTransform = monkeyEntity->GetTransform();
+
+		monkeyEntity->Add(monkeyMeshRenderer); // implicitly cast to TinySandbox::Component
+		monkeyMeshRenderer->SetMesh(new Mesh("../Resources/monkey.obj"));
+		monkeyMeshRenderer->SetMaterial(new NormalDebugMaterial());
+		monkeyTransform->Rotation(glm::vec3(-90.0f, 0.0f, 90.0f));
+		monkeyTransform->Position(glm::vec3(shift -3, 0, 0));
+
+		Scene::Instance()->Add(monkeyEntity);
+
+		// 4. Draw Quad with logo
 		TinySandbox::Entity* quadEntity = new TinySandbox::Entity("Quad");
 		TinySandbox::MeshRenderer* quadMeshRenderer = new TinySandbox::MeshRenderer();
 		Transform* quadTransform = quadEntity->GetTransform();
 
 		quadEntity->Add(quadMeshRenderer); // implicitly cast to TinySandbox::Component
 		quadMeshRenderer->SetMesh(new Quad());
-		// quadMeshRenderer->SetMaterial(new NormalDebugMaterial());
-		quadMeshRenderer->SetMaterial(new UnlitMaterial("../Resources/test.png"));
-		quadTransform->Rotation(glm::vec3(0.0f, 0.0f, 0.0f));
-		quadTransform->Position(glm::vec3(3, 0, 0));
+		quadMeshRenderer->SetMaterial(new UnlitMaterial("../Resources/logo.jpg", false));
+		quadTransform->Rotation(glm::vec3(0.0f, 0.0f, -90.0f));
+		quadTransform->Position(glm::vec3(shift + 3, 0, 0));
 
+		Scene::Instance()->Add(quadEntity);
+
+		// 5. Add Light to scene
 		TinySandbox::Entity* sunEntity = new TinySandbox::Entity("Sun");
-		DirectionalLight* sunLight = new DirectionalLight();
+		DirectionalLight* sunLight = new DirectionalLight(3.0, glm::vec3(1, 1, 1));
 		sunEntity->Add(sunLight);
 		sunEntity->Add(new RotateAxis());
 
-		Scene::Instance()->Add(testEntity);
-		Scene::Instance()->Add(cubeEntity);
-		Scene::Instance()->Add(quadEntity);
 		Scene::Instance()->Add(sunEntity);
+
+		// 6. Add Spheres
+		
+		const int row = 5, col = 5, sphereSpacing = 3.0;
+		auto clamp = [](float x, float min, float max) -> float {
+			return x < min ? min : x > max ? max : x;
+		};
+
+		for (int i = 0; i < col; ++i) {
+			for (int j = 0; j < row; ++j) {
+				
+				TinySandbox::Entity* sphereEntity = new TinySandbox::Entity("Test (" + std::to_string(i) + "_" + std::to_string(j) + ")");
+				TinySandbox::MeshRenderer* sphereMeshRenderer = new TinySandbox::MeshRenderer();
+				TinySandbox::Mesh* sphereMesh = new TinySandbox::Mesh("../Resources/sphere.obj");
+				Transform* sphereTransform = sphereEntity->GetTransform();
+				CookTorranceMaterial* sphereMaterial = new CookTorranceMaterial();
+
+				sphereMaterial->SetMetallic((float)i / (float)row);
+				sphereMaterial->SetRoughness(clamp((float)j / (float)col, 0.05f, 1.0f));
+				sphereMaterial->SetAmbientOcculusion(1.0f);
+				
+				sphereEntity->Add(sphereMeshRenderer); // implicitly cast to TinySandbox::Component
+				sphereMeshRenderer->SetMesh(sphereMesh);
+				
+				sphereMeshRenderer->SetMaterial(sphereMaterial);
+				sphereTransform->Rotation(glm::vec3(-90.0f, 0.0f, 90.0f));
+				sphereTransform->Position(glm::vec3(
+					(float)((col / 2) - j) * sphereSpacing,
+					(float)((col / 2) - i) * sphereSpacing, -2.0));
+
+				Scene::Instance()->Add(sphereEntity);
+			}
+		}
 		
 		// Skybox Setting
 		Texture* test = new Texture("../Resources/Newport_Loft_Ref.hdr", TextureType::TEXTURE_2D, true, true, true, 1024, 512, 512, 5);
@@ -105,15 +171,14 @@ namespace TinySandbox
 		m_mainCamera->FieldOfView(45.0f);
 		// m_mainCamera->Position(glm::vec3(0, 0, 10));
 		// m_mainCamera->Position(glm::vec3(0, 0, 4.899));
-		m_mainCamera->Position(glm::vec3(0, 0, 4.99));
-		m_mainCamera->Phi(90.0f);
+		m_mainCamera->Position(glm::vec3(20.6, 0, 15.69));
+		m_mainCamera->Phi(123.0f);
 		m_mainCamera->Theta(0.0f);
 
 		// ViewPort Setting
 		Windows* window = Windows::GetInstance();
 		API->SetViewport(0, 0, window->GetWidth(), window->GetHeight());
 	}
-
 
 	void Scene::Start()
 	{
@@ -259,7 +324,7 @@ namespace TinySandbox
 			m_SkyboxRenderer->SetLod(m_SkyboxRenderer->GetLod() - 0.1);
 		}
 
-		sentivity = 10;
+		/*sentivity = 10;
 
 		if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS) {
 			const glm::vec3 pos = m_entitiesList[2]->GetTransform()->Position();
@@ -300,6 +365,39 @@ namespace TinySandbox
 			const glm::vec3 pos = m_entitiesList[3]->GetTransform()->Rotation();
 			m_entitiesList[3]->GetTransform()->Rotation(pos + glm::vec3(0, 0, -1) * sentivity);
 		}
+
+		if (glfwGetKey(window, GLFW_KEY_PERIOD) == GLFW_PRESS) {
+			
+			Entity* innerEntity = m_entitiesList[1];
+			auto components = innerEntity->GetComponents();
+
+			for (auto component : components)
+			{
+				MeshRenderer* renderer = dynamic_cast<MeshRenderer*>(component);
+				if (renderer) {
+					const glm::vec2 offset = renderer->GetMaterial()->GetOffset();
+					renderer->GetMaterial()->SetOffset(offset + glm::vec2(0, 1) * -0.01f);
+
+					break;
+				}
+			}
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_COMMA) == GLFW_PRESS) {
+			Entity* innerEntity = m_entitiesList[1];
+			auto components = innerEntity->GetComponents();
+
+			for (auto component : components)
+			{
+				MeshRenderer* renderer = dynamic_cast<MeshRenderer*>(component);
+				if (renderer) {
+					const glm::vec2 offset = renderer->GetMaterial()->GetOffset();
+					renderer->GetMaterial()->SetOffset(offset + glm::vec2(0, 1) * 0.01f);
+
+					break;
+				}
+			}
+		}*/
 	}
 
 	void Scene::ProcessReshape(Windows* _window, int _width, int _height)

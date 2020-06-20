@@ -123,7 +123,8 @@ namespace TinySandbox
 		GraphicsAPI_DataType targetType = GraphicsAPI_DataType::LEN;
 		for (int i = 0; i < 6; ++i) {
 
-			_material->Use(i);
+			_material->SetIndex(i);
+			_material->Use();
 
 			switch (i) {
 				case 0: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_X; break;
@@ -223,6 +224,7 @@ namespace TinySandbox
 		CubemapConverter::Instance()->m_prefilterMaterial->SetMainTexture(&_tex);
 
 		m_api->BindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER, CubemapConverter::Instance()->m_frameBufferObject);
+		CubemapConverter::Instance()->m_prefilterMaterial->SetMaxLod(maxMipLevels);
 
 		for (unsigned int mip = 0; mip < maxMipLevels; ++mip) {
 
@@ -236,7 +238,10 @@ namespace TinySandbox
 				m_api->SetRenderBuffer(GraphicsAPI_DataType::RENDERBUFFER, GraphicsAPI_DataType::DEPTH_COMPONENT24, mipWidth, mipHeight);
 				m_api->SetViewport(0, 0, mipWidth, mipHeight);
 
-				CubemapConverter::Instance()->m_prefilterMaterial->Use(i, mip, maxMipLevels);
+				CubemapConverter::Instance()->m_prefilterMaterial->SetIndex(i);
+				CubemapConverter::Instance()->m_prefilterMaterial->SetLod(mip);
+
+				CubemapConverter::Instance()->m_prefilterMaterial->Use();
 
 				switch (i) {
 				case 0: targetType = GraphicsAPI_DataType::TEXTURE_CUBE_MAP_POSITIVE_X; break;

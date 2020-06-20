@@ -19,7 +19,7 @@ namespace TinySandbox
 
 	}
 
-	void CubemapConvolveMaterial::Use(int index)
+	void CubemapConvolveMaterial::Use()
 	{
 		m_api->BindProgram(m_program);
 		m_api->EnableTexture2D();
@@ -27,7 +27,7 @@ namespace TinySandbox
 		// Note: this is TextureCubemap, since it takes enviornmentMap as input
 		this->SetTextureCubemap("u_environmentMap", GetMainTexture()->GetID());
 		this->SetMat4("u_projectionMatrix", captureProjection);
-		this->SetMat4("u_viewMatrix", captureViews[index]);
+		this->SetMat4("u_viewMatrix", captureViews[m_index]);
 	}
 
 	void CubemapConvolveMaterial::Unuse()

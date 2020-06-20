@@ -15,6 +15,7 @@ namespace TinySandbox
 			~DirectionalLight();
 
 			void Start() override;
+
 			void Update() override;
 
 			void OnGUI() override;

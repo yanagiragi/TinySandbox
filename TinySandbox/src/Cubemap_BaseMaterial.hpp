@@ -28,7 +28,7 @@ namespace TinySandbox
 					glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f))
 				}
 			{
-
+				m_index = 0;
 			}
 
 			// Note that CubemapMaterial does not serve holding renderer!
@@ -44,19 +44,15 @@ namespace TinySandbox
 					glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f))
 				}
 			{
-
+				m_index = 0;
 			}
 
-			void Use() override {
-				throw "Use Use(index) instead!";
-			}
-
-			virtual void Use(int _index) = 0;
+			void SetIndex(int _index) { m_index = _index; }
 
 		protected:
 			
 			const glm::mat4 captureProjection;
 			const glm::mat4 captureViews[6];
-
+			int m_index;
 	};
 }

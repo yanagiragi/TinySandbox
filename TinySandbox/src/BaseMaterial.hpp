@@ -90,10 +90,13 @@ namespace TinySandbox
 				return *this;
 			}
 
+			glm::vec2 GetTiling() const { return m_tiling; }
+			void SetTiling(glm::vec2 _other) { m_tiling = _other; }
+
+			glm::vec2 GetOffset() const { return m_offset; }
+			void SetOffset(glm::vec2 _other) { m_offset = _other; }
 
 		private:
-
-			Texture* m_mainTexture;
 			
 			void Compile();
 
@@ -104,7 +107,9 @@ namespace TinySandbox
 		protected:
 		
 			Renderer* m_renderer; // current only support one renderer per material
-
+			Texture* m_mainTexture;
+			glm::vec2 m_tiling;
+			glm::vec2 m_offset;
 			unsigned int m_textureIncrementId = 0;
 			unsigned int m_program;
 			GraphicsAPI* m_api;

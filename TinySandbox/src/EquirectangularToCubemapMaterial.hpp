@@ -17,6 +17,6 @@ namespace TinySandbox
 
 			void Unuse() override;
 
-			void Use(int index) override;
+			void Use() override;
 	};
 }

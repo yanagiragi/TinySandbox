@@ -22,7 +22,7 @@ namespace TinySandbox
 				SetMainTexture( new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false) );
 			}
 
-			UnlitMaterial(const char* _filename) : BaseMaterial(nullptr, "../Shaders/unlit.vert", "", "../Shaders/unlit.frag")
+			UnlitMaterial(const char* _filename, bool isHdr) : BaseMaterial(nullptr, "../Shaders/unlit.vert", "", "../Shaders/unlit.frag")
 			{
 				SetMainTexture(new Texture(_filename, TextureType::TEXTURE_2D, false));
 			}
@@ -30,6 +30,11 @@ namespace TinySandbox
 			UnlitMaterial(Renderer* _renderer, const char* _filename) : BaseMaterial(_renderer, "../Shaders/unlit.vert", "", "../Shaders/unlit.frag")
 			{
 				SetMainTexture( new Texture(_filename, TextureType::TEXTURE_2D, false) );
+			}
+
+			UnlitMaterial(Renderer* _renderer, const char* _filename, bool isHdr) : BaseMaterial(_renderer, "../Shaders/unlit.vert", "", "../Shaders/unlit.frag")
+			{
+				SetMainTexture(new Texture(_filename, TextureType::TEXTURE_2D, false));
 			}
 
 			void OnGUI() override
@@ -60,7 +65,8 @@ namespace TinySandbox
 				this->SetMat4("u_ViewMatrix", viewMatrix);
 				this->SetMat4("u_ProjectionMatrix", projectionMatrix);
 				this->SetTexture2D("u_albedo", GetMainTexture()->GetID());
-				this->SetVec2("u_tiling", 1.0, 1.0);
+				this->SetVec2("u_offset", m_offset.x, m_offset.y);
+				this->SetVec2("u_tiling", m_tiling.x, m_tiling.y);
 				this->SetVec3("u_tint", 1.0, 1.0, 1.0);
 				this->SetFloat("u_alpha", 1.0);
 				this->SetFloat("u_emission", 1.0);

@@ -8,9 +8,12 @@ namespace TinySandbox
 		: m_vertexShaderSource(_vertexShaderSource),
 		m_geometryShaderSource(_geometryShaderSource),
 		m_fragmentShaderSource(_fragmentShaderSouce),
-		m_renderer(nullptr)
+		m_renderer(_renderer)
 	{
-		m_renderer = _renderer;
+		
+		m_tiling = glm::vec2(1.0, 1.0);
+		m_offset = glm::vec2(0.0, 0.0);
+
 		m_api = GraphicsAPI::GetAPI();
 		this->Compile();
 		

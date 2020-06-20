@@ -188,7 +188,7 @@ vec3 CollectLo(vec3 N, vec3 V, vec3 F0, vec3 albedo, float metallic, float rough
 		Lo += BRDF(N, V, L, F0, albedo, metallic, roughness) * radiance * NdotL;
 	}
 
-    return Lo;
+	return Lo;
 }
 
 void main()

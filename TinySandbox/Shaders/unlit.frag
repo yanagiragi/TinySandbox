@@ -3,6 +3,7 @@
 uniform sampler2D u_albedo;
 uniform vec3 u_tint;
 uniform vec2 u_tiling;
+uniform vec2 u_offset;
 uniform float u_alpha;
 uniform float u_emission;
 
@@ -13,6 +14,6 @@ out vec4 outColor;
 
 void main()
 {
-	outColor = texture2D(u_albedo, _texCoord * u_tiling) * vec4(u_tint, 1.0) * u_emission;
+	outColor = texture2D(u_albedo, u_offset + _texCoord * u_tiling) * vec4(u_tint, 1.0) * u_emission;
 	outColor.a = u_alpha;
 }
