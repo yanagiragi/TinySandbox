@@ -5,6 +5,8 @@
 
 #include <string>
 
+#define TEXTURE_NOT_INITIALIZED 4294967294
+
 namespace TinySandbox
 {
 	class Renderer;
@@ -80,7 +82,7 @@ namespace TinySandbox
 				this->m_textureIncrementId = std::move(_other.m_textureIncrementId);
 
 				_other.m_api = nullptr;
-				this->m_program = 4294967294;
+				this->m_program = TEXTURE_NOT_INITIALIZED;
 				this->m_textureIncrementId = 0;
 
 				this->SetMainTexture(_other.GetMainTexture());

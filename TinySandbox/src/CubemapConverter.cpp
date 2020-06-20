@@ -15,8 +15,8 @@ namespace TinySandbox
 	CubemapConverter::CubemapConverter()
 	{
 		this->SetMesh(new Cube());
-		m_frameBufferObject = 4294967294; // magic number to mean "un-initialized"
-		m_renderBufferObject= 4294967294;
+		m_frameBufferObject = TEXTURE_NOT_INITIALIZED; // magic number to mean "un-initialized"
+		m_renderBufferObject= TEXTURE_NOT_INITIALIZED;
 
 		// leave _renderer as nullptr since it is a lazy update
 		m_convertMaterial = new EquirectangularToCubemapMaterial();
@@ -26,8 +26,8 @@ namespace TinySandbox
 
 	CubemapConverter::~CubemapConverter()
 	{
-		m_frameBufferObject = 4294967294;
-		m_renderBufferObject = 4294967294;
+		m_frameBufferObject = TEXTURE_NOT_INITIALIZED;
+		m_renderBufferObject = TEXTURE_NOT_INITIALIZED;
 	}
 
 	CubemapConverter* CubemapConverter::Instance()
@@ -41,7 +41,7 @@ namespace TinySandbox
 	void CubemapConverter::SetupFrameBufferAndRenderBuffer(unsigned int _resolution) {
 		GraphicsAPI* m_api = GraphicsAPI::GetAPI();
 
-		if (CubemapConverter::Instance()->m_frameBufferObject == 4294967294 || CubemapConverter::Instance()->m_renderBufferObject == 4294967294) {
+		if (CubemapConverter::Instance()->m_frameBufferObject == TEXTURE_NOT_INITIALIZED || CubemapConverter::Instance()->m_renderBufferObject == TEXTURE_NOT_INITIALIZED) {
 			CubemapConverter::Instance()->InitializeFrameBufferObjects(m_api);
 
 			m_api->BindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER, CubemapConverter::Instance()->m_frameBufferObject);

@@ -15,4 +15,7 @@ void main()
 {
 	outColor = texture2D(u_albedo, _texCoord * u_tiling) * vec4(u_tint, 1.0) * u_emission;
 	outColor.a = u_alpha;
+
+	outColor.rg = texture2D(u_albedo, _texCoord * u_tiling).rg;
+	outColor.b = 0.0;
 }

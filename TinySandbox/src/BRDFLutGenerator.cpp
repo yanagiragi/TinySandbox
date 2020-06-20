@@ -12,9 +12,9 @@ namespace TinySandbox
 	{
 		this->SetMesh(new Quad());
 		
-		m_frameBufferObject = 4294967294; // magic number to mean "un-initialized"
-		m_renderBufferObject = 4294967294;
-		m_brdfLutTextureId = 4294967294;
+		m_frameBufferObject = TEXTURE_NOT_INITIALIZED; // magic number to mean "un-initialized"
+		m_renderBufferObject = TEXTURE_NOT_INITIALIZED;
+		m_brdfLutTextureId = TEXTURE_NOT_INITIALIZED;
 
 		m_resolution = _resolution;
 
@@ -23,8 +23,8 @@ namespace TinySandbox
 
 	BRDFLutGenerator::~BRDFLutGenerator()
 	{
-		m_frameBufferObject = 4294967294; // magic number to mean "un-initialized"
-		m_renderBufferObject = 4294967294;
+		m_frameBufferObject = TEXTURE_NOT_INITIALIZED; // magic number to mean "un-initialized"
+		m_renderBufferObject = TEXTURE_NOT_INITIALIZED;
 	}
 
 	BRDFLutGenerator* BRDFLutGenerator::Instance()
@@ -47,7 +47,7 @@ namespace TinySandbox
 
 	unsigned int BRDFLutGenerator::GetLutID()
 	{
-		if (BRDFLutGenerator::Instance()->m_brdfLutTextureId == 4294967294)
+		if (BRDFLutGenerator::Instance()->m_brdfLutTextureId == TEXTURE_NOT_INITIALIZED)
 		{
 			BRDFLutGenerator::Instance()->m_brdfLutTextureId = BRDFLutGenerator::Generate(BRDFLutGenerator::Instance()->m_resolution);
 		}
@@ -59,7 +59,7 @@ namespace TinySandbox
 		GraphicsAPI* m_api = GraphicsAPI::GetAPI();
 		const int _resolution = BRDFLutGenerator::Instance()->m_resolution;
 
-		if (BRDFLutGenerator::Instance()->m_frameBufferObject == 4294967294 || BRDFLutGenerator::Instance()->m_renderBufferObject == 4294967294) {
+		if (BRDFLutGenerator::Instance()->m_frameBufferObject == TEXTURE_NOT_INITIALIZED || BRDFLutGenerator::Instance()->m_renderBufferObject == TEXTURE_NOT_INITIALIZED) {
 			BRDFLutGenerator::Instance()->InitializeFrameBufferObjects(m_api);
 
 			m_api->BindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER, BRDFLutGenerator::Instance()->m_frameBufferObject);
@@ -110,7 +110,7 @@ namespace TinySandbox
 
 		m_api->BindVertexArray(BRDFLutGenerator::Instance()->m_VAO);
 		m_api->DrawArrays(GraphicsAPI_DataType::TRIANGLES, BRDFLutGenerator::Instance()->m_mesh->vertex.size());
-
+		
 		// Cleanup
 		BRDFLutGenerator::Instance()->m_brdLutfProgram->Unuse();
 		m_api->UnbindFrameBuffer(GraphicsAPI_DataType::FRAMEBUFFER);
