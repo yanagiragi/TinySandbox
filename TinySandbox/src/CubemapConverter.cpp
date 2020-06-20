@@ -66,8 +66,14 @@ namespace TinySandbox
 		GraphicsAPI_DataType formatType;
 
 		if (isHDR) {
-			channelType = GraphicsAPI_DataType::RGB16F;
-			formatType = GraphicsAPI_DataType::FLOAT;
+			#ifdef WIN32
+				channelType = GraphicsAPI_DataType::RGB16F;
+				formatType = GraphicsAPI_DataType::FLOAT;
+			#else
+				// behaves wierd in linux platform, fallback to LDR instead
+				channelType = GraphicsAPI_DataType::RGB;
+				formatType = GraphicsAPI_DataType::UNSIGNED_BYTE;
+			#endif
 		}
 		else {
 			channelType = GraphicsAPI_DataType::RGB;

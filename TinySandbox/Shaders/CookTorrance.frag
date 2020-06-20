@@ -140,6 +140,7 @@ vec3 BRDF(vec3 N, vec3 V, vec3 L, vec3 F0, vec3 albedo, float metallic, float ro
 
 vec3 FresnelSchlickRoughness(float cosTheta, vec3 F0, float roughness)
 {
+	cosTheta = clamp(cosTheta, 0.0, 0.99);
 	return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(1.0 - cosTheta, 5.0);
 }
 
@@ -225,16 +226,16 @@ void main()
 
 	// specular irradiance from env map
 	vec3 prefilteredColor = textureLod(u_prefilterMap, R,  roughness * MAX_REFLECTION_LOD).rgb;
-    vec2 brdf  = texture(u_brdfLUT, vec2(max(dot(N, V), 0.0), roughness)).rg;
-    vec3 specular = prefilteredColor * (F * brdf.x + brdf.y);
+	vec2 brdf  = texture(u_brdfLUT, vec2(max(dot(N, V), 0.0), roughness)).rg;
+	vec3 specular = prefilteredColor * (F * brdf.x + brdf.y);
 
 	vec3 ambient = (kD * diffuse + specular) * ao;	
 	vec3 color = (ambient + Lo);
-	
+
 	// HDR tonemapping
 	color = color / (color + vec3(1.0));
 	// gamma correct	
 	color = pow(color, vec3(1.0/2.2)); 
-
+	
     outColor = vec4(color, 1.0);
 }

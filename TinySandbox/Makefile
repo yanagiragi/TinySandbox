@@ -1,7 +1,7 @@
 all: main
 
 CC=g++
-OUT=TinySandbox
+OUT=_Executable/TinySandbox
 INCLUDE_DIR=includes
 SRC_DIR=src/
 FLAGS=-I${INCLUDE_DIR} -lglfw -ldl --std=c++11
