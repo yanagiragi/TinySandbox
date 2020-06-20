@@ -1,0 +1,1 @@
+sudo apt install g++ mesa-common-dev libglfw3-dev

@@ -1,5 +1,3 @@
-#pragma once
-
 #include "BaseMaterial.hpp"
 
 namespace TinySandbox

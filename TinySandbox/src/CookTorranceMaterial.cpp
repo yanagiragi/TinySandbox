@@ -5,8 +5,6 @@
 
 #include "DirectionalLight.hpp"
 
-float time = 0;
-
 namespace TinySandbox
 {
 	CookTorranceMaterial::CookTorranceMaterial()

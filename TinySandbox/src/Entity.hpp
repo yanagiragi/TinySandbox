@@ -3,6 +3,7 @@
 //#include "Component.hpp"
 #include "Transform.hpp"
 
+#include <string>
 #include <vector>
 
 // use Forward Declaration to avoid Circular Dependency

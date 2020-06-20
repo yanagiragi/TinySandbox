@@ -54,21 +54,7 @@ namespace TinySandbox
 			}
 
 			const glm::mat4 ViewMatrix() const  {
-
-				const float M_PI = 3.14f;
-
-				//const glm::vec3 forward = glm::vec3(0, 0, 11);
-				const glm::vec3 forward = Forward();
-				glm::mat4 ViewMatrixLH = glm::lookAtLH(
-					m_position,
-					forward,
-					glm::vec3(0.0, 1.0, 0.0));
-				glm::mat4 ViewMatrixRH = glm::lookAtRH(
-					m_position,
-					forward,
-					glm::vec3(0.0, 1.0, 0.0));
-
-				return glm::lookAt(Position(), forward, Up());
+				return glm::lookAt(Position(), Forward(), Up());
 			}
 
 			const glm::mat4 ProjectionMatrix() const {

@@ -591,7 +591,7 @@ void GraphicsAPI_OpenGL::BindBuffer(GraphicsAPI_DataType _type, unsigned int _id
 
 void GraphicsAPI_OpenGL::UnbindBuffer(GraphicsAPI_DataType _type) const
 {
-	BindBuffer(_type, NULL);
+	BindBuffer(_type, static_cast<unsigned int>(NULL));
 }
 
 void GraphicsAPI_OpenGL::SetBuffers(GraphicsAPI_DataType _type, size_t _size, const void *_data, GraphicsAPI_DataType _additionalType) const
@@ -647,7 +647,7 @@ void GraphicsAPI_OpenGL::BindVertexArray(unsigned int _id) const
 
 void GraphicsAPI_OpenGL::UnbindVertexArray() const
 {
-	BindVertexArray(NULL);
+	BindVertexArray(static_cast<unsigned int>(NULL));
 }
 
 void GraphicsAPI_OpenGL::GenerateVertexArrays(unsigned int* _ids, int _length) const
@@ -846,7 +846,7 @@ void GraphicsAPI_OpenGL::BindProgram(unsigned int _program) const
 
 void GraphicsAPI_OpenGL::UnbindProgram() const
 {
-	glUseProgram(NULL);
+	glUseProgram(static_cast<unsigned int>(NULL));
 }
 
 void GraphicsAPI_OpenGL::SetBool(unsigned int _program, const std::string &name, bool value) const
@@ -1084,7 +1084,7 @@ void GraphicsAPI_OpenGL::UnbindTexture(GraphicsAPI_DataType _type) const
 {
 	const GLenum target = static_cast<GLenum>(this->GetType(_type));
 
-	glBindTexture(target, NULL);
+	glBindTexture(target, static_cast<unsigned int>(NULL));
 }
 
 void GraphicsAPI_OpenGL::EnableSeamlessCubemap() const
@@ -1118,7 +1118,7 @@ void GraphicsAPI_OpenGL::BindFrameBuffer(GraphicsAPI_DataType _type, unsigned in
 void GraphicsAPI_OpenGL::UnbindFrameBuffer(GraphicsAPI_DataType _type) const
 {
 	const GLenum target = static_cast<GLenum>(this->GetType(_type));
-	glBindFramebuffer(target, NULL);
+	glBindFramebuffer(target, static_cast<unsigned int>(NULL));
 }
 
 void GraphicsAPI_OpenGL::AttachRenderBufferToFrameBuffer(GraphicsAPI_DataType _target, GraphicsAPI_DataType _attachment, GraphicsAPI_DataType _renderBufferTarget, unsigned int _renderBuffer) const
@@ -1154,7 +1154,7 @@ void GraphicsAPI_OpenGL::UnbindRenderBuffer(GraphicsAPI_DataType _type) const
 {
 	const GLenum target = static_cast<GLenum>(this->GetType(_type));
 	
-	glBindRenderbuffer(target, NULL);
+	glBindRenderbuffer(target, static_cast<unsigned int>(NULL));
 }
 
 void GraphicsAPI_OpenGL::SetRenderBuffer(GraphicsAPI_DataType _target, GraphicsAPI_DataType _internalFormat, unsigned int _width, unsigned int _height) const
