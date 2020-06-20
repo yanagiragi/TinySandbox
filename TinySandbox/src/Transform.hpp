@@ -54,6 +54,19 @@ namespace TinySandbox
 			void Rotation(const glm::vec3& _other)
 			{ 
 				m_rotation = _other; 
+
+				auto Check = [](float &x) {
+					if (x > 360.0f) {
+						x -= 360.0f;
+					}
+					else if (x < 0.0f) {
+						x += 360.0f;
+					}
+				};
+
+				Check(m_rotation.x);
+				Check(m_rotation.y);
+				Check(m_rotation.z);				
 			}
 			
 			void Scale(const glm::vec3& _other)

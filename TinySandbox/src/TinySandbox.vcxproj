@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseLight.hpp" />
     <ClInclude Include="BRDFLutGenerator.hpp" />
     <ClInclude Include="BRDFLutMaterial.hpp" />
     <ClInclude Include="Camera.hpp" />
@@ -29,6 +30,7 @@
     <ClInclude Include="CubemapConvolveMaterial.hpp" />
     <ClInclude Include="CubemapPrefilterMaterial.hpp" />
     <ClInclude Include="Cubemap_BaseMaterial.hpp" />
+    <ClInclude Include="DirectionalLight.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="EquirectangularToCubemapMaterial.hpp" />
     <ClInclude Include="GLFW_Windows.hpp" />
@@ -39,6 +41,7 @@
     <ClInclude Include="MeshRenderer.hpp" />
     <ClInclude Include="NormalDebugMaterial.hpp" />
     <ClInclude Include="Renderer.hpp" />
+    <ClInclude Include="RotateAxis.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="SkyboxMaterial.hpp" />
     <ClInclude Include="SkyboxRenderer.hpp" />
@@ -57,6 +60,7 @@
     <ClCompile Include="CubemapConverter.cpp" />
     <ClCompile Include="CubemapConvolveMaterial.cpp" />
     <ClCompile Include="CubemapPrefilterMaterial.cpp" />
+    <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="EquirectangularToCubemapMaterial.cpp" />
     <ClCompile Include="GLFW_Windows.cpp" />
     <ClCompile Include="GraphicsAPI.cpp" />
@@ -65,6 +69,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="RotateAxis.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SkyboxMaterial.cpp" />
     <ClCompile Include="SkyboxRenderer.cpp" />

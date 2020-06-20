@@ -21,6 +21,8 @@ namespace TinySandbox
 			Entity(const char* _name) : m_name(_name)
 			{
 				m_transform = new Transform();
+
+				entity = this; // override Componetn Ctor
 			}
 		
 			// dtor
@@ -93,6 +95,11 @@ namespace TinySandbox
 			Transform* GetTransform() const
 			{
 				return m_transform;
+			}
+
+			std::vector<Component*>& GetComponents()
+			{
+				return m_components;
 			}
 
 		 private:

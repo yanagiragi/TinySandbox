@@ -24,9 +24,18 @@ in vec3 viewDir;
 
 uniform mat4 u_ViewMatrix;
 
-uniform vec3 u_lightColor;
-uniform float u_lightIntensity;
-uniform vec3 u_lightPosition;
+#define MAX_SUPPORT_LIGHT 4
+#define MAX_REFLECTION_LOD 4.0
+
+#define LIGHT_TYPE_DIRECTIONAL 0
+#define LIGHT_TYPE_POINT 1
+#define LIGHT_TYPE_SPOTLIGHT 2
+
+uniform vec3 u_lightColor[MAX_SUPPORT_LIGHT];
+uniform float u_lightIntensity[MAX_SUPPORT_LIGHT];
+uniform vec3 u_lightPosition[MAX_SUPPORT_LIGHT];
+uniform int u_lightType[MAX_SUPPORT_LIGHT];
+uniform vec4 u_lightAdditional[MAX_SUPPORT_LIGHT];
 
 out vec4 outColor;
 
@@ -35,10 +44,21 @@ vec3 Lambertian (vec3 albedo)
 	return albedo / PI;
 }
 
-float CalculateAttenuation(vec3 P, vec3 L)
+float CalculateAttenuation(vec3 P, vec3 L, int type, vec4 additionalData)
 {
-    float d = length(P - L);
-    return 1.0 / (d * d);
+	if (type == LIGHT_TYPE_DIRECTIONAL){
+		return 1.0;
+	}
+	else if(type == LIGHT_TYPE_POINT){
+		float d = length(P - L);
+		return 1.0 / (d * d);
+	}
+	else if(type == LIGHT_TYPE_SPOTLIGHT){
+		return 0.0; // not implementated yet
+	}
+	else {
+		return 0.0;
+	}
 }
 
 float DistributionGGX (vec3 N, vec3 H, float roughness)
@@ -147,16 +167,26 @@ mat4 rotationZ( in float angle ) {
 vec3 CollectLo(vec3 N, vec3 V, vec3 F0, vec3 albedo, float metallic, float roughness)
 {
 	vec3 Lo = vec3(0.0);
+	vec3 L;
 
-	vec3  L = normalize(u_lightPosition - worldPosition);
-    vec3 lightColor = u_lightColor * u_lightIntensity;
-    float attenuation = CalculateAttenuation(worldPosition, u_lightPosition);
-    vec3 radiance = lightColor * attenuation;
+	for(int i = 0; i < MAX_SUPPORT_LIGHT; ++i){
 
-    float NdotL = max(dot(N, L), 0.0);
+		if (u_lightType[i] == LIGHT_TYPE_DIRECTIONAL) {
+			L = normalize(u_lightAdditional[i].xyz);
+		}
+		else {
+			L = normalize(u_lightPosition[i] - worldPosition);
+		}
 
-    // calculate Lo
-    Lo += BRDF(N, V, L, F0, albedo, metallic, roughness) * radiance * NdotL;
+		vec3 lightColor = u_lightColor[i] * u_lightIntensity[i];
+		float attenuation = CalculateAttenuation(worldPosition, u_lightPosition[i], u_lightType[i], u_lightAdditional[i]);
+		vec3 radiance = lightColor * attenuation;
+
+		float NdotL = max(dot(N, L), 0.0);
+
+		// calculate Lo
+		Lo += BRDF(N, V, L, F0, albedo, metallic, roughness) * radiance * NdotL;
+	}
 
     return Lo;
 }
@@ -194,8 +224,7 @@ void main()
 	vec3 diffuse    = irradiance * albedo;
 
 	// specular irradiance from env map
-	const float MAX_REFLECTION_LOD = 4.0;
-    vec3 prefilteredColor = textureLod(u_prefilterMap, R,  roughness * MAX_REFLECTION_LOD).rgb;
+	vec3 prefilteredColor = textureLod(u_prefilterMap, R,  roughness * MAX_REFLECTION_LOD).rgb;
     vec2 brdf  = texture(u_brdfLUT, vec2(max(dot(N, V), 0.0), roughness)).rg;
     vec3 specular = prefilteredColor * (F * brdf.x + brdf.y);
 

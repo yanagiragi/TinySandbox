@@ -3,6 +3,8 @@
 #include "Scene.hpp"
 #include "BRDFLutGenerator.hpp"
 
+#include "DirectionalLight.hpp"
+
 float time = 0;
 
 namespace TinySandbox
@@ -74,8 +76,10 @@ namespace TinySandbox
 		this->SetMat4("u_ProjectionMatrix", projectionMatrix);
 		this->SetFloat("u_metallic", m_metallic);
 		this->SetFloat("u_roughness", m_roughness);
-
 		this->SetFloat("u_ao", m_ambientOcculusion);
+
+		this->SetFloat("u_ao", 0.0);
+
 		this->SetVec3("u_tint", glm::vec3(1, 1, 1));
 		this->SetTexture2D("u_albedo", GetMainTexture()->GetID());
 		
@@ -85,9 +89,55 @@ namespace TinySandbox
 
 		this->SetVec3("u_CameraPos", Scene::GetMainCamera()->Position());
 
-		// TODO
-		this->SetFloat("u_lightIntensity", 1.0);
-		this->SetVec3("u_lightColor", glm::vec3(1.0, 1.0, 1.0));
-		this->SetVec3("u_lightPosition", glm::vec3(0, 0, 5));		
+		auto lightList = Scene::GetLightList();
+
+		for (int i = 0; i < m_api->Max_Supported_Light; ++i)
+		{
+			if (i >= lightList.size()) {
+				this->SetFloat("u_lightIntensity[" + std::to_string(i) + "]", 0);
+				this->SetVec3("u_lightColor[" + std::to_string(i) + "]", glm::vec3(0, 0, 0));
+				this->SetVec3("u_lightPosition[" + std::to_string(i) + "]", glm::vec3(0, 0, 0));
+				this->SetInt("u_lightType[" + std::to_string(i) + "]", static_cast<int>(Light_Type::LEN));
+				this->SetVec4("u_lightAdditional[" + std::to_string(i) + "]", glm::vec4(0, 0, 0, 0));
+			}
+			else {
+
+				BaseLight* light = lightList[i];
+
+				this->SetFloat("u_lightIntensity[" + std::to_string(i) + "]", light->GetIntensity());
+				this->SetVec3("u_lightColor[" + std::to_string(i) + "]", light->GetColor());
+				this->SetVec3("u_lightPosition[" + std::to_string(i) + "]", light->GetPosition());
+
+				if (dynamic_cast<DirectionalLight*>(light)) {
+					this->SetInt("u_lightType[" + std::to_string(i) + "]", static_cast<int>(Light_Type::DIRECTIONAL));
+
+					glm::vec3 rotation = light->GetRotation();
+					glm::mat4 rotationMatrix = glm::mat4(1.0);
+					rotationMatrix = glm::rotate(rotationMatrix, glm::radians(rotation.x), glm::vec3(1, 0, 0));
+					rotationMatrix = glm::rotate(rotationMatrix, glm::radians(rotation.y), glm::vec3(0, 1, 0));
+					rotationMatrix = glm::rotate(rotationMatrix, glm::radians(rotation.z), glm::vec3(0, 0, 1));
+
+					glm::vec4 direction = rotationMatrix * glm::vec4(1, 0, 0, 1.0);
+
+					this->SetVec4("u_lightAdditional[" + std::to_string(i) + "]", direction);
+				}
+				/*
+				// Un-implementated Features
+				else if (dynamic_cast<PointLight*>(light)) {
+					PointLight* pl = dynamic_cast<PointLight*>(light);
+					this->SetInt("u_lightType[" + std::to_string(i) + "]", static_cast<int>(Light_Type::POINT));
+					this->SetVec4("u_lightAdditional[" + std::to_string(i) + "]", glm::vec4(pl->Range(), 0.0, 0.0, 1.0));
+				}
+				else if (dynamic_cast<SpotLight*>(light)) {
+					SpotLight* spl = dynamic_cast<SpotLight*>(light);
+					this->SetInt("u_lightType[" + std::to_string(i) + "]", static_cast<int>(Light_Type::SPOTLIGHT));
+					this->SetVec4("u_lightAdditional[" + std::to_string(i) + "]", glm::vec4(spl->Range(), spl->HoriztonalAngle(), spl->VerticalAngle(), 1.0));
+				}
+				*/
+				else {
+					throw "Error Occurs When Passing Light to Cook Torrance, Are you using un-implementated feature?";
+				}
+			}
+		}
 	}	
 }

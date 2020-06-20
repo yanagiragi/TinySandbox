@@ -21,6 +21,8 @@ namespace TinySandbox
 
 			void Use() override;
 
+			// TODO: Expose internel parameters
+
 		private:
 			Texture *m_cubemapTexture;
 			float m_metallic, m_roughness, m_ambientOcculusion;

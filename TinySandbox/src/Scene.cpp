@@ -3,6 +3,7 @@
 #include "MeshRenderer.hpp"
 #include "Quad.hpp"
 #include "Cube.hpp"
+#include "DirectionalLight.hpp"
 
 #include "NormalDebugMaterial.hpp"
 #include "UnlitMaterial.hpp"
@@ -11,8 +12,13 @@
 #include "SkyboxRenderer.hpp"
 #include "SkyboxMaterial.hpp"
 
+#include "RotateAxis.hpp"
+
 #include <GLFW/glfw3.h>
 #include "GLFW_Windows.hpp"
+
+#include <type_traits>
+#include <string>
 
 // initialize static member
 TinySandbox::Scene* TinySandbox::Scene::m_instance = nullptr;
@@ -78,9 +84,15 @@ namespace TinySandbox
 		quadTransform->Rotation(glm::vec3(0.0f, 0.0f, 0.0f));
 		quadTransform->Position(glm::vec3(3, 0, 0));
 
+		TinySandbox::Entity* sunEntity = new TinySandbox::Entity("Sun");
+		DirectionalLight* sunLight = new DirectionalLight();
+		sunEntity->Add(sunLight);
+		sunEntity->Add(new RotateAxis());
+
 		Scene::Instance()->Add(testEntity);
 		Scene::Instance()->Add(cubeEntity);
 		Scene::Instance()->Add(quadEntity);
+		Scene::Instance()->Add(sunEntity);
 		
 		// Skybox Setting
 		Texture* test = new Texture("../Resources/Newport_Loft_Ref.hdr", TextureType::TEXTURE_2D, true, true, true, 1024, 512, 512, 5);
@@ -136,6 +148,15 @@ namespace TinySandbox
 	void Scene::Add(Entity* _entity)
 	{
 		Scene::Instance()->m_entitiesList.push_back(_entity);
+
+		// update LightList
+		auto components = _entity->GetComponents();
+		for (Component* component : components) {
+			BaseLight* derived = dynamic_cast<BaseLight*>(component);
+			if (derived) {
+				Scene::Instance()->m_lightList.push_back(derived);
+			}
+		}
 	}
 
 	Scene* Scene::Instance()
@@ -157,6 +178,11 @@ namespace TinySandbox
 		return dynamic_cast<SkyboxMaterial*>( Scene::Instance()->m_SkyboxRenderer->GetMaterial() );
 	}
 
+	std::vector<BaseLight*>& Scene::GetLightList()
+	{
+		return Scene::Instance()->m_lightList;
+	}
+
 	void Scene::ProcessInput(Windows* _window)
 	{
 		GLFWwindow* window = dynamic_cast<GLFW_Windows*>(_window)->GetGLFWInstance();
@@ -170,7 +196,7 @@ namespace TinySandbox
 
 		TinySandbox::Camera* mainCamera = TinySandbox::Scene::GetMainCamera();
 
-		const float sentivity = 0.1;
+		float sentivity = 0.1;
 
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 			mainCamera->Position(mainCamera->Position() + glm::vec3(0, 0, -1) * sentivity);
@@ -233,6 +259,8 @@ namespace TinySandbox
 			m_SkyboxRenderer->SetLod(m_SkyboxRenderer->GetLod() - 0.1);
 		}
 
+		sentivity = 10;
+
 		if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS) {
 			const glm::vec3 pos = m_entitiesList[2]->GetTransform()->Position();
 			m_entitiesList[2]->GetTransform()->Position(pos + glm::vec3(1, 0, 0) * sentivity);
@@ -244,33 +272,33 @@ namespace TinySandbox
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS) {
-			const glm::vec3 pos = m_entitiesList[2]->GetTransform()->Rotation();
-			m_entitiesList[2]->GetTransform()->Rotation(pos + glm::vec3(1, 0, 0) * sentivity);
+			const glm::vec3 pos = m_entitiesList[3]->GetTransform()->Rotation();
+			m_entitiesList[3]->GetTransform()->Rotation(pos + glm::vec3(1, 0, 0) * sentivity);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS) {
-			const glm::vec3 pos = m_entitiesList[2]->GetTransform()->Rotation();
-			m_entitiesList[2]->GetTransform()->Rotation(pos + glm::vec3(-1, 0, 0) * sentivity);
+			const glm::vec3 pos = m_entitiesList[3]->GetTransform()->Rotation();
+			m_entitiesList[3]->GetTransform()->Rotation(pos + glm::vec3(-1, 0, 0) * sentivity);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
-			const glm::vec3 pos = m_entitiesList[2]->GetTransform()->Rotation();
-			m_entitiesList[2]->GetTransform()->Rotation(pos + glm::vec3(0, 1, 0) * sentivity);
+			const glm::vec3 pos = m_entitiesList[3]->GetTransform()->Rotation();
+			m_entitiesList[3]->GetTransform()->Rotation(pos + glm::vec3(0, 1, 0) * sentivity);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_V) == GLFW_PRESS) {
-			const glm::vec3 pos = m_entitiesList[2]->GetTransform()->Rotation();
-			m_entitiesList[2]->GetTransform()->Rotation(pos + glm::vec3(0, -1, 0) * sentivity);
+			const glm::vec3 pos = m_entitiesList[3]->GetTransform()->Rotation();
+			m_entitiesList[3]->GetTransform()->Rotation(pos + glm::vec3(0, -1, 0) * sentivity);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS) {
-			const glm::vec3 pos = m_entitiesList[2]->GetTransform()->Rotation();
-			m_entitiesList[2]->GetTransform()->Rotation(pos + glm::vec3(0, 0, 1) * sentivity);
+			const glm::vec3 pos = m_entitiesList[3]->GetTransform()->Rotation();
+			m_entitiesList[3]->GetTransform()->Rotation(pos + glm::vec3(0, 0, 1) * sentivity);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS) {
-			const glm::vec3 pos = m_entitiesList[2]->GetTransform()->Rotation();
-			m_entitiesList[2]->GetTransform()->Rotation(pos + glm::vec3(0, 0, -1) * sentivity);
+			const glm::vec3 pos = m_entitiesList[3]->GetTransform()->Rotation();
+			m_entitiesList[3]->GetTransform()->Rotation(pos + glm::vec3(0, 0, -1) * sentivity);
 		}
 	}
 

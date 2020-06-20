@@ -377,8 +377,13 @@ namespace TinySandbox
 			// glDrawBuffer(GL_NONE);
 			// glReadBuffer(GL_NONE);
 
+			static int Max_Supported_Light;
+			static int Max_Supported_Lod;
+
 		private:
             static GraphicsAPI_Type m_type;
 			static GraphicsAPI* m_api;
+
+			
     };
 }

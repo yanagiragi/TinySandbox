@@ -4,6 +4,7 @@
 #include "Entity.hpp"
 #include "Camera.hpp"
 
+#include "BaseLight.hpp"
 #include "SkyboxMaterial.hpp"
 
 #include <iostream>
@@ -51,6 +52,8 @@ namespace TinySandbox
 
 			static SkyboxMaterial* GetSkybox();
 
+			static std::vector<BaseLight*>& GetLightList();
+
 			virtual void InitSceneSettings();
 						
 			void ProcessInput(Windows* _window);
@@ -59,6 +62,7 @@ namespace TinySandbox
 
 		private:
 			std::vector<Entity*> m_entitiesList;
+			std::vector<BaseLight*> m_lightList;
 			static Scene* m_instance; // singleton instance
 			Camera* m_mainCamera;
 			SkyboxRenderer* m_SkyboxRenderer;
