@@ -8,10 +8,10 @@
 namespace TinySandbox
 {
 	EquirectangularToCubemapMaterial::EquirectangularToCubemapMaterial(Renderer* _renderer) : 
-		Cubemap_BaseMaterial("../Shaders/cubemap.vert", "", "../Shaders/EquirectangularToCubemap.frag")
+		Cubemap_BaseMaterial(_renderer, "../Shaders/cubemap.vert", "", "../Shaders/EquirectangularToCubemap.frag")
 	{
 		m_renderer = _renderer;
-		m_mainTexture = new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false);
+		SetMainTexture( new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false) );
 	}
 
 	void EquirectangularToCubemapMaterial::OnGUI()
@@ -25,7 +25,7 @@ namespace TinySandbox
 		m_api->EnableTexture2D();
 		
 		// Note: this is Texture2D, since it is a equirectangular projected 2d image
-		this->SetTexture2D("u_equirectangularMap", m_mainTexture->GetID());		
+		this->SetTexture2D("u_equirectangularMap", GetMainTexture()->GetID());		
 		this->SetMat4("u_projectionMatrix", captureProjection);
 		this->SetMat4("u_viewMatrix", captureViews[index]);
 	}

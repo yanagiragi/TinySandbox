@@ -4,14 +4,24 @@
 
 namespace TinySandbox
 {
-	BaseMaterial::BaseMaterial(const char* _vertexShaderSource, const char* _geometryShaderSource, const char* _fragmentShaderSouce)
+	BaseMaterial::BaseMaterial(Renderer* _renderer, const char* _vertexShaderSource, const char* _geometryShaderSource, const char* _fragmentShaderSouce)
 		: m_vertexShaderSource(_vertexShaderSource),
 		m_geometryShaderSource(_geometryShaderSource),
 		m_fragmentShaderSource(_fragmentShaderSouce),
 		m_renderer(nullptr)
 	{
+		m_renderer = _renderer;
 		m_api = GraphicsAPI::GetAPI();
 		this->Compile();
+		
+		m_mainTexture = nullptr; // default is nullptr
+	}
+
+	BaseMaterial::~BaseMaterial()
+	{
+		if (m_mainTexture) {
+			delete m_mainTexture;
+		}
 	}
 
 	void BaseMaterial::Unuse() {
@@ -23,6 +33,14 @@ namespace TinySandbox
 		}
 		m_textureIncrementId = 0;
 		m_api->ActiveTexture(m_textureIncrementId);
+	}
+
+	void BaseMaterial::SetMainTexture(Texture* _other)
+	{
+		if (this->m_mainTexture) {
+			delete this->m_mainTexture;
+		}
+		this->m_mainTexture = _other;
 	}
 
 	void BaseMaterial::SetBool(const std::string &name, bool value) const

@@ -8,7 +8,7 @@ namespace TinySandbox
 	{
 		public:
 			NormalDebugMaterial(Renderer* _renderer)
-				: BaseMaterial("../Shaders/normalDebug.vert", "", "../Shaders/normalDebug.frag")
+				: BaseMaterial(_renderer, "../Shaders/normalDebug.vert", "", "../Shaders/normalDebug.frag")
 			{
 				m_renderer = _renderer;
 			}

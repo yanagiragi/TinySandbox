@@ -3,10 +3,9 @@
 namespace TinySandbox
 {
 	CubemapConvolveMaterial::CubemapConvolveMaterial(Renderer* _renderer) :
-		Cubemap_BaseMaterial("../Shaders/cubemap.vert", "", "../Shaders/CubemapIrradianceConvolution.frag")
+		Cubemap_BaseMaterial(_renderer, "../Shaders/cubemap.vert", "", "../Shaders/CubemapIrradianceConvolution.frag")
 	{
-		m_renderer = _renderer;
-		m_mainTexture = new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false);
+		SetMainTexture(new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false));
 	}
 
 	void CubemapConvolveMaterial::OnGUI()
@@ -20,7 +19,7 @@ namespace TinySandbox
 		m_api->EnableTexture2D();
 
 		// Note: this is TextureCubemap, since it takes enviornmentMap as input
-		this->SetTextureCubemap("u_environmentMap", m_mainTexture->GetID());
+		this->SetTextureCubemap("u_environmentMap", GetMainTexture()->GetID());
 		this->SetMat4("u_projectionMatrix", captureProjection);
 		this->SetMat4("u_viewMatrix", captureViews[index]);
 	}

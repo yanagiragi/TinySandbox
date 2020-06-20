@@ -1,9 +1,7 @@
 #pragma once
 
-#include "GraphicsAPI.hpp"
-#include "Component.hpp"
-#include "Scene.hpp"
-//#include "Renderer.hpp"
+#include "Renderer.hpp"
+#include "Texture.hpp"
 
 #include <string>
 
@@ -15,7 +13,9 @@ namespace TinySandbox
 	{
 		public:
 
-			BaseMaterial(const char* _vertexShaderSource, const char* _geometryShaderSource, const char* _fragmentShaderSouce);
+			BaseMaterial(Renderer* _renderer, const char* _vertexShaderSource, const char* _geometryShaderSource, const char* _fragmentShaderSouce);
+
+			~BaseMaterial();
 
 			// child class must override OnGUI function
 			virtual void OnGUI() = 0;
@@ -56,7 +56,40 @@ namespace TinySandbox
 
 			void SetTextureCubemap(const std::string &name, const unsigned int _textureId);
 
+			void SetMainTexture(Texture* _other);
+
+			Texture* GetMainTexture() const { return m_mainTexture; }
+
+			BaseMaterial& operator=(const BaseMaterial& _other)
+			{
+				this->m_program = _other.m_program;
+				this->m_api = _other.m_api;
+				this->m_textureIncrementId = _other.m_textureIncrementId;
+				
+				this->SetMainTexture(new Texture(*_other.GetMainTexture()));
+
+				return *this;
+			}
+
+			BaseMaterial& operator=(BaseMaterial&& _other)
+			{
+				this->m_program = std::move(_other.m_program);
+				this->m_api = std::move(_other.m_api);
+				this->m_textureIncrementId = std::move(_other.m_textureIncrementId);
+
+				_other.m_api = nullptr;
+				this->m_program = 4294967294;
+				this->m_textureIncrementId = 0;
+
+				this->SetMainTexture(_other.GetMainTexture());
+
+				return *this;
+			}
+
+
 		private:
+
+			Texture* m_mainTexture;
 			
 			void Compile();
 
@@ -69,8 +102,7 @@ namespace TinySandbox
 			Renderer* m_renderer; // current only support one renderer per material
 
 			unsigned int m_textureIncrementId = 0;
-
 			unsigned int m_program;
-			GraphicsAPI* m_api;			
+			GraphicsAPI* m_api;
 	};
 }

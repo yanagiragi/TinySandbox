@@ -26,7 +26,7 @@ namespace TinySandbox
 			void SetLod(const float _lod) {
 				
 				// maxLod = 5 means range = [0, 4]
-				const float maxLod = dynamic_cast<SkyboxMaterial*>(m_material)->m_mainTexture->GetMaxLod() - 1.0;
+				const float maxLod = dynamic_cast<SkyboxMaterial*>(m_material)->GetMainTexture()->GetMaxLod() - 1.0;
 
 				const float lod = (_lod < 0) ? 0.0 : ((_lod > maxLod) ? maxLod : _lod);
 				

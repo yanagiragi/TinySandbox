@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Component.hpp" />
+    <ClInclude Include="CookTorranceMaterial.hpp" />
     <ClInclude Include="CubemapConverter.hpp" />
     <ClInclude Include="CubemapConvolveMaterial.hpp" />
     <ClInclude Include="CubemapPrefilterMaterial.hpp" />
@@ -47,6 +48,7 @@
   <ItemGroup>
     <ClCompile Include="..\includes\glad.c" />
     <ClCompile Include="..\includes\TinyObjLoader\tiny_obj_loader.cc" />
+    <ClCompile Include="CookTorranceMaterial.cpp" />
     <ClCompile Include="CubemapConverter.cpp" />
     <ClCompile Include="CubemapConvolveMaterial.cpp" />
     <ClCompile Include="CubemapPrefilterMaterial.cpp" />

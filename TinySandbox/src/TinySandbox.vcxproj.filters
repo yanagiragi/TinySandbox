@@ -13,95 +13,98 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Materials">
+      <UniqueIdentifier>{8f432933-590e-4069-bd60-ee45d52e72d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Windows">
+      <UniqueIdentifier>{19955c50-4ff8-4559-b921-a5e8feec3f15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\API">
+      <UniqueIdentifier>{fa5921a6-7630-4780-a0e6-ffa312d3a624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{dc1b8740-164c-4a41-ad66-2f5782f551ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NormalDebugMaterial.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TestComponent.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Windows.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Camera.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Component.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entity.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GLFW_Windows.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicsAPI.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicsAPI_OpenGL.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="MeshRenderer.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UnlitMaterial.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SkyboxMaterial.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SkyboxRenderer.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="CubemapConverter.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="EquirectangularToCubemapMaterial.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Cubemap_BaseMaterial.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseMaterial.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CubemapPrefilterMaterial.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="CookTorranceMaterial.hpp">
+      <Filter>Source Files\Materials</Filter>
     </ClInclude>
     <ClInclude Include="CubemapConvolveMaterial.hpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="Cubemap_BaseMaterial.hpp">
+      <Filter>Source Files\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="CubemapPrefilterMaterial.hpp">
+      <Filter>Source Files\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="UnlitMaterial.hpp">
+      <Filter>Source Files\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalDebugMaterial.hpp">
+      <Filter>Source Files\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="EquirectangularToCubemapMaterial.hpp">
+      <Filter>Source Files\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="GLFW_Windows.hpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Windows.hpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsAPI.hpp">
+      <Filter>Source Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsAPI_OpenGL.hpp">
+      <Filter>Source Files\API</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderer.hpp">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyboxRenderer.hpp">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TestComponent.hpp">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.hpp">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.hpp">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyboxMaterial.hpp">
+      <Filter>Source Files\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseMaterial.hpp">
+      <Filter>Source Files\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.hpp">
+      <Filter>Source Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GLFW_Windows.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicsAPI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicsAPI_OpenGL.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
@@ -119,29 +122,44 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SkyboxMaterial.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CubemapConverter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SkyboxRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EquirectangularToCubemapMaterial.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Windows.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseMaterial.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CubemapPrefilterMaterial.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="CookTorranceMaterial.cpp">
+      <Filter>Source Files\Materials</Filter>
     </ClCompile>
     <ClCompile Include="CubemapConvolveMaterial.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="CubemapPrefilterMaterial.cpp">
+      <Filter>Source Files\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="EquirectangularToCubemapMaterial.cpp">
+      <Filter>Source Files\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="GLFW_Windows.cpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows.cpp">
+      <Filter>Source Files\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsAPI.cpp">
+      <Filter>Source Files\API</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsAPI_OpenGL.cpp">
+      <Filter>Source Files\API</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderer.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyboxRenderer.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyboxMaterial.cpp">
+      <Filter>Source Files\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseMaterial.cpp">
+      <Filter>Source Files\Materials</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

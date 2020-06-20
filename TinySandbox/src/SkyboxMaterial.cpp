@@ -1,30 +1,29 @@
 #include "SkyboxMaterial.hpp"
 
+#include "Scene.hpp"
 #include "Texture.hpp"
 
 namespace TinySandbox
 {	
-	SkyboxMaterial::SkyboxMaterial(Renderer* _renderer) : BaseMaterial("../Shaders/skybox.vert", "", "../Shaders/skybox.frag")
+	SkyboxMaterial::SkyboxMaterial(Renderer* _renderer) : BaseMaterial(_renderer, "../Shaders/skybox.vert", "", "../Shaders/skybox.frag")
 	{
-		m_renderer = _renderer;
-		m_mainTexture = new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false);
+		SetMainTexture( new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false) );
 		m_mode = Skybox_DisplayType::REGULAR;
 		m_lod = 0;
 	}
 
-	SkyboxMaterial::SkyboxMaterial(Renderer* _renderer, const char* _filename, bool _isHDR) : BaseMaterial("../Shaders/skybox.vert", "", "../Shaders/skybox.frag")
+	SkyboxMaterial::SkyboxMaterial(Renderer* _renderer, const char* _filename, bool _isHDR) : BaseMaterial(_renderer, "../Shaders/skybox.vert", "", "../Shaders/skybox.frag")
 	{
 		m_renderer = _renderer;
-		m_mainTexture = new Texture(_filename, TextureType::TEXTURE_2D, _isHDR);
+		SetMainTexture(new Texture(_filename, TextureType::TEXTURE_2D, _isHDR));
 		m_mode = Skybox_DisplayType::REGULAR;
 		m_lod = 0;
 	}
 
 	SkyboxMaterial& SkyboxMaterial::operator=(const SkyboxMaterial& _other)
 	{
-		this->m_program = _other.m_program;
-		this->m_api = _other.m_api;
-		this->m_mainTexture = _other.m_mainTexture;
+		BaseMaterial::operator=(_other);
+
 		this->m_mode = _other.m_mode;
 		this->m_lod = _other.m_lod;
 
@@ -63,24 +62,16 @@ namespace TinySandbox
 		this->SetFloat("u_lod", m_lod);
 		
 		if (m_mode == Skybox_DisplayType::REGULAR) {
-			this->SetTextureCubemap("u_environmentMap", m_mainTexture->GetID(CubemapTextureType::REGULAR));
+			this->SetTextureCubemap("u_environmentMap", GetMainTexture()->GetID(CubemapTextureType::REGULAR));
 		}
 		else if (m_mode == Skybox_DisplayType::IRRADIANCE) {
-			this->SetTextureCubemap("u_environmentMap", m_mainTexture->GetID(CubemapTextureType::IRRADIANCE));
+			this->SetTextureCubemap("u_environmentMap", GetMainTexture()->GetID(CubemapTextureType::IRRADIANCE));
 		}
 		else if (m_mode == Skybox_DisplayType::PREFILTER) {
-			this->SetTextureCubemap("u_environmentMap", m_mainTexture->GetID(CubemapTextureType::PREFILTER));
+			this->SetTextureCubemap("u_environmentMap", GetMainTexture()->GetID(CubemapTextureType::PREFILTER));
 		}
 		else {
 			throw "Error Skybox Display Type!";
 		}		
-	}
-
-	void SkyboxMaterial::SetMainTexture(Texture* _other)
-	{
-		if (this->m_mainTexture) {
-			delete this->m_mainTexture;
-		}
-		this->m_mainTexture = _other;
 	}
 }

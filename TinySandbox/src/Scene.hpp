@@ -4,6 +4,8 @@
 #include "Entity.hpp"
 #include "Camera.hpp"
 
+#include "SkyboxMaterial.hpp"
+
 #include <iostream>
 #include <vector>
 
@@ -46,6 +48,8 @@ namespace TinySandbox
 			static Scene* Instance();
 
 			static Camera* GetMainCamera();
+
+			static SkyboxMaterial* GetSkybox();
 
 			virtual void InitSceneSettings();
 						

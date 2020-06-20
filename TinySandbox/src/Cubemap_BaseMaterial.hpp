@@ -3,6 +3,9 @@
 #include "BaseMaterial.hpp"
 #include "Texture.hpp"
 
+#include <glmathematics/glm.hpp>
+#include <glmathematics/gtc/matrix_transform.hpp>
+
 namespace TinySandbox
 {
 	/*
@@ -16,8 +19,8 @@ namespace TinySandbox
 			Cubemap_BaseMaterial() = delete;
 
 			// Note that CubemapMaterial does not serve holding renderer!
-			Cubemap_BaseMaterial(const char* _vertexShaderSource, const char* _geometryShaderSource, const char* _fragmentShaderSource) :
-				BaseMaterial(_vertexShaderSource, _geometryShaderSource, _fragmentShaderSource),
+			Cubemap_BaseMaterial(Renderer *_renderer, const char* _vertexShaderSource, const char* _geometryShaderSource, const char* _fragmentShaderSource) :
+				BaseMaterial(_renderer, _vertexShaderSource, _geometryShaderSource, _fragmentShaderSource),
 				captureProjection(glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f)),
 				captureViews{
 					glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
@@ -28,7 +31,7 @@ namespace TinySandbox
 					glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f))
 				}
 			{
-
+				// SetMainTexture(new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false));
 			}
 
 			void Use() override {
@@ -37,16 +40,8 @@ namespace TinySandbox
 
 			virtual void Use(int _index) = 0;
 
-			void SetMainTexture(Texture* _other) 
-			{
-				if (this->m_mainTexture) {
-					delete this->m_mainTexture;
-				}
-				this->m_mainTexture = _other;
-			}
-
 		protected:
-			Texture* m_mainTexture;
+			
 			const glm::mat4 captureProjection;
 			const glm::mat4 captureViews[6];
 

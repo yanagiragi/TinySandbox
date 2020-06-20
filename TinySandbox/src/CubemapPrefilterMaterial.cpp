@@ -3,10 +3,9 @@
 namespace TinySandbox
 {
 	CubemapPrefilterMaterial::CubemapPrefilterMaterial(Renderer* _renderer) :
-		Cubemap_BaseMaterial("../Shaders/cubemap.vert", "", "../Shaders/CubemapPrefilter.frag")
+		Cubemap_BaseMaterial(_renderer, "../Shaders/cubemap.vert", "", "../Shaders/CubemapPrefilter.frag")
 	{
-		m_renderer = _renderer;
-		m_mainTexture = new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false);
+		SetMainTexture(new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false));
 	}
 
 	void CubemapPrefilterMaterial::OnGUI()
@@ -23,7 +22,7 @@ namespace TinySandbox
 		this->SetFloat("u_roughness", roughness);
 
 		// Note: this is TextureCubemap, since it takes cubemap as input
-		this->SetTextureCubemap("u_environmentMap", m_mainTexture->GetID());
+		this->SetTextureCubemap("u_environmentMap", GetMainTexture()->GetID());
 		this->SetMat4("u_projectionMatrix", captureProjection);
 		this->SetMat4("u_viewMatrix", captureViews[_index]);
 	}

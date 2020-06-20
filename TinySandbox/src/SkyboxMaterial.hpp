@@ -33,12 +33,9 @@ namespace TinySandbox
 
 			void Unuse() override;
 
-			void Use() override;
-
-			void SetMainTexture(Texture* _other);
+			void Use() override;			
 
 		private:
-			Texture* m_mainTexture;
 			Skybox_DisplayType m_mode;
 			float m_lod; // for debug
 	};

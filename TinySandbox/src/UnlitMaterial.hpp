@@ -10,23 +10,15 @@ namespace TinySandbox
 	class UnlitMaterial : public BaseMaterial
 	{
 		public:
-			UnlitMaterial(Renderer* _renderer) : BaseMaterial("../Shaders/unlit.vert", "", "../Shaders/unlit.frag")
+			UnlitMaterial(Renderer* _renderer) : BaseMaterial(_renderer, "../Shaders/unlit.vert", "", "../Shaders/unlit.frag")
 			{
-				m_renderer = _renderer;
-				m_mainTexture = new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false);
+				SetMainTexture( new Texture("../Resources/white.png", TextureType::TEXTURE_2D, false) );
 			}
 
-			UnlitMaterial(Renderer* _renderer, const char* _filename) : BaseMaterial("../Shaders/unlit.vert", "", "../Shaders/unlit.frag")
+			UnlitMaterial(Renderer* _renderer, const char* _filename) : BaseMaterial(_renderer, "../Shaders/unlit.vert", "", "../Shaders/unlit.frag")
 			{
 				m_renderer = _renderer;
-				m_mainTexture = new Texture(_filename, TextureType::TEXTURE_2D, false);
-			}
-
-			UnlitMaterial& operator=(const UnlitMaterial& _other)
-			{
-				this->m_program = _other.m_program;
-				this->m_api = _other.m_api;
-				this->m_mainTexture = _other.m_mainTexture;
+				SetMainTexture( new Texture(_filename, TextureType::TEXTURE_2D, false) );
 			}
 
 			void OnGUI() override
@@ -56,7 +48,7 @@ namespace TinySandbox
 				this->SetMat4("u_ModelMatrix", modelMatrix);
 				this->SetMat4("u_ViewMatrix", viewMatrix);
 				this->SetMat4("u_ProjectionMatrix", projectionMatrix);
-				this->SetTexture2D("u_albedo", m_mainTexture->GetID());
+				this->SetTexture2D("u_albedo", GetMainTexture()->GetID());
 				this->SetVec2("u_tiling", 1.0, 1.0);
 				this->SetVec3("u_tint", 1.0, 1.0, 1.0);
 				this->SetFloat("u_alpha", 1.0);
@@ -64,6 +56,5 @@ namespace TinySandbox
 			}
 
 		private:
-			Texture* m_mainTexture;
 	};
 }

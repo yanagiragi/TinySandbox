@@ -119,6 +119,11 @@ namespace TinySandbox
 		return Scene::Instance()->m_mainCamera;
 	}
 
+	SkyboxMaterial* Scene::GetSkybox()
+	{
+		return dynamic_cast<SkyboxMaterial*>( Scene::Instance()->m_SkyboxRenderer->GetMaterial() );
+	}
+
 	void Scene::ProcessInput(Windows* _window)
 	{
 		GLFWwindow* window = dynamic_cast<GLFW_Windows*>(_window)->GetGLFWInstance();
