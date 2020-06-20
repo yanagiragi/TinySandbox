@@ -402,11 +402,15 @@ namespace TinySandbox
 
 	void Scene::ProcessReshape(Windows* _window, int _width, int _height)
 	{
+		// special take care when window is mimimized
+		const int width = _width == 0 ? 1 : _width;
+		const int height = _height == 0 ? 1 : _height;
+
 		// make sure the viewport matches the new window dimensions; note that width and 
 		// height will be significantly larger than specified on retina displays.
 		const GraphicsAPI* m_api = GraphicsAPI::GetAPI();
-		m_api->SetViewport(0, 0, _width, _height);
+		m_api->SetViewport(0, 0, width, height);
 
-		TinySandbox::Windows::GetInstance()->SetWidthAndHeight(_width, _height);
+		TinySandbox::Windows::GetInstance()->SetWidthAndHeight(width, height);
 	}
 }
