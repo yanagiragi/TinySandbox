@@ -2,7 +2,7 @@
 
 ![](https://i.imgur.com/abKxtfL.png)
 
-* a game engine build from scratch
+* A tiny game engine build from scratch
 
 * Currently only contains abstraction of OpenGL, DirectX wip
 
