@@ -8,7 +8,7 @@ in vec3 _worldPos;
 out vec4 FragColor;
 
 void main()
-{		
+{        
     vec3 envColor = textureLod(u_environmentMap, _worldPos, u_lod).rgb;
     
     // HDR tonemap and gamma correct

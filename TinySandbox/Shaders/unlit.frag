@@ -14,6 +14,6 @@ out vec4 outColor;
 
 void main()
 {
-	outColor = texture2D(u_albedo, u_offset + _texCoord * u_tiling) * vec4(u_tint, 1.0) * u_emission;
-	outColor.a = u_alpha;
+    outColor = texture2D(u_albedo, u_offset + _texCoord * u_tiling) * vec4(u_tint, 1.0) * u_emission;
+    outColor.a = u_alpha;
 }

@@ -23,25 +23,25 @@ out vec3 tangent;
 out vec3 bitangent;*/
 
 void main() {
-	objectPosition = aPosition;
-	textureCoord = aTextureCoord;
-	
-	mat4 ModelViewMatrix = u_ViewMatrix * u_ModelMatrix;
+    objectPosition = aPosition;
+    textureCoord = aTextureCoord;
+    
+    mat4 ModelViewMatrix = u_ViewMatrix * u_ModelMatrix;
 
-	viewPosition = vec3(ModelViewMatrix *  vec4(aPosition , 1.0));
-	worldPosition = vec3(u_ModelMatrix * vec4(aPosition, 1.0));
-	
-	// Consider Compute it in CPU then send in with uniform
-	mat4 normalMatrix = transpose(inverse(u_ModelMatrix));
-	normal = normalize((normalMatrix * vec4(aNormal, 1)).xyz); // this is correct , don't use raw normal or MV * normal
-		
-	/*vec3 T = normalize(vec3(normalMatrix * vec4(aTangent,   0.0)));
-	vec3 B = normalize(vec3(normalMatrix * vec4(aBitangent, 0.0)));
-	vec3 N = normalize(vec3(normalMatrix * vec4(aNormal,    0.0)));
-	TBN = mat3(T, B, N);
+    viewPosition = vec3(ModelViewMatrix *  vec4(aPosition , 1.0));
+    worldPosition = vec3(u_ModelMatrix * vec4(aPosition, 1.0));
+    
+    // Consider Compute it in CPU then send in with uniform
+    mat4 normalMatrix = transpose(inverse(u_ModelMatrix));
+    normal = normalize((normalMatrix * vec4(aNormal, 1)).xyz); // this is correct , don't use raw normal or MV * normal
+        
+    /*vec3 T = normalize(vec3(normalMatrix * vec4(aTangent,   0.0)));
+    vec3 B = normalize(vec3(normalMatrix * vec4(aBitangent, 0.0)));
+    vec3 N = normalize(vec3(normalMatrix * vec4(aNormal,    0.0)));
+    TBN = mat3(T, B, N);
 
-	tangent = T;
-	bitangent = B;*/
+    tangent = T;
+    bitangent = B;*/
 
-	gl_Position = u_ProjectionMatrix * ModelViewMatrix * vec4(aPosition , 1.0);
+    gl_Position = u_ProjectionMatrix * ModelViewMatrix * vec4(aPosition , 1.0);
 }

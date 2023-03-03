@@ -13,7 +13,7 @@ out vec3 _worldNormal;
 out vec2 _texCoord;
 
 void main() {
-	_worldNormal = aNormal;
-	_texCoord = aTextureCoord;
-	gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix *  vec4(aPosition , 1.0);
+    _worldNormal = aNormal;
+    _texCoord = aTextureCoord;
+    gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix *  vec4(aPosition , 1.0);
 }
