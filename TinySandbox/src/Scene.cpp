@@ -66,7 +66,7 @@ namespace TinySandbox
 		CookTorranceMaterial* outerMaterial = new CookTorranceMaterial();
 		outerMaterial->SetMetallic(1.0);
 		outerMaterial->SetRoughness(0.2);
-		outerMaterial->SetTint(glm::vec3(0.54, 0, 0));
+		outerMaterial->SetTint(glm::vec3(1, 112, 44) / 255.0f);
 		outerMeshRenderer->SetMaterial(outerMaterial);
 		outerTransform->Rotation(glm::vec3(-90.0f, 0.0f, 90.0f));
 		outerTransform->Position(glm::vec3(shift + 0, 0, 0));
@@ -114,7 +114,7 @@ namespace TinySandbox
 		quadEntity->Add(quadMeshRenderer); // implicitly cast to TinySandbox::Component
 		quadMeshRenderer->SetMesh(new Quad());
 		quadMeshRenderer->SetMaterial(new UnlitMaterial("../Resources/logo.jpg", false));
-		quadTransform->Rotation(glm::vec3(0.0f, 0.0f, -90.0f));
+		quadTransform->Rotation(glm::vec3(0.0f, 0.0f, 90.0f));
 		quadTransform->Position(glm::vec3(shift + 3, 0, 0));
 
 		Scene::Instance()->Add(quadEntity);
@@ -134,12 +134,12 @@ namespace TinySandbox
 			return x < min ? min : x > max ? max : x;
 		};
 
+		TinySandbox::Mesh* sphereMesh = new TinySandbox::Mesh("../Resources/sphere.obj");
 		for (int i = 0; i < col; ++i) {
 			for (int j = 0; j < row; ++j) {
 				
 				TinySandbox::Entity* sphereEntity = new TinySandbox::Entity("Test (" + std::to_string(i) + "_" + std::to_string(j) + ")");
 				TinySandbox::MeshRenderer* sphereMeshRenderer = new TinySandbox::MeshRenderer();
-				TinySandbox::Mesh* sphereMesh = new TinySandbox::Mesh("../Resources/sphere.obj");
 				Transform* sphereTransform = sphereEntity->GetTransform();
 				CookTorranceMaterial* sphereMaterial = new CookTorranceMaterial();
 

@@ -14,7 +14,7 @@ int main()
 	const unsigned int SCR_WIDTH = 800;
 	const unsigned int SCR_HEIGHT = 600;
 
-	TinySandbox::GLFW_Windows* window = new TinySandbox::GLFW_Windows(SCR_WIDTH, SCR_HEIGHT, "TinySandbox (nsd20spFinal Ver.)", NULL, NULL);
+	TinySandbox::GLFW_Windows* window = new TinySandbox::GLFW_Windows(SCR_WIDTH, SCR_HEIGHT, "TinySandbox", NULL, NULL);
 	TinySandbox::Scene* mainScene = TinySandbox::Scene::Instance();
 
 	TinySandbox::GLFW_Windows::SetInstance(window);
