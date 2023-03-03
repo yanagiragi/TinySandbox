@@ -1,7 +1,10 @@
 # TinySandbox
 
-![](https://i.imgur.com/zL6rOU9.png) 
+* a game engine build from scratch
 
-* This Project tries to build a game engine from scratch
+* Currently only contains abstraction of OpenGL, DirectX wip
 
-* Logo is provided by courtesy of Wayne
+* Features:
+  * Physically based rendering: Cook-Torrance BRDF
+  * Image based lighting: pre-filter & irradance map generation
+  * Unity-like component-based system
